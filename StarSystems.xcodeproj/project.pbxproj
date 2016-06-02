@@ -1,0 +1,283 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5A416509A854A4FEB1F997C5 /* Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A41621DD4E385D4C1429A9D /* Name.swift */; };
+		5A41698E85D5CF9E7B959BD7 /* BasicPlanet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4166A9B7D8B8ECE62F41B1 /* BasicPlanet.swift */; };
+		5A4169B08DCB174B3F7B2556 /* Pdf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4161823CA9160770ED54E9 /* Pdf.swift */; };
+		8338515C1CA39A310058E510 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338515B1CA39A310058E510 /* main.swift */; };
+		833851631CA39A9E0058E510 /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851621CA39A9E0058E510 /* Dice.swift */; };
+		833851781CA7B0F20058E510 /* Star.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851771CA7B0F20058E510 /* Star.swift */; };
+		8338517A1CA7B1080058E510 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851791CA7B1080058E510 /* Planet.swift */; };
+		8338517C1CA7B11B0058E510 /* Satellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338517B1CA7B11B0058E510 /* Satellite.swift */; };
+		8338517E1CA7B13D0058E510 /* StarSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338517D1CA7B13D0058E510 /* StarSystem.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		833851561CA39A310058E510 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5A4161823CA9160770ED54E9 /* Pdf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pdf.swift; sourceTree = "<group>"; };
+		5A41621DD4E385D4C1429A9D /* Name.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Name.swift; sourceTree = "<group>"; };
+		5A4166A9B7D8B8ECE62F41B1 /* BasicPlanet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicPlanet.swift; sourceTree = "<group>"; };
+		833851581CA39A310058E510 /* StarSystems */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = StarSystems; sourceTree = BUILT_PRODUCTS_DIR; };
+		8338515B1CA39A310058E510 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		833851621CA39A9E0058E510 /* Dice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dice.swift; sourceTree = "<group>"; };
+		833851771CA7B0F20058E510 /* Star.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Star.swift; sourceTree = "<group>"; };
+		833851791CA7B1080058E510 /* Planet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
+		8338517B1CA7B11B0058E510 /* Satellite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Satellite.swift; sourceTree = "<group>"; };
+		8338517D1CA7B13D0058E510 /* StarSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarSystem.swift; sourceTree = "<group>"; };
+		834B94F01CEFDEAA00E3A083 /* NameData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NameData.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		833851551CA39A310058E510 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8338514F1CA39A310058E510 = {
+			isa = PBXGroup;
+			children = (
+				8338515A1CA39A310058E510 /* StarSystems */,
+				833851591CA39A310058E510 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		833851591CA39A310058E510 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				833851581CA39A310058E510 /* StarSystems */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8338515A1CA39A310058E510 /* StarSystems */ = {
+			isa = PBXGroup;
+			children = (
+				8338515B1CA39A310058E510 /* main.swift */,
+				833851621CA39A9E0058E510 /* Dice.swift */,
+				833851771CA7B0F20058E510 /* Star.swift */,
+				833851791CA7B1080058E510 /* Planet.swift */,
+				8338517B1CA7B11B0058E510 /* Satellite.swift */,
+				8338517D1CA7B13D0058E510 /* StarSystem.swift */,
+				5A4166A9B7D8B8ECE62F41B1 /* BasicPlanet.swift */,
+				5A4161823CA9160770ED54E9 /* Pdf.swift */,
+				5A41621DD4E385D4C1429A9D /* Name.swift */,
+				834B94F01CEFDEAA00E3A083 /* NameData.plist */,
+			);
+			path = StarSystems;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		833851571CA39A310058E510 /* StarSystems */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8338515F1CA39A310058E510 /* Build configuration list for PBXNativeTarget "StarSystems" */;
+			buildPhases = (
+				833851541CA39A310058E510 /* Sources */,
+				833851551CA39A310058E510 /* Frameworks */,
+				833851561CA39A310058E510 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StarSystems;
+			productName = StarSystems;
+			productReference = 833851581CA39A310058E510 /* StarSystems */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		833851501CA39A310058E510 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Christopher Green";
+				TargetAttributes = {
+					833851571CA39A310058E510 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = 833851531CA39A310058E510 /* Build configuration list for PBXProject "StarSystems" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 8338514F1CA39A310058E510;
+			productRefGroup = 833851591CA39A310058E510 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				833851571CA39A310058E510 /* StarSystems */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		833851541CA39A310058E510 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				833851631CA39A9E0058E510 /* Dice.swift in Sources */,
+				8338515C1CA39A310058E510 /* main.swift in Sources */,
+				833851781CA7B0F20058E510 /* Star.swift in Sources */,
+				8338517A1CA7B1080058E510 /* Planet.swift in Sources */,
+				8338517E1CA7B13D0058E510 /* StarSystem.swift in Sources */,
+				8338517C1CA7B11B0058E510 /* Satellite.swift in Sources */,
+				5A41698E85D5CF9E7B959BD7 /* BasicPlanet.swift in Sources */,
+				5A4169B08DCB174B3F7B2556 /* Pdf.swift in Sources */,
+				5A416509A854A4FEB1F997C5 /* Name.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		8338515D1CA39A310058E510 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8338515E1CA39A310058E510 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		833851601CA39A310058E510 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		833851611CA39A310058E510 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		833851531CA39A310058E510 /* Build configuration list for PBXProject "StarSystems" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8338515D1CA39A310058E510 /* Debug */,
+				8338515E1CA39A310058E510 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8338515F1CA39A310058E510 /* Build configuration list for PBXNativeTarget "StarSystems" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				833851601CA39A310058E510 /* Debug */,
+				833851611CA39A310058E510 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 833851501CA39A310058E510 /* Project object */;
+}

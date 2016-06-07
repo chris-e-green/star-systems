@@ -24,11 +24,33 @@ struct CoordPair {
     var ys: String {
         return y.f1()
     }
+    var s: String {
+        return "\(xs) \(ys)"
+    }
+}
+
+func -(left: CoordPair, right: CoordPair) -> CoordPair {
+    return CoordPair(x: left.x - right.x, y: left.y - right.y)
+}
+
+func +(left: CoordPair, right: CoordPair) -> CoordPair {
+    return CoordPair(x: left.x + right.x, y: left.y + right.y)
 }
 
 struct RectCoords {
     var bl: CoordPair
     var tr: CoordPair
+    var s: String {
+        return "\(bl.s) \(tr.s)"
+    }
+}
+
+func -(left: RectCoords, right: RectCoords) -> RectCoords {
+    return RectCoords(bl: left.bl - right.bl, tr: left.tr - right.tr)
+}
+
+func +(left: RectCoords, right: RectCoords) -> RectCoords {
+    return RectCoords(bl: left.bl + right.bl, tr: left.tr + right.tr)
 }
 
 class PdfObj {
@@ -85,7 +107,7 @@ class Page: PdfObj {
         s += "<<\n"
         s += "   /Type /Page\n"
         s += "   /Parent \(parent!.id) 0 R\n"
-        s += "   /MediaBox [0 0 \(max!.x) \(max!.y)]\n"
+        s += "   /MediaBox [0 0 \(max!.s)]\n"
         s += "   /Contents \(contents!.id) 0 R\n"
         s += "   /Resources <<\n"
         s += "      /ProcSet \(procset!.id) 0 R\n"
@@ -166,7 +188,7 @@ class PdfXObject: PdfObj {
         s += "<<\n"
         s += "   /Type /XObject\n"
         s += "   /Subtype /Form\n"
-        s += "   /BBox [\(bbox!.bl.x) \(bbox!.bl.y) \(bbox!.tr.x) \(bbox!.tr.y)]\n"
+        s += "   /BBox [\(bbox!.s)]\n"
         s += "   /Resources <<\n"
         s += "      /ProcSet [/PDF /Text]\n"
         if fonts.count > 0 {
@@ -194,6 +216,7 @@ class PdfXObject: PdfObj {
 }
 
 class Pdf {
+    let fontDetails    : [(name: String, id: String)] = [("Helvetica", "F1"), ("Helvetica-Bold", "F2"), ("Helvetica-Oblique", "F3"), ("Courier", "F4")]
     let fontName1      : String = "Helvetica"
     let fontId1        : String = "F1"
     let fontName2      : String = "Helvetica-Bold"
@@ -202,7 +225,7 @@ class Pdf {
     let fontId3        : String = "F3"
     let fontName4      : String = "Courier"
     let fontId4        : String = "F4"
-    let xobjId1        : String = "img1"
+//    let xobjId1        : String = "img1"
     let xobjPlanetDry  : String = "circle-blue-filled"
     let xobjPlanetWet  : String = "circle-blue-empty"
     let xobjGasGiant   : String = "circle-black-filled"
@@ -272,6 +295,7 @@ class Pdf {
     var fontObjs       : [PdfFont] = []
     var structure      : [Int:PdfObj] = [:]
     var fonts          : [PdfFont] = []
+    var nsfonts        : [String : NSFont] = [:]
     var currObjId = 2
     
     func leftPad(num: Int)->String {
@@ -280,7 +304,13 @@ class Pdf {
     }
  
     func strWidth(str:String, fontName: String, fontSize:Double) -> Double {
-        let ctl:CTLine = CTLineCreateWithAttributedString(NSAttributedString(string:str, attributes: [NSFontAttributeName:NSFont(name: fontName, size: CGFloat(fontSize))!]))
+        var font:NSFont?
+        font = nsfonts[fontName + fontSize.f1()]
+        if font == nil {
+            font = NSFont(name: fontName, size:CGFloat(fontSize))
+            nsfonts[fontName + fontSize.f1()] = font
+        }
+        let ctl:CTLine = CTLineCreateWithAttributedString(NSAttributedString(string:str, attributes: [NSFontAttributeName:font!]))
         let width:Double = CTLineGetTypographicBounds(ctl, nil, nil, nil)// / 12.0 * fontSize
         return width
     }
@@ -360,9 +390,10 @@ class Pdf {
     
     func hex(x: Double, y: Double, height: Double, label: String)-> String {
         var hexStr = "% hex at (\(x.f1()), \(y.f1()))\n"
+        let (fn, fid) = fontDetails[0]
         hexStr += "q 1 0 0 1 \(x.f1()) \(y.f1()) cm /\(xobjHex) Do Q\n"
-        let labelWidth:Double = strWidth(label, fontName: fontName1, fontSize:coordPts)
-        hexStr += "BT /\(fontId1) \(coordPts) Tf \((x - labelWidth / 2.0).f1()) \((y + 14.0).f1()) Td (\(label))Tj ET\n"
+        let labelWidth:Double = strWidth(label, fontName: fn, fontSize:coordPts)
+        hexStr += "BT /\(fid) \(coordPts) Tf \((x - labelWidth / 2.0).f1()) \((y + 14.0).f1()) Td (\(label))Tj ET\n"
         return hexStr
     }
     
@@ -393,51 +424,51 @@ class Pdf {
     }
     
     
-    func drawTASForm6(form:RectCoords)->String {
-        // bl and tr are the coordinates of the box in absolute
-        // terms relative to the page itself.
-        var formPdf = "% TAS Form 6\n"
-        formPdf += "%-----------------------------------------------\n"
-        //----------------------------------------------------------
-        // Draw TAS Form 6.
-        //----------------------------------------------------------
-        // draw box around map
-        formPdf += "4 w \(form.bl.xs) \(form.bl.ys) \(form.tr.x - form.bl.x) \(form.tr.y - form.bl.y) re S\n"
-        let box = RectCoords(bl:CoordPair(x: form.bl.x + mapBoxMargin.bl.x, y: form.bl.y + mapBoxMargin.bl.y), tr: CoordPair(x: form.tr.x - mapBoxMargin.tr.x, y: form.tr.y - mapBoxMargin.tr.y - 39))
-        
-        formPdf += "\(box.bl.xs) \(box.bl.ys) \(box.tr.x - box.bl.x) \(box.tr.y - box.bl.y) re S\n"
-        formPdf += "\(form.bl.xs) \(box.tr.ys) m \(form.tr.xs) \(box.tr.ys) l S\n"
-
-        // draw labels on map form
-        formPdf += "BT /\(fontId2) \(headingPts) Tf \(form.bl.xs) \(form.bl.y - headingPts) Td (TAS Form 6)Tj ET\n"
-        let lbl1 = "Subsector Map Grid"
-        let w = strWidth(lbl1, fontName: fontName2, fontSize: headingPts)
-        formPdf += "BT /\(fontId2) \(headingPts) Tf \((box.tr.x - w).f1()) \(form.bl.y - headingPts) Td (\(lbl1))Tj ET\n"
-        formPdf += "BT /\(fontId2) \(headingPts) Tf \(form.bl.x + 6) \(form.tr.y - 33) Td  (SUBSECTOR MAP GRID)Tj ET\n"
-        formPdf += "BT /\(fontId1) \(textPts) Tf 200 \(form.tr.y - textPts * 1.5) Td  (1. Subsector Name)Tj ET\n"
-
-        // draw hexagons in map
-        formPdf += "1 w\n"
-        formPdf += "190 \(form.tr.ys) m 190 \(box.tr.ys) l S\n"
-        formPdf += "340 \(form.tr.ys) m 340 \(box.tr.ys) l S\n"
-        formPdf += "0.5 g 0.5 G\n"
-        
-        for x in 1 ... 8 {
-            for y in 1 ... 10 {
-                let c:CoordPair = hexLocToCoord(x, y: y)
-                let s:String = String(format:"%02d%02d",arguments:[x,y])
-                formPdf += hex(c.x, y:c.y, height:hexHeight, label: s)
-            }
-        }
-        formPdf += "0.0 g 0.0 G\n"
-        return formPdf
-
-    }
+//    func drawTASForm6(form:RectCoords)->String {
+//        // bl and tr are the coordinates of the box in absolute
+//        // terms relative to the page itself.
+//        var formPdf = "% TAS Form 6\n"
+//        formPdf += "%-----------------------------------------------\n"
+//        //----------------------------------------------------------
+//        // Draw TAS Form 6.
+//        //----------------------------------------------------------
+//        // draw box around map
+//        formPdf += "4 w \(form.bl.s) \((form.tr - form.bl).s) re S\n"
+//        let box = RectCoords(bl:form.bl + mapBoxMargin.bl, tr: CoordPair(x: form.tr.x - mapBoxMargin.tr.x, y: form.tr.y - mapBoxMargin.tr.y - 39))
+//        
+//        formPdf += "\(box.bl.s) \((box.tr - box.bl).s) re S\n"
+//        formPdf += "\(form.bl.xs) \(box.tr.ys) m \(form.tr.xs) \(box.tr.ys) l S\n"
+//
+//        // draw labels on map form
+//        formPdf += "BT /\(fontId2) \(headingPts) Tf \(form.bl.xs) \(form.bl.y - headingPts) Td (TAS Form 6)Tj ET\n"
+//        let lbl1 = "Subsector Map Grid"
+//        let w = strWidth(lbl1, fontName: fontName2, fontSize: headingPts)
+//        formPdf += "BT /\(fontId2) \(headingPts) Tf \((box.tr.x - w).f1()) \(form.bl.y - headingPts) Td (\(lbl1))Tj ET\n"
+//        formPdf += "BT /\(fontId2) \(headingPts) Tf \(form.bl.x + 6) \(form.tr.y - 33) Td  (SUBSECTOR MAP GRID)Tj ET\n"
+//        formPdf += "BT /\(fontId1) \(textPts) Tf 200 \(form.tr.y - textPts * 1.5) Td  (1. Subsector Name)Tj ET\n"
+//
+//        // draw hexagons in map
+//        formPdf += "1 w\n"
+//        formPdf += "190 \(form.tr.ys) m 190 \(box.tr.ys) l S\n"
+//        formPdf += "340 \(form.tr.ys) m 340 \(box.tr.ys) l S\n"
+//        formPdf += "0.5 g 0.5 G\n"
+//        
+//        for x in 1 ... 8 {
+//            for y in 1 ... 10 {
+//                let c:CoordPair = hexLocToCoord(x, y: y)
+//                let s:String = String(format:"%02d%02d",arguments:[x,y])
+//                formPdf += hex(c.x, y:c.y, height:hexHeight, label: s)
+//            }
+//        }
+//        formPdf += "0.0 g 0.0 G\n"
+//        return formPdf
+//
+//    }
     
     func drawTASForm7(form:RectCoords)->String {
         var formPdf = "% TAS Form 7\n"
         formPdf += "%-----------------------------------------------\n"
-        formPdf += "4 w \(form.bl.x) \(form.bl.y) \(form.tr.x - form.bl.x) \(form.tr.y - form.bl.y) re S 1 w\n"
+        formPdf += "4 w \(form.bl.s) \((form.tr - form.bl).s) re S 1 w\n"
         formPdf += "\(form.bl.x) \(form.tr.y - headingPts - 25) m \(form.tr.x) \(form.tr.y - headingPts - 25) l S\n"
         formPdf += "\(form.bl.x) \(form.tr.y - headingPts - 58) m \(form.tr.x) \(form.tr.y - headingPts - 58) l S\n"
         formPdf += "\(form.bl.x + 207) \(form.tr.y) m \(form.bl.x + 207) \(form.tr.y - headingPts - 58) l S\n"
@@ -473,6 +504,7 @@ class Pdf {
         formPdf += "BT /F3 10 Tf \(form.bl.x + 5) \(form.tr.y - headingPts - 85) Td (World Name)Tj 102 0 Td (Location)Tj 60 0 Td (UPP)Tj 110 0 Td (Remarks)Tj ET\n"
         return formPdf
     }
+    
     func start() {
         procset = ProcSet(id: currObjId)
         structure[currObjId] = procset
@@ -615,12 +647,11 @@ class Pdf {
         pageContent += "%-----------------------------------------------\n"
         //----------------------------------------------------------
         // draw box around map
-        pageContent += "4 w \(pageMargin.bl.x) \(pageMargin.bl.y) \(mapBoxSize.x) \(mapBoxSize.y) re S\n"
-        let innerBoxBLX = pageMargin.bl.x + mapBoxMargin.bl.x - 3
-        let innerBoxBLY = pageMargin.bl.y + mapBoxMargin.bl.y - 3
+        pageContent += "4 w \(pageMargin.bl.s) \(mapBoxSize.s) re S\n"
+        let innerBoxBL = pageMargin.bl + mapBoxMargin.bl - CoordPair(x: 3, y: 3)
         let innerBoxSzX = mapBoxSize.x + 5 - (mapBoxMargin.tr.x + mapBoxMargin.bl.x)
         let innerBoxSzY = mapBoxSize.y + 6 - (mapBoxMargin.tr.y + mapBoxMargin.bl.y) - 39
-        pageContent += "\(innerBoxBLX) \(innerBoxBLY) \(innerBoxSzX) \(innerBoxSzY) re S\n"
+        pageContent += "\(innerBoxBL.s) \(innerBoxSzX) \(innerBoxSzY) re S\n"
         pageContent += "\(pageMargin.bl.x) \(pageMargin.bl.y + mapBoxSize.y - 39) m \(pageMargin.bl.x + mapBoxSize.x) \(pageMargin.bl.y + mapBoxSize.y - 39) l S\n"
         // draw labels on map form
         pageContent += "BT /\(fontId2) \(headingPts) Tf \(pageMargin.bl.x) \(pageMargin.bl.y - 12) Td (TAS Form 6)Tj ET\n"
@@ -659,11 +690,11 @@ class Pdf {
                 page2Content += "q 1 0 0 1 \(pageMargin.bl.x * 2 + 364 + pageMargin.tr.x) \(pageMargin.bl.y) cm /\(xobjTASForm7) Do Q\n"
                 
             case 2:
-                page2Content += "q 1 0 0 1 \(pageMargin.bl.x) \(pageMargin.bl.y) cm /\(xobjTASForm7) Do Q\n"
+                page2Content += "q 1 0 0 1 \(pageMargin.bl.s) cm /\(xobjTASForm7) Do Q\n"
             case 5:
                 page3Content += "q 1 0 0 1 \(pageMargin.bl.x * 2 + 364 + pageMargin.tr.x) \(pageMargin.bl.y) cm /\(xobjTASForm7) Do Q\n"
             case 4:
-                page3Content += "q 1 0 0 1 \(pageMargin.bl.x) \(pageMargin.bl.y) cm /\(xobjTASForm7) Do Q\n"
+                page3Content += "q 1 0 0 1 \(pageMargin.bl.s) cm /\(xobjTASForm7) Do Q\n"
             default: break
             }
             
@@ -684,7 +715,7 @@ class Pdf {
         var p: String = ""
         p += "% Rendering \(planet.description) to list\n"
         let c:CoordPair = listCoords(planet.coordinateX, y:planet.coordinateY)
-        p += "BT /\(fontId1) \(listPts) Tf \(c.x) \(c.y) Td (\(planet.name))Tj 104 0 Td "
+        p += "BT /\(fontId1) \(listPts) Tf \(c.s) Td (\(planet.name))Tj 104 0 Td "
         let ins = 12.0
         p += String(format:"5.5 Tc (%02d%02d)Tj 0 Tc 60 0 Td (%@)Tj \(ins) 0 Td (%1X)Tj \(ins) 0 Td (%1X)Tj \(ins) 0 Td (%1X)Tj \(ins) 0 Td (%1X)Tj \(ins) 0 Td (%1X)Tj \(ins) 0 Td(%1X)Tj \(ins) 0 Td (%1X)Tj \(ins) 0 Td ",
             arguments:[planet.coordinateX, planet.coordinateY, planet.starport,
@@ -719,7 +750,7 @@ class Pdf {
         if planet.size == 0 {
             pageContent += asteroids(c1.x, y: c1.y, size: asteroidsSize)
         } else {
-            pageContent += "q 1 0 0 1 \(c1.xs) \(c1.ys) cm "
+            pageContent += "q 1 0 0 1 \(c1.s) cm "
             if planet.hydrographics > 0 {
                 pageContent += "/\(xobjPlanetDry)"
             } else {
@@ -728,13 +759,13 @@ class Pdf {
             pageContent +=  " Do Q\n"
         }
         if planet.gasGiant {
-            pageContent += "q 1 0 0 1 \((c1.x + 10).f1()) \((c1.y + 10).f1()) cm /\(xobjGasGiant) Do Q\n"
+            pageContent += "q 1 0 0 1 \((c1 + CoordPair(x:10,y:10)).s) cm /\(xobjGasGiant) Do Q\n"
         }
         if planet.navalBase {
-            pageContent += "q 1 0 0 1 \((c1.x - 10.0).f1()) \(c1.ys) cm /\(xobjNavalBase) Do Q\n"
+            pageContent += "q 1 0 0 1 \((c1 - CoordPair(x:10,y:0)).s) cm /\(xobjNavalBase) Do Q\n"
         }
         if planet.scoutBase {
-            pageContent += "q 1 0 0 1 \((c1.x - 10.0).f1()) \((c1.y + 10.0).f1()) cm /\(xobjScoutBase) Do Q\n"
+            pageContent += "q 1 0 0 1 \((c1 + CoordPair(x:-10, y:10)).s) cm /\(xobjScoutBase) Do Q\n"
         }
     }
     

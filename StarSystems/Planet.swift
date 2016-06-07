@@ -154,7 +154,7 @@ class Planet: Satellite, CustomStringConvertible {
         setTradeClassifications()
     }
     
-    func generateRandomPlanet(orbit: Int, starType: StarType, zone: Zone) {
+    func generateRandomPlanet() {
         //generate starport
         rollStarport()
         //generate naval base
@@ -181,6 +181,9 @@ class Planet: Satellite, CustomStringConvertible {
         rollTechLevel()
         // determine trade classifications
         setTradeClassifications()
+    }
+    func generateRandomPlanet(orbit: Int, starType: StarType, zone: Zone) {
+        generateRandomPlanet()
     }
     
     func getSize()->String {
@@ -463,6 +466,8 @@ class Planet: Satellite, CustomStringConvertible {
     }
     
     func setTradeClassifications() {
+        // start with a clean slate!
+        tradeClassifications.removeAll()
 //        var tc  : String = ""
 //        var stc : String = ""
         

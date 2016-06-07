@@ -10,6 +10,7 @@
 		5A416509A854A4FEB1F997C5 /* Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A41621DD4E385D4C1429A9D /* Name.swift */; };
 		5A41698E85D5CF9E7B959BD7 /* BasicPlanet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4166A9B7D8B8ECE62F41B1 /* BasicPlanet.swift */; };
 		5A4169B08DCB174B3F7B2556 /* Pdf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4161823CA9160770ED54E9 /* Pdf.swift */; };
+		831CBE991D014F03006F9182 /* Subsector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831CBE981D014F03006F9182 /* Subsector.swift */; };
 		8338515C1CA39A310058E510 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338515B1CA39A310058E510 /* main.swift */; };
 		833851631CA39A9E0058E510 /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851621CA39A9E0058E510 /* Dice.swift */; };
 		833851781CA7B0F20058E510 /* Star.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851771CA7B0F20058E510 /* Star.swift */; };
@@ -34,6 +35,7 @@
 		5A4161823CA9160770ED54E9 /* Pdf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pdf.swift; sourceTree = "<group>"; };
 		5A41621DD4E385D4C1429A9D /* Name.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Name.swift; sourceTree = "<group>"; };
 		5A4166A9B7D8B8ECE62F41B1 /* BasicPlanet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicPlanet.swift; sourceTree = "<group>"; };
+		831CBE981D014F03006F9182 /* Subsector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subsector.swift; sourceTree = "<group>"; };
 		833851581CA39A310058E510 /* StarSystems */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = StarSystems; sourceTree = BUILT_PRODUCTS_DIR; };
 		8338515B1CA39A310058E510 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		833851621CA39A9E0058E510 /* Dice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dice.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				8338515B1CA39A310058E510 /* main.swift */,
+				831CBE981D014F03006F9182 /* Subsector.swift */,
 				833851621CA39A9E0058E510 /* Dice.swift */,
 				833851771CA7B0F20058E510 /* Star.swift */,
 				833851791CA7B1080058E510 /* Planet.swift */,
@@ -151,6 +154,7 @@
 				8338517A1CA7B1080058E510 /* Planet.swift in Sources */,
 				8338517E1CA7B13D0058E510 /* StarSystem.swift in Sources */,
 				8338517C1CA7B11B0058E510 /* Satellite.swift in Sources */,
+				831CBE991D014F03006F9182 /* Subsector.swift in Sources */,
 				5A41698E85D5CF9E7B959BD7 /* BasicPlanet.swift in Sources */,
 				5A4169B08DCB174B3F7B2556 /* Pdf.swift in Sources */,
 				5A416509A854A4FEB1F997C5 /* Name.swift in Sources */,

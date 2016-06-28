@@ -74,28 +74,28 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-u"
+            argument = "-u=A123456-B"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "A123456-B 1 1 1"
+            argument = "-n"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "2"
-            isEnabled = "NO">
+            argument = "-g"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "3"
-            isEnabled = "NO">
+            argument = "-s"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "4"
-            isEnabled = "NO">
+            argument = "-N=Vulcan"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "5"
-            isEnabled = "NO">
+            argument = "-c=01,08"
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>

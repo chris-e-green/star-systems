@@ -4,15 +4,28 @@
     <content url="file://$USER_HOME$/Library/Caches/AppCode2016.1/DerivedData/StarSystems-fduiyjernjujhtfoedrvytdscsgz/Build/Intermediates/StarSystems.build/Debug/StarSystems.build/DerivedSources" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/StarSystems/Star.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/StarSystem.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/RTTWorldGen/PlanetType.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/RTTWorldGen/PlanetOrbit.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/RTTWorldGen/Extensions.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/RTTWorldGen/RTTStar.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/RTTWorldGen/Bases.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/RTTWorldGen/Spectrum.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/RTTWorldGen/Habitation.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/RTTWorldGen/Chemistry.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/RTTWorldGen/StarOrbits.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/RTTWorldGen/Luminosity.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/RTTWorldGen/RTTPlanet.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/RTTWorldGen/Entity.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/RTTWorldGen/TradeCodes.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/RTTWorldGen/RTTSystem.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/StarSystems/Name.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/StarSystems/Pdf.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/StarSystems/StarSystem.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/StarSystems/main.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/StarSystems/Planet.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/StarSystems/Dice.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/StarSystems/BasicPlanet.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StarSystems/Subsector.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/StarSystems/Satellite.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/StarSystems/NameData.plist" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">

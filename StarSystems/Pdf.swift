@@ -173,9 +173,9 @@ class Contents: PdfObj {
             bodyStr = newValue
         }
     }
-    override init(id: Int) {
-        super.init(id: id)
-    }
+//    override init(id: Int) {
+//        super.init(id: id)
+//    }
 }
 
 class PdfXObject: PdfObj {
@@ -681,7 +681,7 @@ class Pdf {
         pageContent += "q 1 0 0 1 \(pageMargin.bl.x * 2 + 364 + pageMargin.tr.x) \(pageMargin.bl.y) cm /\(xobjTASForm7) Do Q\n"
     }
     
-    func display(planet: BasicPlanet) {
+    func display(planet: Planet) {
         if line > 17 {
             listPage += 1
             
@@ -744,8 +744,8 @@ class Pdf {
         let c1:CoordPair = hexLocToCoord(planet.coordinateX,y:planet.coordinateY)
         var w:Double = strWidth(planet.starport, fontName: fontName1, fontSize: namePts)
         pageContent += "BT /\(fontId1) \(namePts) Tf \((c1.x - w / 2).f1()) \(c1.y + 5) Td (\(planet.starport))Tj ET\n"
-        let dispName = planet.population >= 9 ? planet.name.uppercaseString : planet.name
-        w = strWidth(dispName, fontName: fontName1, fontSize: namePts * 0.75)
+        let dispName = planet.population >= 9 ? planet.name!.uppercaseString : planet.name
+        w = strWidth(dispName!, fontName: fontName1, fontSize: namePts * 0.75)
         pageContent += "BT /\(fontId1) \(namePts) Tf \((c1.x - w / 2).f1()) \(c1.y - 6.0 - namePts) Td 75 Tz (\(dispName))Tj 100 Tz ET\n"
         if planet.size == 0 {
             pageContent += asteroids(c1.x, y: c1.y, size: asteroidsSize)

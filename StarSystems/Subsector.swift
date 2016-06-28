@@ -9,7 +9,7 @@
 import Foundation
 
 class Subsector  {
-    var planets = [BasicPlanet]()
+    var planets = [Planet]()
     var xml: String {
         var x: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
         x += "<subsector>\n"
@@ -78,55 +78,23 @@ class Subsector  {
             ins?.close()
             if let ss = data["subsector"] as? [[String:AnyObject]] {
                 for p in ss {
-                    planets.append(BasicPlanet(fromJSON:p))
+                    planets.append(Planet(fromJSON:p))
                 }
             }
-//        print(data)
         } catch {
             print("Error parsing JSON data \(error)")
         }
     }
     init(density:Int) {
         let d : Dice = Dice(sides:6)
-        //    let pdf : Pdf = Pdf()
-//        var ssxml: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-        //    ssxml += "<!DOCTYPE subsector [\n"
-        //    ssxml += "  <!ELEMENT subsector (planet*)>\n"
-        //    ssxml += "  <!ELEMENT planet (name, coords, starport, size, atm, hyd, pop, gov, law, tech, naval, scout, gas, tc)>\n"
-        //    ssxml += "  <!ELEMENT name (#PCDATA)>\n"
-        //    ssxml += "  <!ELEMENT coords (x, y)>\n"
-        //    ssxml += "  <!ELEMENT starport (#PCDATA)>\n"
-        //    ssxml += "  <!ELEMENT size (#PCDATA)>\n"
-        //    ssxml += "  <!ELEMENT atm (#PCDATA)>\n"
-        //    ssxml += "  <!ELEMENT hyd (#PCDATA)>\n"
-        //    ssxml += "  <!ELEMENT pop (#PCDATA)>\n"
-        //    ssxml += "  <!ELEMENT gov (#PCDATA)>\n"
-        //    ssxml += "  <!ELEMENT law (#PCDATA)>\n"
-        
-//        ssxml += "<subsector>\n"
-        
-        //    pdf.start()
+
         for x in 1...8 {
             for y in 1...10 {
                 if d.roll() <= density {
-                    let planet = BasicPlanet(coordX:x,coordY:y)
+                    let planet = Planet(coordX:x,coordY:y)
                     planets.append(planet)
-//                    ssxml += planet.xml
-                    //                pdf.display(planet)
                 }
             }
         }
-        //    pdf.end()
-//        ssxml += "</subsector>\n"
-        //    do {
-        //        print("Writing PDF to \(path + ".pdf")")
-        //        try pdf.pdfContent.writeToFile(path + ".pdf", atomically: true, encoding: NSUTF8StringEncoding)
-        //        print("Writing XML to \(path + ".xml")")
-        //        try ssxml.writeToFile(path + ".xml", atomically: true, encoding: NSUTF8StringEncoding)
-        //    } catch {
-        //        print(pdf.pdfContent)
-        //    }
-        
     }
- 
 }

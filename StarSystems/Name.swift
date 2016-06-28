@@ -132,11 +132,11 @@ class Name:CustomStringConvertible {
 //    self.init(_maxLength:maxLength)
 //  }
 
-  convenience init() {
-    self.init(maxLength:0)
-  }
+//  convenience init() {
+//    self.init(maxLength:0)
+//  }
 
-  init(maxLength:Int) {
+  init(maxLength:Int = 0) {
     maxNameLength = maxLength
     generate()
   }

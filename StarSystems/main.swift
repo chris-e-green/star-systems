@@ -9,17 +9,21 @@
 import Foundation
 
 func printSyntax() {
-    print("\(Process.arguments[0]) -u UPP S N G")
-    print("where S=1 if scout base present, 0 if absent")
-    print("      N=1 if naval base present, 0 if absent")
-    print("      G=1 if gas giant present, 0 if absent")
+    print("\(Process.arguments[0]) -u=UWP [-n] [-s] [-g] [-c=x,y] [-N=name]")
+    print("where UWP is the planetary profile, formatted A123456-7")
+    print("\t-n if a naval base is present, -s if a scout base is present, -g if a gas giant is present")
+    print("\tx and y are optional coordinates")
+    print("\tname is the optional name of the planet; one will be generated if it is not supplied")
     print("\tGenerate a full star system from existing planet")
     print()
     print("\(Process.arguments[0]) -f")
     print("\tGenerate a full star system from scratch")
-    print("")
+    print()
     print("\(Process.arguments[0]) -b")
     print("\tGenerate basic planet")
+    print()
+    print("\(Process.arguments[0]) -r")
+    print("\tGenerate a system using RTT Worldgen rules")
     print()
     print("\(Process.arguments[0]) -s {density} [file1.pdf] [file2.xml] [file3.json]")
     print("\tGenerate a subsector to PDF/XML/JSON")
@@ -30,54 +34,14 @@ func printSyntax() {
     print("\tIf -o is specified, file1.json is rewritten (fixes up trade classifications)")
 }
 
-//func createSubsector(density:Int, path:String) {
-//    let d : Dice = Dice(sides:6)
-//    let pdf : Pdf = Pdf()
-//    var ssxml: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-////    ssxml += "<!DOCTYPE subsector [\n"
-////    ssxml += "  <!ELEMENT subsector (planet*)>\n"
-////    ssxml += "  <!ELEMENT planet (name, coords, starport, size, atm, hyd, pop, gov, law, tech, naval, scout, gas, tc)>\n"
-////    ssxml += "  <!ELEMENT name (#PCDATA)>\n"
-////    ssxml += "  <!ELEMENT coords (x, y)>\n"
-////    ssxml += "  <!ELEMENT starport (#PCDATA)>\n"
-////    ssxml += "  <!ELEMENT size (#PCDATA)>\n"
-////    ssxml += "  <!ELEMENT atm (#PCDATA)>\n"
-////    ssxml += "  <!ELEMENT hyd (#PCDATA)>\n"
-////    ssxml += "  <!ELEMENT pop (#PCDATA)>\n"
-////    ssxml += "  <!ELEMENT gov (#PCDATA)>\n"
-////    ssxml += "  <!ELEMENT law (#PCDATA)>\n"
-//    
-//    ssxml += "<subsector>\n"
-//    
-//    pdf.start()
-//    for x in 1...8 {
-//        for y in 1...10 {
-//            if d.roll() <= density {
-//                let planet = BasicPlanet(coordX:x,coordY:y)
-//                ssxml += planet.xml
-//                pdf.display(planet)
-//            }
-//        }
-//    }
-//    pdf.end()
-//    ssxml += "</subsector>\n"
-//    do {
-//        print("Writing PDF to \(path).pdf")
-//        try pdf.pdfContent.writeToFile("\(path).pdf", atomically: true, encoding: NSUTF8StringEncoding)
-//        print("Writing XML to \(path).xml")
-//        try ssxml.writeToFile("\(path).xml", atomically: true, encoding: NSUTF8StringEncoding)
-//    } catch {
-//        print(pdf.pdfContent)
-//    }
-//    
-//}
-
 var planet:Planet
 if Process.argc > 1 {
-    switch Process.arguments[1] {
+    let param1:String = Process.arguments[1]
+    let choice = param1[param1.startIndex...param1.startIndex.advancedBy(1)]
+    switch choice {
     case "-b":
         print("Generating basic system")
-        var planet : BasicPlanet = BasicPlanet()
+        var planet =  Planet()
         planet.generateRandomPlanet()
         print(planet)
         print(planet.xml)
@@ -105,17 +69,6 @@ if Process.argc > 1 {
             print("sorry, that density makes no sense.")
             abort()
         }
-//        if Process.argc >= 3 {
-//            density = Int(Process.arguments[2]) ?? 3
-//            if density > 5 || density < 1 {
-//                print("sorry, that density makes no sense.")
-//                abort()
-//            }
-//            if Process.argc == 4 {
-//                path = Process.arguments[3]
-//            }
-//        }
-        // createSubsector(density, path:path)
         let subsector: Subsector = Subsector(density: density)
         if pdffn != nil { subsector.generatePdf(pdffn!) }
         if xmlfn != nil { subsector.serialize(xmlfn!) }
@@ -155,15 +108,49 @@ if Process.argc > 1 {
         print("Generating system from scratch")
         let star : StarSystem = StarSystem()
         print(star)
+    case "-r":
+        print("Generating system using RTTWorldGen")
+        let rtt = RTTSystem()
+        print(rtt)
     case "-u":
-        if Process.argc == 6 {
-            planet = Planet.init(upp: Process.arguments[2], scoutBase: Process.arguments[3] == "1" ? true : false, navalBase: Process.arguments[4] == "1" ? true : false, gasGiant: Process.arguments[5] == "1" ? true : false)
-            
+        var navalBase = false
+        var scoutBase = false
+        var gasGiant = false
+        var coords : String?
+        var upp: String?
+        var name: String?
+        for fn in Process.arguments {
+            switch fn[fn.startIndex...fn.startIndex.advancedBy(1)] {
+            case "-n": navalBase = true
+            case "-s": scoutBase = true
+            case "-g": gasGiant = true
+            case "-c": coords = fn[fn.startIndex.advancedBy(3)...fn.endIndex.advancedBy(-1)]
+            case "-u":
+                upp = fn[fn.startIndex.advancedBy(3)...fn.endIndex.advancedBy(-1)]
+            case "-N":
+                name = fn[fn.startIndex.advancedBy(3)...fn.endIndex.advancedBy(-1)]
+            default: break
+            }
+        }
+        if upp != nil {
+            planet = Planet.init(upp: upp!, scoutBase: scoutBase, navalBase: navalBase, gasGiant: gasGiant)
+            if name != nil {
+                planet.name = name!
+            }
+            if coords != nil {
+                let xcoord = coords![coords!.startIndex...coords!.rangeOfString(",")!.startIndex.advancedBy(-1)]
+                let ycoord = coords![coords!.rangeOfString(",")!.endIndex...coords!.endIndex.advancedBy(-1)]
+                planet.coordinateX = Int(xcoord)!
+                planet.coordinateY = Int(ycoord)!
+            }
             print("Generating from existing planet \(planet)")
             print (planet)
-            let star = StarSystem(planet: planet)
-            print(star)
-        } else { printSyntax() }
+            let starSystem = StarSystem(newWorld: planet)
+            print(starSystem)
+        } else {
+            print("the UWP must be supplied!")
+            printSyntax()
+        }
     default:
         printSyntax()
     }

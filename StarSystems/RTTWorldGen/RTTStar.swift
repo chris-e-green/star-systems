@@ -13,8 +13,34 @@ class RTTStar: Entity, CustomStringConvertible {
     var age: Int
     var description: String {
         var result: String = ""
-        result += spectrum.description
-        if let lum = luminosity?.description {
+        result += String(spectrum)
+        if let lum = luminosity {
+            result += "-\(lum)"
+        }
+        if orbit != .Primary {
+            result += " in \(orbit) orbit"
+        } else {
+            result += " (primary)"
+        }
+        if planets.count == 0
+        {
+            result += " with no planets\n"
+        } else {
+            result += ", there "
+        }
+
+        if planets.count > 0 {
+            result += "\(planets.count.strord("planet")):\n"
+            for p in planets {
+                result += "\(p)"
+            }
+        }
+        return result
+    }
+    var verboseDesc: String {
+        var result: String = ""
+        result += String(spectrum)
+        if let lum = luminosity {
             result += "-\(lum)"
         }
         if orbit != .Primary {
@@ -28,10 +54,7 @@ class RTTStar: Entity, CustomStringConvertible {
         } else {
             result += " with\n"
         }
-//        let epistellar = planets.filter({(planet) in planet.orbit == .Epistellar})
-//        let inner = planets.filter({(planet) in planet.orbit == .Inner})
-//        let outer = planets.filter({(planet) in planet.orbit == .Outer})
-
+        
         if planets.count > 0 {
             result += "\t\(planets.count) planet"
             if planets.count != 1 { result += "s" }

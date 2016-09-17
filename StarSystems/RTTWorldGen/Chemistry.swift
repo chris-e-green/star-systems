@@ -5,15 +5,9 @@
 
 import Foundation
 
-enum Chemistry: Int, CustomStringConvertible {
+enum Chemistry: String, CustomStringConvertible {
     case Water, Ammonia, Methane, Sulfur, Chlorine
     var description: String {
-        switch self {
-        case Water: return "Water"
-        case Ammonia: return "Ammonia"
-        case Methane: return "Methane"
-        case Sulfur: return "Sulfur"
-        case Chlorine: return "Chlorine"
-        }
+        return self.rawValue
     }
 }

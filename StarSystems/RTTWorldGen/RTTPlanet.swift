@@ -5,6 +5,12 @@
 
 import Foundation
 
+extension Int {
+    var b36:String {
+        return String(self, radix:36, uppercase:true)
+    }
+}
+
 class RTTPlanet: Entity, CustomStringConvertible {
     let baseTL = 15 // one day it might be worth allowing this to be set.
     let settlement = 10 // how many centuries the region has been settled
@@ -29,7 +35,7 @@ class RTTPlanet: Entity, CustomStringConvertible {
     var techLevel: Int = 0
     var habitation: Habitation = .Uninhabited
     var tradeCodes = Set<TradeCodes>()
-    var bases = Set<Bases>()
+    var bases = Set<RTTBases>()
     var starport: String = ""
     var longDescription: String {
         var result = ""
@@ -64,9 +70,9 @@ class RTTPlanet: Entity, CustomStringConvertible {
         return result
     }
     var description: String {
-        var result = "\(type) (Orb:\(orbit) Size:\(size.b36) Atm:\(atmosphere.b36) Hyd:\(hydrosphere.b36) Bio:\(biosphere.b36)"
+        var result = "\(type), \(orbit) orbit, \(uwp), Bio:\(biosphere.b36)"
         if chemistry != nil { result += " Chem:\(chemistry!)" }
-        result += " Pop:\(population.b36) Gov:\(government.b36) Law:\(lawLevel.b36) Ind:\(industry.b36) Des:\(desirability) Hab:\(habitation) TC:\(tradeCodes) Bases:\(bases)"
+        result += " Ind:\(industry.b36) Des:\(desirability) Hab:\(habitation) TC:\(tradeCodes) Bases:\(bases)"
         result += ")"
         if satellites.count > 0 {
             result += ", satellites are:\n"
@@ -79,6 +85,23 @@ class RTTPlanet: Entity, CustomStringConvertible {
         return result
     }
 
+    var uwp: String {
+        var result: String = ""
+        if bases.contains(RTTBases.A) { result += "A" }
+        else if bases.contains(RTTBases.B) { result += "B" }
+        else if bases.contains(RTTBases.C) { result += "C" }
+        else if bases.contains(RTTBases.D) { result += "D" }
+        else if bases.contains(RTTBases.E) { result += "E" }
+        else if bases.contains(RTTBases.X) { result += "X" }
+        result += size.b36
+        result += atmosphere.b36
+        result += hydrosphere.b36
+        result += population.b36
+        result += government.b36
+        result += lawLevel.b36
+        return result
+    }
+    
     var sizeDescription: String {
         switch size {
         case 0: return "≤800 km, neg. gravity"

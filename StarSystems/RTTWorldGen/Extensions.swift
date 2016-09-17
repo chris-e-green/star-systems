@@ -7,6 +7,7 @@ import Foundation
 
 
 extension Int {
+    // this one is used by RTTWorlGen
     var b36:String {
         return String(self, radix:36, uppercase:true)
     }

@@ -9,23 +9,21 @@
 import Foundation
 import AppKit
 
-extension Double {
-    func f1() -> String {
-        return String(format: "%.1f", self)
+postfix operator ~ {}
+postfix func ~ (value: Double)->String {
+    var result = String(format: "%.1f", value)
+    if result[result.endIndex.advancedBy(-2)...result.endIndex.advancedBy(-1)] == ".0" {
+        result.removeAtIndex(result.endIndex.advancedBy(-1))
+        result.removeAtIndex(result.endIndex.advancedBy(-1))
     }
+    return result
 }
 
-struct CoordPair {
+struct CoordPair: CustomStringConvertible {
     var x: Double
     var y: Double
-    var xs: String {
-        return x.f1()
-    }
-    var ys: String {
-        return y.f1()
-    }
-    var s: String {
-        return "\(xs) \(ys)"
+    var description: String {
+        return "\(x~) \(y~)"
     }
 }
 
@@ -37,11 +35,11 @@ func +(left: CoordPair, right: CoordPair) -> CoordPair {
     return CoordPair(x: left.x + right.x, y: left.y + right.y)
 }
 
-struct RectCoords {
+struct RectCoords: CustomStringConvertible {
     var bl: CoordPair
     var tr: CoordPair
-    var s: String {
-        return "\(bl.s) \(tr.s)"
+    var description: String {
+        return "\(bl) \(tr)"
     }
 }
 
@@ -57,13 +55,14 @@ class PdfObj {
     var id: Int
     var content: String { return "\(id) 0 obj\n\(body)endobj\n" }
     var body: String { return "" }
+    
     init(id: Int) {
         self.id = id
     }
 }
 
-class Catalog: PdfObj {
-    var pages : Pages?
+class PdfCatalog: PdfObj {
+    var pages : PdfPages?
     override var body: String {
         var s: String = ""
         s += "<<\n"
@@ -72,14 +71,15 @@ class Catalog: PdfObj {
         s += ">>\n"
         return s
     }
-    init(id:Int, pages:Pages) {
+    
+    init(id:Int, pages:PdfPages) {
         super.init(id: id)
         self.pages = pages
     }
 }
 
-class Pages: PdfObj {
-    var kids:[Page?] = []
+class PdfPages: PdfObj {
+    var kids:[PdfPage?] = []
     override var body: String {
         var s: String = ""
         s += "<<\n"
@@ -95,10 +95,10 @@ class Pages: PdfObj {
     }
 }
 
-class Page: PdfObj {
-    var parent: Pages?
-    var contents: Contents?
-    var procset: ProcSet?
+class PdfPage: PdfObj {
+    var parent: PdfPages?
+    var contents: PdfContents?
+    var procset: PdfProcSet?
     var fonts:[PdfFont]=[]
     var xobjects:[PdfXObject]?
     var max: CoordPair?
@@ -107,7 +107,7 @@ class Page: PdfObj {
         s += "<<\n"
         s += "   /Type /Page\n"
         s += "   /Parent \(parent!.id) 0 R\n"
-        s += "   /MediaBox [0 0 \(max!.s)]\n"
+        s += "   /MediaBox [0 0 \(max!)]\n"
         s += "   /Contents \(contents!.id) 0 R\n"
         s += "   /Resources <<\n"
         s += "      /ProcSet \(procset!.id) 0 R\n"
@@ -127,7 +127,8 @@ class Page: PdfObj {
         s += ">>\n"
         return s
     }
-    init(id:Int, parent: Pages, contents: Contents, procset: ProcSet, fonts:[PdfFont], xobjects:[PdfXObject], max: CoordPair) {
+    
+    init(id:Int, parent: PdfPages, contents: PdfContents, procset: PdfProcSet, fonts:[PdfFont], xobjects:[PdfXObject], max: CoordPair) {
         super.init(id: id)
         self.parent = parent
         self.contents = contents
@@ -138,7 +139,7 @@ class Page: PdfObj {
     }
 }
 
-class ProcSet: PdfObj {
+class PdfProcSet: PdfObj {
     override var body: String {
         return "   [/PDF /Text]\n"
     }
@@ -163,7 +164,7 @@ class PdfFont: PdfObj {
     }
 }
 
-class Contents: PdfObj {
+class PdfContents: PdfObj {
     var bodyStr : String = ""
     override var body: String {
         get {
@@ -173,28 +174,37 @@ class Contents: PdfObj {
             bodyStr = newValue
         }
     }
-//    override init(id: Int) {
-//        super.init(id: id)
-//    }
 }
+
+// The problem with the hex display is that the hex is an
+// XObject and is referenced in an XObject, so it needs to be mentioned
+// in the Resources for the XObject...
 
 class PdfXObject: PdfObj {
     var xobjId: String?
     var stream : String?
     var bbox : RectCoords?
+    var xobjs: [PdfXObject]=[]
     var fonts:[PdfFont]=[]
     override var body: String {
         var s: String = ""
         s += "<<\n"
         s += "   /Type /XObject\n"
         s += "   /Subtype /Form\n"
-        s += "   /BBox [\(bbox!.s)]\n"
+        s += "   /BBox [\(bbox!)]\n"
         s += "   /Resources <<\n"
         s += "      /ProcSet [/PDF /Text]\n"
         if fonts.count > 0 {
             s += "      /Font <<\n"
             for f in fonts {
                 s += "          /\(f.fontId!) \(f.id) 0 R\n"
+            }
+            s += "      >>\n"
+        }
+        if xobjs.count > 0 {
+            s += "      /XObject <<\n"
+            for x in xobjs {
+                s += "        /\(x.xobjId!) \(x.id) 0 R\n"
             }
             s += "      >>\n"
         }
@@ -206,12 +216,14 @@ class PdfXObject: PdfObj {
         s += "endstream\n"
         return s
     }
-    init(id: Int, xobjId: String, stream: String, bbox: RectCoords, fonts:[PdfFont]) {
+    
+    init(id: Int, xobjId: String, stream: String, bbox: RectCoords, fonts:[PdfFont] = [], xobjs: [PdfXObject] = []) {
         super.init(id: id)
         self.xobjId = xobjId
         self.stream = stream
         self.bbox = bbox
         self.fonts = fonts
+        self.xobjs = xobjs
     }
 }
 
@@ -221,17 +233,15 @@ class Pdf {
     let fontId1        : String = "F1"
     let fontName2      : String = "Helvetica-Bold"
     let fontId2        : String = "F2"
-    let fontName3      : String = "Helvetica-Oblique"
-    let fontId3        : String = "F3"
-    let fontName4      : String = "Courier"
-    let fontId4        : String = "F4"
-//    let xobjId1        : String = "img1"
     let xobjPlanetDry  : String = "circle-blue-filled"
     let xobjPlanetWet  : String = "circle-blue-empty"
     let xobjGasGiant   : String = "circle-black-filled"
     let xobjNavalBase  : String = "triangle-black-filled"
     let xobjScoutBase  : String = "star-black-filled"
+    let xobjTASForm6   : String = "tas-form-6"
     let xobjTASForm7   : String = "tas-form-7"
+    let xobjISForm7    : String = "is-form-7"
+    let xobjISForm7a   : String = "is-form-7-continuation"
     let xobjHex        : String = "hex"
     let coordPts       : Double = 5.0
     let namePts        : Double = 8.0
@@ -239,36 +249,29 @@ class Pdf {
     let listLineHeight : Double = 23.5
     let headingPts     : Double = 12.0
     let textPts        : Double = 8.0
-    let mapRows        : Int = 10
-    let mapCols        : Int = 8
     let sqrt3          : Double = sqrt(3.0)
-    let pageMax        : CoordPair = CoordPair(x: 841.0, y: 595.0)
+    let invsqrt3       : Double = 1.0 / sqrt(3.0)
+    let pageMax        : CoordPair = CoordPair(x: 420, y: 595.0) // A5
     let pageMargin     : RectCoords = RectCoords(
         bl: CoordPair(x: 26.0, y: 41.0),
         tr: CoordPair(x: 30.0, y: 22.5)
     )
-    let mapBoxMargin   : RectCoords = RectCoords(
+    let contentMargin   : RectCoords = RectCoords(
         bl: CoordPair(x: 10.0, y: 10.0),
         tr: CoordPair(x: 10.0, y: 10.0)
     )
     var mapBoxSize     : CoordPair {
-        return CoordPair(x: mapBoxMargin.bl.x + mapBoxMargin.bl.x + 328, y: pageMax.y - pageMargin.tr.y - pageMargin.bl.y)
-    }
-    var mapBoxCoords   : RectCoords {
-        return RectCoords(bl:CoordPair(x: pageMargin.bl.x + mapBoxMargin.bl.x, y: pageMargin.bl.y + mapBoxMargin.bl.y), tr:CoordPair(x: pageMargin.bl.x + mapBoxSize.x, y: pageMargin.bl.y + mapBoxSize.y))
-    }
-    let mapListSepMargin: Double = 50.0
-    var oddListTL         : CoordPair {
         return CoordPair(
-            x: pageMargin.bl.x * 2 + 364.0 + 7.0 + pageMargin.tr.x,
-            y: pageMax.y - pageMargin.tr.y - 93.0)
+            x: contentMargin.bl.x + contentMargin.bl.x + 328,
+            y: pageMax.y - pageMargin.tr.y - pageMargin.bl.y
+        )
     }
-    var evenListTL         : CoordPair {
+    var tasForm7ListTL         : CoordPair {
         return CoordPair(
             x: pageMargin.bl.x + 7.0,
             y: pageMax.y - pageMargin.tr.y - 93.0)
     }
-
+    
     var hexHeight      : Double = 45.0
     var hexWidth       : Double { return hexHeight / sqrt3 }
     let planetRadius   : Double = 3.0
@@ -276,23 +279,17 @@ class Pdf {
     let gasGiantRadius : Double = 1.5
     let navalBaseSize  : Double = 4.0
     let scoutBaseSize  : Double = 4.0
-    var line           : Int    = 0
-    var listPage       : Int    = 1
-    var pageContent    : String = ""
-    var page2Content   : String = ""
-    var page3Content   : String = ""
+    var tas7line       : Int    = 0
+    var is7line        : Int    = 0
+    var is7continued   : Bool   = false
+    var mapData    : String = ""
+    var subsectorData = [String]()
+    var systemData = [String]()
     var pdfContent     : String = ""
-    var catalog        : Catalog?
-    var contents1      : Contents?
-    var contents2      : Contents?
-    var contents3      : Contents?
-    var pages          : Pages?
-    var procset        : ProcSet?
-    var page           : Page?
-    var page2          : Page?
-    var page3          : Page?
+    var catalog        : PdfCatalog?
+    var pages          : PdfPages?
+    var procset        : PdfProcSet?
     var xobjs          : [PdfXObject] = []
-    var fontObjs       : [PdfFont] = []
     var structure      : [Int:PdfObj] = [:]
     var fonts          : [PdfFont] = []
     var nsfonts        : [String : NSFont] = [:]
@@ -302,41 +299,55 @@ class Pdf {
         let ofsStr = ("0000000000" + String(num))
         return ofsStr.substringFromIndex(ofsStr.endIndex.advancedBy(-10))
     }
- 
+    
     func strWidth(str:String, fontName: String, fontSize:Double) -> Double {
         var font:NSFont?
-        font = nsfonts[fontName + fontSize.f1()]
+        font = nsfonts["\(fontName)\(fontSize)"]
         if font == nil {
             font = NSFont(name: fontName, size:CGFloat(fontSize))
-            nsfonts[fontName + fontSize.f1()] = font
+            nsfonts["\(fontName)\(fontSize)"] = font
         }
         let ctl:CTLine = CTLineCreateWithAttributedString(NSAttributedString(string:str, attributes: [NSFontAttributeName:font!]))
         let width:Double = CTLineGetTypographicBounds(ctl, nil, nil, nil)// / 12.0 * fontSize
         return width
     }
     
+    func hline(y: Double, minX: Double, maxX: Double)->String {
+        return "\(minX~) \(y~) m \(maxX~) \(y~) l S\n"
+    }
+    
+    func vline(x: Double, minY: Double, maxY: Double)->String {
+        return "\(x~) \(minY~) m \(x~) \(maxY~) l S\n"
+    }
+    
+    func xobject(xobjName: String, at: CoordPair)->String {
+        return "q 1 0 0 1 \(at) cm /\(xobjName) Do Q\n"
+    }
+    
     func circle(x:Double, y:Double, radius: Double, filled:Bool, blue:Bool)->String {
         let magic:Double = radius * 0.551784
-        var circleStr = "% circle at (\(x.f1()), \(y.f1())) r=\(radius.f1())\n"
+        var circleStr = ""
+        if DEBUG { circleStr += "% circle at (\(x~), \(y~)) r=\(radius~)\n" }
         if filled && blue {
-            circleStr += "0 0.5 1.0 rg "
+            circleStr += "0 0.5 1 rg "
         }
-        circleStr += "0.5 w \((x - radius).f1()) \((y).f1()) m "
-        circleStr += "\((x - radius).f1()) \((y + magic).f1()) \((x - magic).f1()) \((y + radius).f1()) \((x).f1()) \((y + radius).f1()) c "
-        circleStr += "\((x + magic).f1()) \((y + radius).f1()) \((x + radius).f1()) \((y + magic).f1()) \((x + radius).f1()) \((y).f1()) c "
-        circleStr += "\((x + radius).f1()) \((y - magic).f1()) \((x + magic).f1()) \((y - radius).f1()) \((x).f1()) \((y - radius).f1()) c "
-        circleStr += "\((x - magic).f1()) \((y - radius).f1()) \((x - radius).f1()) \((y - magic).f1()) \((x - radius).f1()) \((y).f1()) c "
+        circleStr += "0.5 w \((x - radius)~) \(y~) m "
+        circleStr += "\((x - radius)~) \((y + magic)~) \((x - magic)~) \((y + radius)~) \(x~) \((y + radius)~) c "
+        circleStr += "\((x + magic)~) \((y + radius)~) \((x + radius)~) \((y + magic)~) \((x + radius)~) \(y~) c "
+        circleStr += "\((x + radius)~) \((y - magic)~) \((x + magic)~) \((y - radius)~) \(x~) \((y - radius)~) c "
+        circleStr += "\((x - magic)~) \((y - radius)~) \((x - radius)~) \((y - magic)~) \((x - radius)~) \(y~) c "
         if filled {circleStr += "f "}
         circleStr += "S 1 w "
         if filled && blue {
-            circleStr += "0.0 0.0 0.0 rg"
+            circleStr += "0 0 0 rg"
         }
         circleStr += "\n"
         return circleStr
     }
     
     func asteroids(x:Double, y:Double, size: Double)->String {
-        var asteroidStr = "% asteroid at (\(x.f1()), \(y.f1()))\n"
+        var asteroidStr = ""
+        if DEBUG { asteroidStr += "% asteroid at (\(x~), \(y~))\n" }
         var xdisp : Double = 0.0
         var ydisp : Double = 0.0
         let intsz = UInt32(size)
@@ -349,183 +360,334 @@ class Pdf {
     }
     
     func triangle(x:Double, y:Double, size:Double)->String {
-        var triangleStr = "% triangle at (\(x.f1()), \(y.f1()))\n"
-        triangleStr += "\((x - size / 2.0).f1()) \(y.f1()) m \(x.f1()) \((y + 0.866 * size).f1()) l "
-        triangleStr += "\((x + size / 2.0).f1()) \(y.f1()) l h f S\n"
+        var triangleStr = ""
+        if DEBUG { triangleStr += "% triangle at (\(x~), \(y~))\n" }
+        triangleStr += "\((x - size / 2.0)~) \(y~) m \(x~) \((y + 0.866 * size)~) l "
+        triangleStr += "\((x + size / 2.0)~) \(y~) l h f S\n"
         return triangleStr
     }
     
     func star(x:Double, y: Double, size:Double)->String {
-        let xf1 = 0.809 * size
-        let yf1 = 0.182 * size
-        let xf2 = 0.191 * size
-        let yf2 = 0.77 * size
-        let xf3 = 0.309 * size
-        let xf4 = 0.5 * size
-        let yf3 = 0.406 * size
-        var starStr = "% asterisk at (\(x.f1()), \(y.f1()))\n"
-        starStr += "\((x - xf1).f1()) \((y + yf1).f1()) m \((x - xf2).f1()) \((y + yf1).f1()) l "
-        starStr += "\(x.f1()) \((y + yf2).f1()) l \((x + xf2).f1()) \((y + yf1).f1()) l "
-        starStr += "\((x + xf1).f1()) \((y + yf1).f1()) l \((x + xf3).f1()) \((y - yf1).f1()) l "
-        starStr += "\((x + xf4).f1()) \((y - yf2).f1()) l \(x.f1()) \((y - yf3).f1()) l "
-        starStr += "\((x - xf4).f1()) \((y - yf2).f1()) l \((x - xf3).f1()) \((y - yf1).f1()) l h f S\n"
+        let xf1:Double = 0.809 * size
+        let yf1:Double = 0.182 * size
+        let xf2:Double = 0.191 * size
+        let yf2:Double = 0.77 * size
+        let xf3:Double = 0.309 * size
+        let xf4:Double = 0.5 * size
+        let yf3:Double = 0.406 * size
+        var starStr = ""
+        if DEBUG { starStr += "% asterisk at (\(x~), \(y~))\n" }
+        starStr += "\((x - xf1)~) \((y + yf1)~) m \((x - xf2)~) \((y + yf1)~) l "
+        starStr += "\(x~) \((y + yf2)~) l \((x + xf2)~) \((y + yf1)~) l "
+        starStr += "\((x + xf1)~) \((y + yf1)~) l \((x + xf3)~) \((y - yf1)~) l "
+        starStr += "\((x + xf4)~) \((y - yf2)~) l \(x~) \((y - yf3)~) l "
+        starStr += "\((x - xf4)~) \((y - yf2)~) l \((x - xf3)~) \((y - yf1)~) l h f S\n"
         return starStr
     }
     
     func drawHex(x: Double, y: Double, height: Double)-> String {
-        let invSqrt3 = 1.0 / sqrt(3.0)
-        let topBottomVar = invSqrt3 * height / 2.0
-        let middleVar = invSqrt3 * height
-        let heightVar = height / 2.0
-        var s = "% hex at (\(x.f1()), \(y.f1()))\n"
-        s += "\((x - topBottomVar).f1()) \((y - heightVar).f1()) m "
-        s += "\((x + topBottomVar).f1()) \((y - heightVar).f1()) l "
-        s += "\((x + middleVar).f1()) \(y.f1()) l "
-        s += "\((x + topBottomVar).f1()) \((y + heightVar).f1()) l "
-        s += "\((x - topBottomVar).f1()) \((y + heightVar).f1()) l "
-        s += "\((x - middleVar).f1()) \(y.f1()) l "
-        s += "\((x - topBottomVar).f1()) \((y - heightVar).f1()) l h S\n"
+        let topBottomVar:Double = invsqrt3 * height / 2.0
+        let middleVar:Double = invsqrt3 * height
+        let heightVar:Double = height / 2.0
+        var s = ""
+        if DEBUG { s += "% hex at (\(x~), \(y~))\n" }
+        s += "\((x - topBottomVar)~) \((y - heightVar)~) m "
+        s += "\((x + topBottomVar)~) \((y - heightVar)~) l "
+        s += "\((x + middleVar)~) \(y~) l "
+        s += "\((x + topBottomVar)~) \((y + heightVar)~) l "
+        s += "\((x - topBottomVar)~) \((y + heightVar)~) l "
+        s += "\((x - middleVar)~) \(y~) l "
+        s += "\((x - topBottomVar)~) \((y - heightVar)~) l h S\n"
         return s
     }
     
     func hex(x: Double, y: Double, height: Double, label: String)-> String {
-        var hexStr = "% hex at (\(x.f1()), \(y.f1()))\n"
+        var hexStr = ""
+        if DEBUG { hexStr += "% hex at (\(x~), \(y~))\n" }
         let (fn, fid) = fontDetails[0]
-        hexStr += "q 1 0 0 1 \(x.f1()) \(y.f1()) cm /\(xobjHex) Do Q\n"
+        hexStr += "q 1 0 0 1 \(x~) \(y~) cm /\(xobjHex) Do Q\n"
         let labelWidth:Double = strWidth(label, fontName: fn, fontSize:coordPts)
-        hexStr += "BT /\(fid) \(coordPts) Tf \((x - labelWidth / 2.0).f1()) \((y + 14.0).f1()) Td (\(label))Tj ET\n"
+        hexStr += "BT /\(fid) \(coordPts~) Tf \((x - labelWidth / 2.0)~) \((y + 14.0)~) Td (\(label))Tj ET\n"
         return hexStr
     }
     
-    func hexLocToCoord(x: Int, y: Int) -> CoordPair {
-        let ptsX:Double = pageMargin.bl.x + mapBoxMargin.bl.x + hexWidth + hexWidth * 1.5 * (Double(x) - 1.0)
-        var ptsY:Double = pageMargin.bl.y + mapBoxMargin.bl.y - 2 + 1.5 * hexHeight + hexHeight * (Double(y) - 1.0)
+    func hexLocToCoord(x: Int, y: Int, map: Bool = false) -> CoordPair {
+        // if map is true, we are drawing the hexes on the map so our coordinates are based on zero in the form context.
+        var ptsX = 0.0
+        var ptsY = 0.0
+        if map {
+            ptsX = 20 + hexWidth + hexWidth * 1.5 * (Double(x) - 1.0)
+            ptsY = 1.5 * hexHeight + hexHeight * (Double(y) - 1.0)
+        } else {
+            ptsX = 46 + hexWidth + hexWidth * 1.5 * (Double(x) - 1.0)
+            ptsY = 1.5 * hexHeight + hexHeight * (Double(y) - 1.0)
+        }
         if x % 2 == 1 {
             ptsY = ptsY - hexHeight / 2.0
         }
-        ptsY = pageMax.y - ptsY
-        let c:CoordPair = CoordPair(x: ptsX, y: ptsY)
-        return c
+        if map {
+            ptsY = mapBoxSize.y - 12 - ptsY
+        } else {
+            ptsY = mapBoxSize.y + 17 - ptsY
+        }
+        return CoordPair(x: ptsX, y: ptsY)
     }
     
     func listCoords(x: Int, y: Int) -> CoordPair {
-        var newX: Double = 0
-        var newY: Double = 0
-        if listPage % 2 == 1 {
-            newX = oddListTL.x
-            newY = oddListTL.y
-        } else {
-            newX = evenListTL.x
-            newY = evenListTL.y
-        }
-        newY = newY - Double(line + 1) * listLineHeight
-        let c:CoordPair = CoordPair(x: newX, y: newY)
-        return c
+        return CoordPair(x: tasForm7ListTL.x,
+                         y: tasForm7ListTL.y - Double(tas7line + 1) * listLineHeight)
     }
     
-    
-//    func drawTASForm6(form:RectCoords)->String {
-//        // bl and tr are the coordinates of the box in absolute
-//        // terms relative to the page itself.
-//        var formPdf = "% TAS Form 6\n"
-//        formPdf += "%-----------------------------------------------\n"
-//        //----------------------------------------------------------
-//        // Draw TAS Form 6.
-//        //----------------------------------------------------------
-//        // draw box around map
-//        formPdf += "4 w \(form.bl.s) \((form.tr - form.bl).s) re S\n"
-//        let box = RectCoords(bl:form.bl + mapBoxMargin.bl, tr: CoordPair(x: form.tr.x - mapBoxMargin.tr.x, y: form.tr.y - mapBoxMargin.tr.y - 39))
-//        
-//        formPdf += "\(box.bl.s) \((box.tr - box.bl).s) re S\n"
-//        formPdf += "\(form.bl.xs) \(box.tr.ys) m \(form.tr.xs) \(box.tr.ys) l S\n"
-//
-//        // draw labels on map form
-//        formPdf += "BT /\(fontId2) \(headingPts) Tf \(form.bl.xs) \(form.bl.y - headingPts) Td (TAS Form 6)Tj ET\n"
-//        let lbl1 = "Subsector Map Grid"
-//        let w = strWidth(lbl1, fontName: fontName2, fontSize: headingPts)
-//        formPdf += "BT /\(fontId2) \(headingPts) Tf \((box.tr.x - w).f1()) \(form.bl.y - headingPts) Td (\(lbl1))Tj ET\n"
-//        formPdf += "BT /\(fontId2) \(headingPts) Tf \(form.bl.x + 6) \(form.tr.y - 33) Td  (SUBSECTOR MAP GRID)Tj ET\n"
-//        formPdf += "BT /\(fontId1) \(textPts) Tf 200 \(form.tr.y - textPts * 1.5) Td  (1. Subsector Name)Tj ET\n"
-//
-//        // draw hexagons in map
-//        formPdf += "1 w\n"
-//        formPdf += "190 \(form.tr.ys) m 190 \(box.tr.ys) l S\n"
-//        formPdf += "340 \(form.tr.ys) m 340 \(box.tr.ys) l S\n"
-//        formPdf += "0.5 g 0.5 G\n"
-//        
-//        for x in 1 ... 8 {
-//            for y in 1 ... 10 {
-//                let c:CoordPair = hexLocToCoord(x, y: y)
-//                let s:String = String(format:"%02d%02d",arguments:[x,y])
-//                formPdf += hex(c.x, y:c.y, height:hexHeight, label: s)
-//            }
-//        }
-//        formPdf += "0.0 g 0.0 G\n"
-//        return formPdf
-//
-//    }
-    
-    func drawTASForm7(form:RectCoords)->String {
-        var formPdf = "% TAS Form 7\n"
-        formPdf += "%-----------------------------------------------\n"
-        formPdf += "4 w \(form.bl.s) \((form.tr - form.bl).s) re S 1 w\n"
-        formPdf += "\(form.bl.x) \(form.tr.y - headingPts - 25) m \(form.tr.x) \(form.tr.y - headingPts - 25) l S\n"
-        formPdf += "\(form.bl.x) \(form.tr.y - headingPts - 58) m \(form.tr.x) \(form.tr.y - headingPts - 58) l S\n"
-        formPdf += "\(form.bl.x + 207) \(form.tr.y) m \(form.bl.x + 207) \(form.tr.y - headingPts - 58) l S\n"
-        formPdf += "\(form.bl.x) \(form.tr.y - headingPts - 90) m \(form.tr.x) \(form.tr.y - headingPts - 90) l S\n"
-        formPdf += "0.5 w\n"
-        for i in 1..<19 {
-            let j = 90.0 + Double(i) * listLineHeight
-            formPdf += "\(form.bl.x) \(form.tr.y - headingPts - j) m \(form.tr.x) \(form.tr.y - headingPts - j) l S\n"
-            var x = form.bl.x + 108
-            let y = form.tr.y - headingPts - j + 3.5
-            formPdf += "\(x) \(y + 16.5) m \(x) \(y) l "
-            for k in 1...4 {
-                formPdf += "\(x + Double(k) * 12.0) \(y) l "
-                formPdf += "\(x + Double(k) * 12.0) \(y + 16.5) l "
-                formPdf += "\(x + Double(k) * 12.0) \(y) m "
+    func showText(text: String, x: Double, y: Double, heading:Bool = false, small: Bool = true, narrow: Bool = false)->String {
+        var result = "BT /F"
+        if heading {
+            result += "2 \(headingPts~)"
+        } else {
+            result += "1 "
+            if small {
+                result += "\(textPts~)"
+            } else {
+                result += "\(listPts~)"
             }
-            formPdf += "S\n"
-            x += 60.0
-            formPdf += "\(x) \(y + 16.5) m \(x) \(y) l "
+        }
+        result += " Tf \(x~) \(y~) Td "
+        if narrow { result += "75 Tz " }
+        result += "(\(text))Tj "
+        if narrow { result += "100 Tz " }
+        result += "ET\n"
+        return result
+    }
+    
+    func drawTASForm6()->String {
+        var result = ""
+        
+        //----------------------------------------------------------
+        // Draw TAS Form 6.
+        if DEBUG {
+            result += "%-----------------------------------------------\n"
+            result += "% Draw TAS Form 6.\n"
+            result += "%-----------------------------------------------\n"
+            //----------------------------------------------------------
+        }
+        let form = CoordPair(x: 364.0, y: mapBoxSize.y)
+        
+        // draw box around page content
+        result += "4 w 0 \(headingPts~) \(form) re S\n"
+        // draw box around map content
+        //        result += "\(innerBoxBL) \(innerBoxSzX~) \(innerBoxSzY~) re S\n"
+        result += "6 \((headingPts + 6)~) \(form - CoordPair(x: 12, y: 44)) re S\n"
+        // draw line separating header from map
+        result += hline(form.y - 20, minX: 0, maxX: form.x)
+        // draw labels on map form
+        result += showText("TAS Form 6", x: 0, y: 0, heading: true)
+        let lbl = "Subsector Map Grid"
+        let lblWidth = strWidth(lbl, fontName: fontName2, fontSize: headingPts)
+        result += showText(lbl, x: mapBoxSize.x - lblWidth, y: 0, heading: true)
+        result += showText("SUBSECTOR MAP GRID", x: 6, y: form.y - 15, heading: true)
+        result += showText("1. Subsector Name", x: 200, y: form.y)
+        
+        // draw vertical lines in header
+        result += "1 w\n"
+        result += vline(190, minY: form.y + headingPts, maxY: form.y - 20)
+        result += vline(340, minY: form.y + headingPts, maxY: form.y - 20)
+        
+        // draw hexagons in map
+        
+        result += "0.5 g 0.5 G\n"
+        
+        for x in 1 ... 8 {
+            for y in 1 ... 10 {
+                let c:CoordPair = hexLocToCoord(x, y: y, map: true)
+                let s:String = String(format:"%02d%02d",arguments:[x,y])
+                result += hex(c.x, y:c.y, height:hexHeight, label: s)
+            }
+        }
+        result += "0 g 0 G\n"
+        if DEBUG {
+            result += "%-----------------------------------------------\n"
+        }
+        return result
+    }
+    
+    func drawISForm7(first:Bool = true)->String {
+        /*
+         Content locations:
+         - field 1: bl.x = form.bl.x + 240, bl.y = form.tr.y - headingPts - 18, tr.x = form.tr.x - 5, tr.y = form.tr.y - headingPts - 2
+         - field 2: bl.x = form.bl.x + 5, bl.y = form.tr.y - headingPts -
+         */
+        let form = CoordPair(x: 364.0, y: mapBoxSize.y)
+        let headingInset = 5.0
+        let textVMargin = 3.0
+        let guideBox = CoordPair(x: 12.0, y: 16.5)
+        let guideBoxStartX = 144.0
+        let orbitBox = CoordPair(x: 24.0, y: 16.5)
+        let orbitBoxSep = 2.0
+        let hLineHeight = 24.0
+        let vLine1X = 235.0
+        let vLine2X = 182.0
+        let vLine3X = 283.0
+        let line0Y = form.y + headingPts
+        let boxLineWidth = 4.0
+        let divLineWidth = 1.0
+        
+        func lineToY(lineNum:Double)->Double {
+            return form.y - 20 - (lineNum - 1) * hLineHeight
+        }
+        
+        var formPdf = ""
+        if DEBUG {
+            if first {
+                formPdf += "% IS Form 7\n"
+            } else {
+                formPdf += "% IS Form 7 continuation\n"
+            }
+            formPdf += "%-----------------------------------------------\n"
+        }
+        formPdf += "\(boxLineWidth~) w 0 \(headingPts~) \(form) re S \(divLineWidth~) w\n"
+        // first row content
+        var curLineNum = 1.0
+        var dateLabelNum = 1
+        if first {
+            formPdf += showText("STAR SYSTEM DATA", x: headingInset, y: lineToY(curLineNum) + textVMargin, heading: true)
+        } else {
+            formPdf += showText("STAR SYSTEM DATA (Continuation)", x: headingInset, y: lineToY(curLineNum) + textVMargin, heading: true)
+            dateLabelNum = 7
+        }
+        formPdf += showText("\(dateLabelNum). Date of Preparation", x: vLine1X + headingInset, y: line0Y - textPts - boxLineWidth / 2)
+        
+        // line separating column 1 & 2 on row 1
+        formPdf += vline(vLine1X, minY: line0Y, maxY: lineToY(curLineNum))
+        
+        // line below first row
+        formPdf += hline(lineToY(curLineNum), minX: 0, maxX: form.x)
+        
+        if first {
+            // second row content
+            // line separating column 1 & 2 on row 2
+            formPdf += vline(vLine2X, minY: lineToY(curLineNum), maxY: lineToY(curLineNum+1))
+            
+            formPdf += showText("2. System Name (and Hex Location)", x: headingInset, y: lineToY(curLineNum) - textPts)
+            formPdf += showText("3. Subsector and Sector", x: vLine2X + headingInset, y: lineToY(curLineNum) - textPts)
+            curLineNum += 1
+            // line below second row
+            formPdf += hline(lineToY(curLineNum), minX: 0, maxX: form.x)
+        }
+        // third row content
+        var starLabel = "4. Star Name"
+        var specNum = 5
+        var magNum = 6
+        if !first {
+            starLabel = "8. Central Star Name"
+            specNum = 9
+            magNum = 10
+        }
+        // line separating column 1 & 2 on row 3
+        formPdf += vline(vLine2X, minY: lineToY(curLineNum), maxY: lineToY(curLineNum+1))
+        // line separating column 2 & 3 on row 3
+        formPdf += vline(vLine3X, minY: lineToY(curLineNum), maxY: lineToY(curLineNum+1))
+        formPdf += showText(starLabel, x: headingInset, y: lineToY(curLineNum) - textPts)
+        formPdf += showText("\(specNum). Spectrum and Size", x: vLine2X + headingInset, y: lineToY(curLineNum) - textPts)
+        formPdf += showText("\(magNum). Magnitude", x: vLine3X + headingInset, y: lineToY(curLineNum) - textPts)
+        curLineNum += 1
+        // line below third row
+        formPdf += hline(lineToY(curLineNum), minX: 0, maxX: form.x)
+        
+        if first {
+            curLineNum += 1
+            // fourth row content
+            formPdf += showText("WORLD AND SATELLITE DATA", x: headingInset, y: lineToY(curLineNum) + textVMargin, heading: true)
+            //line below fourth row
+            formPdf += hline(lineToY(curLineNum), minX: 0, maxX: form.x)
+        }
+        
+        formPdf += "0.5 w\n"
+        var rows = 19
+        if !first { rows = 21 }
+        for i in 1..<rows {
+            let j = Double(i) * listLineHeight
+            formPdf += hline(lineToY(curLineNum) - j, minX: 0, maxX: form.x)
+            let y = lineToY(curLineNum) - j + 3.5
+            // orbit boxes
+            formPdf += "\(headingInset~) \(y~) \(orbitBox) re S\n"
+            formPdf += "\((headingInset + orbitBox.x + orbitBoxSep)~) \(y~) \(orbitBox) re S\n"
+            // UWP boxes
+            formPdf += "\(guideBoxStartX~) \((y + guideBox.y)~) m \(guideBoxStartX~) \(y~) l "
             for k in 1...8 {
-                formPdf += "\(x + Double(k) * 12.0) \(y) l "
-                formPdf += "\(x + Double(k) * 12.0) \(y + 16.5) l "
-                formPdf += "\(x + Double(k) * 12.0) \(y) m "
+                formPdf += "\((guideBoxStartX + Double(k) * guideBox.x)~) \(y~) l "
+                formPdf += "\((guideBoxStartX + Double(k) * guideBox.x)~) \((y + guideBox.y)~) l "
+                formPdf += "\((guideBoxStartX + Double(k) * guideBox.x)~) \(y~) m "
             }
             formPdf += "S\n"
         }
-        formPdf += "BT /F2 \(headingPts) Tf \(form.bl.x) \(form.bl.y - headingPts) Td (TAS Form 7)Tj ET\n"
-        formPdf += "BT /F2 \(headingPts) Tf \(form.bl.x + 241.9) \(form.bl.y - headingPts) Td (Subsector World Data)Tj ET\n"
-        formPdf += "BT /F2 \(headingPts) Tf \(form.bl.x + 10) \(form.tr.y - headingPts - 21) Td (SUBSECTOR WORLD DATA)Tj ET\n"
-        formPdf += "BT /F1 \(textPts) Tf \(form.bl.x + 210) \(form.tr.y - headingPts) Td (1. Date of Preparation)Tj ET\n"
-        formPdf += "BT /F1 \(textPts) Tf \(form.bl.x + 10) \(form.tr.y - headingPts - 33) Td (2. Subsector Name)Tj ET\n"
-        formPdf += "BT /F1 \(textPts) Tf \(form.bl.x + 210) \(form.tr.y - headingPts - 33) Td (3. Sector Name)Tj ET\n"
-        formPdf += "BT /F3 10 Tf \(form.bl.x + 5) \(form.tr.y - headingPts - 85) Td (World Name)Tj 102 0 Td (Location)Tj 60 0 Td (UPP)Tj 110 0 Td (Remarks)Tj ET\n"
+        // form footer
+        var footer = "IS Form 7"
+        if !first { footer += " (Reverse)" }
+        formPdf += showText("IS Form 7", x: 0, y: 0, heading: true)
+        let footer2width = strWidth("Star System Data", fontName: fontName2, fontSize: headingPts)
+        formPdf += showText("Star System Data", x: form.x - footer2width, y: 0, heading: true)
         return formPdf
     }
     
+    func drawTASForm7()->String {
+        /*bl: CoordPair(x: 0, y: 0),
+         tr: CoordPair(x: 364, y: mapBoxSize.y)*/
+        let form = CoordPair(x: 364.0, y: mapBoxSize.y)
+        
+        var result = ""
+        if DEBUG {
+            result += "% TAS Form 7\n"
+            result += "%-----------------------------------------------\n"
+        }
+        result += "4 w 0 \(headingPts~) \(form) re S 1 w\n"
+        result += hline(form.y - 25, minX: 0, maxX: form.x)
+        result += hline(form.y - 58, minX: 0, maxX: form.x)
+        result += vline(207, minY: form.y + headingPts, maxY: form.y - 58)
+        result += hline(form.y - 90, minX: 0, maxX: form.x)
+        result += "0.5 w\n"
+        for i in 1..<19 {
+            let j = 90.0 + Double(i) * listLineHeight
+            result += hline(form.y - j, minX: 0, maxX: form.x)
+            var x = 108.0
+            let y = form.y - j + 3.5
+            result += "\(x~) \((y + 16.5)~) m \(x~) \(y~) l "
+            for k in 1...4 {
+                result += "\((x + Double(k) * 12.0)~) \(y~) l "
+                result += "\((x + Double(k) * 12.0)~) \((y + 16.5)~) l "
+                result += "\((x + Double(k) * 12.0)~) \(y~) m "
+            }
+            result += "S\n"
+            x += 60.0
+            result += "\(x~) \((y + 16.5)~) m \(x~) \(y~) l "
+            for k in 1...8 {
+                result += "\((x + Double(k) * 12.0)~) \(y~) l "
+                result += "\((x + Double(k) * 12.0)~) \((y + 16.5)~) l "
+                result += "\((x + Double(k) * 12.0)~) \(y~) m "
+            }
+            result += "S\n"
+        }
+        result += showText("TAS Form 7", x: 0, y: 0, heading: true)
+        let lbl = "Subsector World Data"
+        let lblWidth = strWidth(lbl, fontName: fontName2, fontSize: headingPts)
+        result += showText(lbl, x: form.x - lblWidth, y: 0, heading: true)
+        result += showText("SUBSECTOR WORLD DATA", x: 10, y: form.y - 21, heading: true)
+        result += showText("1. Date of Preparation", x: 210, y: form.y)
+        result += showText("2. Subsector Name", x: 10, y: form.y - 33)
+        result += showText("3. Sector Name", x: 210, y: form.y - 33)
+        result += "BT /F3 10 Tf 5 \((form.y - 85)~) Td (World Name)Tj 102 0 Td (Location)Tj 60 0 Td (UPP)Tj 110 0 Td (Remarks)Tj ET\n"
+        return result
+    }
+    
     func start() {
-        procset = ProcSet(id: currObjId)
+        procset = PdfProcSet(id: currObjId)
         structure[currObjId] = procset
         currObjId += 1
         
-        var font = PdfFont(id: currObjId, fontId: fontId1, fontName: fontName1)
-        fonts.append(font)
-        structure[currObjId] = font
-        currObjId += 1
-        font = PdfFont(id: currObjId, fontId: fontId2, fontName: fontName2)
-        fonts.append(font)
-        structure[currObjId] = font
-        currObjId += 1
-        font = PdfFont(id: currObjId, fontId: fontId3, fontName: fontName3)
-        fonts.append(font)
-        structure[currObjId] = font
-        currObjId += 1
-        font = PdfFont(id: currObjId, fontId: fontId4, fontName: fontName4)
-        fonts.append(font)
-        structure[currObjId] = font
-        currObjId += 1
+        for (fontName, fontId) in fontDetails {
+            let font = PdfFont(id: currObjId, fontId: fontId, fontName: fontName)
+            fonts.append(font)
+            structure[currObjId] = font
+            currObjId += 1
+        }
         
         var xobj = PdfXObject(id: currObjId, xobjId: xobjPlanetDry,
                               stream: circle(0, y:0, radius: planetRadius,
@@ -536,7 +698,7 @@ class Pdf {
                                     y: -1 * planetRadius),
                                 tr: CoordPair(
                                     x: planetRadius,
-                                    y:planetRadius)), fonts:[])
+                                    y:planetRadius)))
         xobjs.append(xobj)
         structure[currObjId] = xobj
         currObjId += 1
@@ -550,7 +712,7 @@ class Pdf {
                                 y: -1.1 * planetRadius),
                             tr: CoordPair(
                                 x: 1.1 * planetRadius,
-                                y:1.1 * planetRadius)), fonts:[])
+                                y:1.1 * planetRadius)))
         xobjs.append(xobj)
         structure[currObjId] = xobj
         currObjId += 1
@@ -564,7 +726,7 @@ class Pdf {
                                 y: -1 * gasGiantRadius),
                             tr: CoordPair(
                                 x: gasGiantRadius,
-                                y:gasGiantRadius)), fonts:[])
+                                y:gasGiantRadius)))
         xobjs.append(xobj)
         structure[currObjId] = xobj
         currObjId += 1
@@ -577,7 +739,7 @@ class Pdf {
                                 y: 0),
                             tr: CoordPair(
                                 x: navalBaseSize / 2,
-                                y: navalBaseSize)), fonts:[])
+                                y: navalBaseSize)))
         xobjs.append(xobj)
         structure[currObjId] = xobj
         currObjId += 1
@@ -590,202 +752,334 @@ class Pdf {
                                 y: -1 * scoutBaseSize),
                             tr: CoordPair(
                                 x: scoutBaseSize,
-                                y:scoutBaseSize)),
-                          fonts:[])
+                                y:scoutBaseSize)))
+        xobjs.append(xobj)
+        structure[currObjId] = xobj
+        currObjId += 1
+        
+        let hexXobj = PdfXObject(id: currObjId, xobjId: xobjHex,
+                                 stream: drawHex(0, y: 0, height: hexHeight),
+                                 bbox: RectCoords(
+                                    bl: CoordPair(x: 0 - hexWidth, y: 0 - hexHeight),
+                                    tr: CoordPair(x: hexWidth, y:hexHeight)))
+        xobjs.append(hexXobj)
+        structure[currObjId] = hexXobj
+        currObjId += 1
+        
+        xobj = PdfXObject(id: currObjId, xobjId: xobjTASForm6,
+                          stream: drawTASForm6(),
+                          bbox: RectCoords(
+                            bl: CoordPair(x: -2, y: -2),
+                            tr: CoordPair(x:366, y: mapBoxSize.y + headingPts + 2)),
+                          fonts: fonts, xobjs:[hexXobj])
         xobjs.append(xobj)
         structure[currObjId] = xobj
         currObjId += 1
         
         xobj = PdfXObject(id: currObjId, xobjId: xobjTASForm7,
-                          stream: drawTASForm7(
-                            RectCoords(
-                                bl: CoordPair(x: 0, y: 0),
-                                tr: CoordPair(x: 364, y: mapBoxSize.y))),
+                          stream: drawTASForm7(),
                           bbox: RectCoords(
-                            bl: CoordPair(x: -2, y: -14.0),
-                            tr: CoordPair(x: 366, y: mapBoxSize.y + 2)),
+                            bl: CoordPair(x: -2, y: -2),
+                            tr: CoordPair(x: 366, y: mapBoxSize.y + headingPts + 2)),
                           fonts:fonts)
         xobjs.append(xobj)
         structure[currObjId] = xobj
         currObjId += 1
         
-        xobj = PdfXObject(id: currObjId, xobjId: xobjHex,
-                          stream: drawHex(0, y: 0, height: hexHeight),
+        xobj = PdfXObject(id: currObjId, xobjId: xobjISForm7,
+                          stream: drawISForm7(),
                           bbox: RectCoords(
-                            bl: CoordPair(x: 0 - hexWidth, y: 0 - hexHeight),
-                            tr: CoordPair(x: hexWidth, y:hexHeight)),
-                          fonts:[])
+                            bl: CoordPair(x: -2, y: -2),
+                            tr: CoordPair(x: 366, y: mapBoxSize.y + headingPts + 2)),
+                          fonts:fonts)
         xobjs.append(xobj)
         structure[currObjId] = xobj
         currObjId += 1
         
-        let pagesId = currObjId
+        xobj = PdfXObject(id: currObjId, xobjId: xobjISForm7a,
+                          stream: drawISForm7(false),
+                          bbox: RectCoords(
+                            bl: CoordPair(x: -2, y: -2),
+                            tr: CoordPair(x: 366, y: mapBoxSize.y + headingPts + 2)),
+                          fonts:fonts)
+        xobjs.append(xobj)
+        structure[currObjId] = xobj
+        currObjId += 1
+        
+        pages = PdfPages(id:currObjId)
+        structure[currObjId] = pages
         
         currObjId += 1
-
-        contents1 = Contents(id:currObjId)
-        structure[currObjId] = contents1
-        currObjId += 1
         
-        pages = Pages(id:pagesId)
-        structure[pagesId] = pages
+        catalog = PdfCatalog(id: 1, /*outline: outline!, */pages: pages!)
+        structure[1] = catalog
+        
+        mapData = xobject(xobjTASForm6, at: pageMargin.bl - CoordPair(x:0, y:headingPts))
+        //        mapData = "q 1 0 0 1 \(pageMargin.bl - CoordPair(x:0, y:headingPts)) cm /\(xobjTASForm6) Do Q\n"
+        // create a new TAS Form 7 page string (with append) and start it off with form invocation.
+        subsectorData.append(xobject(xobjTASForm7, at: pageMargin.bl - CoordPair(x:0, y:headingPts)))
+        //        subsectorData.append("q 1 0 0 1 \(pageMargin.bl - CoordPair(x:0, y:headingPts)) cm /\(xobjTASForm7) Do Q\n")
+        
+        // create a new IS Form 7 page string (with append) and start it off with form invocation.
+        //        systemData.append(xobject(xobjISForm7, at: pageMargin.bl - CoordPair(x:0, y:headingPts)))
+        //        systemData.append("q 1 0 0 1 \(pageMargin.bl - CoordPair(x:0, y:headingPts)) cm /\(xobjISForm7) Do Q\n")
+    }
+    
+    // the purpose of composite is to take the supplied content string and turn it into an appropriate pdf text block.
+    // if the string is too long for a single line it will split into two lines and return; if it fits on a single line
+    // it will format as a single line and return that line block.
+    // blockWidth is in points.
+    // proposed algorithm: 
+    //    first, check the string width as supplied. If it fits, we turn it into a single line.
+    //    if it didn't fit, then it must be more than one line long. We split it into words
+    //      and progressively move the last word to a second line, until the first line
+    //      fits. The first and second lines then become the return value.
+    func composite(content: String, blockWidth: Double)->String {
+        var result = ""
+        var line1 = content
+        var line2 = ""
+        if strWidth(line1, fontName: fontName1, fontSize: 11) * 0.6 < blockWidth {
+            // 1 line format is 6 0 Td 75 Tz (line1)Tj 100 Tz"
+            result = "2 0 Td 60 Tz (\(line1))Tj 100 Tz"
+        } else {
+            var contentArray = line1.componentsSeparatedByString(" ")
+            let lastIdx = contentArray.endIndex.advancedBy(-1)
+            for (i, _) in contentArray.enumerate().reverse() {
+                line1 = contentArray[0...(i - 1)].joinWithSeparator(" ")
+                line2 = contentArray[i...lastIdx].joinWithSeparator(" ")
+                if strWidth(line1, fontName: fontName1, fontSize: 11) * 0.6 < blockWidth {
+                    // we have a short enough line 1 now.
+                    result = "2 5.5 Td 60 Tz (\(line1))Tj 0 -11 Td (\(line2))Tj 100 Tz"
+                    break
+                }
+            }
+            // 2 line format is "6 5.5 Td 75 Tz (line1)Tj 0 -11 Td (line2))Tj 100 Tz"
+        }
+        return result
+    }
+    
+    func displaySat(orbitstr: String, suborbitstr: String, o: Satellite, y: Double, isSat: Bool = false) -> String {
+        let orbit1col = 50.0 // right side because right-aligned
+        let orbit2col = 77.0 // right side because right-aligned
+        let namecol = 90.0
+        let uwpcol = 172.0
+        let desccol = 270.0
+        var s = ""
+        let orb1W = strWidth(orbitstr, fontName: fontName1, fontSize: listPts) * 0.75
+        let orb2W = strWidth(suborbitstr, fontName: fontName1, fontSize: listPts) * 0.75
+        s += showText(orbitstr, x: orbit1col - orb1W, y: y, heading: false, small: false, narrow: true)
+        s += showText(suborbitstr, x: orbit2col - orb2W, y: y, heading: false, small: false, narrow: true)
+        s += showText(o.name, x: namecol, y: y, heading: false, small: false)
+        if o is Planet {
+            let p = o as! Planet
+            s += "BT /\(fontId1) \(listPts~) \(uwpcol~) \(y) Td "
+            s += pdfPlanet(p)
+            s += "ET\n"
+        } else if o is GasGiant {
+            let g = o as! GasGiant
+            s += showText(g.size.description, x: desccol, y: y, heading: false, small: false, narrow: true)
+        } else if o is EmptyOrbit {
+            s += showText("Empty orbit", x: namecol, y: y, heading: false, small: false)
+        } else if o is Star {
+            let st = o as! Star
+            s += showText("\(st.specSize) companion", x: desccol, y: y, heading: false, small: false, narrow: true)
+        }
+        
+        return s
+    }
+    
+    func display(starSystem: StarSystem) {
+        let p = starSystem.mainWorld!
+        p.coordinateX = starSystem.coordinateX
+        p.coordinateY = starSystem.coordinateY
+        p.gasGiant = starSystem.gasGiants
+        display(p)
+        for star in starSystem.stars {
+            systemData.append(xobject(xobjISForm7, at: pageMargin.bl - CoordPair(x:0, y:headingPts)))
+            
+            var s = ""
+            let loc = String(format: "%02d%02d", arguments:[p.coordinateX, p.coordinateY])
+            s += showText(starSystem.subsectorName, x: 250, y: mapBoxSize.y - 10, heading: false, small: false)
+            s += showText("\(p.name) (\(loc))", x: 60, y: mapBoxSize.y - 10, heading: false, small: false)
+            s += showText(star.name, x: 100, y: mapBoxSize.y - 35, heading: false, small: false)
+            s += showText(star.specSize, x: 250, y: mapBoxSize.y - 35, heading: false, small: false)
+            s += showText("\(star.magnitude)", x: 330, y: mapBoxSize.y - 35, heading: false, small: false)
+            let sortedOrbits = star.satellites.orbits.sort({$0.0 < $1.0})
+            // make a sorted array of all orbits
+            var orbitLines = [(Int,Int,Satellite)]()
+            for (i, o) in sortedOrbits {
+                orbitLines.append((i,-1,o))
+                // if we are doing a planet or a gas giant, we want to look at the satellites, but if
+                // we are doing a star, we don't, because it will be processed separately. We do need
+                // to make sure close companions are presented, but they have no satellites of their own.
+                if o is Planet || o is GasGiant {
+                    let sortedSuborbits = o.satellites.orbits.sort({$0.0 < $1.0})
+                    for (i1, o1) in sortedSuborbits {
+                        orbitLines.append((-1, i1, o1))
+                    }
+                }
+            }
+            if DEBUG {
+                for (i, j, s) in orbitLines {
+                    var r = "\t"
+                    if i != -1 { r += "\(i)" }
+                    r += "\t"
+                    if j != -1 { r += "\(j)" }
+                    r += "\t\(s.name)\t\(s.type)"
+                    print(r)
+                }
+            }
+            var line = 0.0
+            for (stellarOrbit, moonOrbit, satellite) in orbitLines {
+                if line == 18 {
+                    systemData[systemData.endIndex.advancedBy(-1)] += s
+                    s = ""
+                    systemData.append(xobject(xobjISForm7a, at: pageMargin.bl - CoordPair(x: 0, y: headingPts)))
+                    s += showText(star.name, x: 100, y: mapBoxSize.y - 10, heading: false, small: false)
+                    s += showText(star.specSize, x: 250, y: mapBoxSize.y - 10, heading: false, small: false)
+                    s += showText("\(star.magnitude)", x: 330, y: mapBoxSize.y - 10, heading: false, small: false)
+                    line = -2 // this *should* put the line two up on where it normally would be, perfect for the continuation...
+                }
+                let y = mapBoxSize.y - line * listLineHeight - 78
+                if stellarOrbit != -10 { //
+                    let orbitstr = stellarOrbit == -1 ? "" : (Double(stellarOrbit) / 10)~
+                    // String(format:"%.1f", arguments:[Float(stellarOrbit) / 10])
+                    let suborbitstr = moonOrbit == -1 ? "" : (Double(moonOrbit) / 10)~
+                    // String(format:"%.1f", arguments:[Float(moonOrbit) / 10])
+                    s += displaySat(orbitstr, suborbitstr: suborbitstr, o: satellite, y: y)
+                } else { // close orbit, i.e. must be a star.
+                    s += showText(satellite.name, x: 90, y: y, heading: false, small: false)
+                    s += showText("\(star.specSize) companion in close orbit", x: 270, y: y, heading: false, small: false, narrow: true)
+                }
+                line += 1
+            }
+            systemData[systemData.endIndex.advancedBy(-1)] += s
+        }
+    }
+    
+    func pdfPlanet(planet: Planet)->String {
+        var planetStr = ""
+        planetStr += String(format:"0 Tc (%@)Tj 12 0 Td (%@)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td(%1X)Tj 12 0 Td (%1X)Tj 12 0 Td ", arguments:[planet.starport, planet.getSize(),
+            planet.atmosphere, planet.hydrographics, planet.population,
+            planet.government, planet.lawLevel, planet.technologicalLevel])
+        var basesTCFacilities = ""
+        var bases = ""
+        if planet.bases.contains(.N) && planet.bases.contains(.S) {
+            bases += "Naval, Scout"
+        } else if planet.bases.contains(.N) {
+            bases += "Naval"
+        } else if planet.bases.contains(.S) {
+            bases += "Scout"
+        }
+        basesTCFacilities += bases
+        if planet.facilitiesStr != "" {
+            if bases != "" {
+                basesTCFacilities += ", "
+            }
+            basesTCFacilities += planet.facilitiesStr
+        }
+        if basesTCFacilities != "" { basesTCFacilities += "; " }
+        basesTCFacilities += "\(planet.longTradeClassifications)"
+        planetStr += composite(basesTCFacilities, blockWidth: 115)
+        planetStr += "\n"
+        
+        return planetStr
+    }
 
-        page = Page(id: currObjId, parent: pages!,
-            contents: contents1!, procset: procset!,
-            fonts: fonts, xobjects: xobjs, max: pageMax)
+    func display(planet: Planet) {
+        if tas7line > 17 {
+            tas7line = 0
+            // create a new page string (with append) and start it off with a new form invocation.
+            subsectorData.append(xobject(xobjTASForm7, at: pageMargin.bl - CoordPair(x:0, y:headingPts)))
+        }
+        var p: String = ""
+        if DEBUG { p += "% Rendering \(planet.name) to list\n" }
+        let c:CoordPair = listCoords(planet.coordinateX, y:planet.coordinateY)
+        p += "BT /\(fontId1) \(listPts~) Tf \(c) Td (\(planet.name))Tj "
+        p += String(format:"104 0 Td 5.5 Tc (%02d%02d)Tj 0 Tc 60 0 Td ", arguments:[planet.coordinateX, planet.coordinateY])
+        p += String(format:"(%@)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td(%1X)Tj 12 0 Td (%1X)Tj 12 0 Td ", arguments:[planet.starport, planet.size, planet.atmosphere, planet.hydrographics, planet.population, planet.government, planet.lawLevel,
+            planet.technologicalLevel])
+//        p += "6 5.5 Td 90 Tz ("
+        var ggBaseTC = ""
+        ggBaseTC += planet.gasGiant ? "G" : ""
+        var base = ""
+        if planet.bases.contains(.N) && planet.bases.contains(.S) { base += "A" }
+        else if planet.bases.contains(.N) { base += "N" }
+        else if planet.bases.contains(.S) { base += "S" }
+        else if planet.facilities.contains(.MilitaryBase) { base += "M" }
+//        p += planet.bases.contains(.N) ? "N " : ""
+//        p += planet.bases.contains(.S) ? "S " : ""
+//        p += ")Tj "
+        if base != "" && ggBaseTC != "" { ggBaseTC += " " }
+        ggBaseTC += base
+        if ggBaseTC != "" { ggBaseTC += "; " }
+        ggBaseTC += planet.shortTradeClassifications
+//        p += "0 -11 Td (\(planet.shortTradeClassifications))Tj 100 Tz\n"
+        p += composite(ggBaseTC, blockWidth: 115)
+        p += "\nET\n"
+        // add it to the current/last page
+        subsectorData[subsectorData.endIndex.advancedBy(-1)]  += p
+        
+        tas7line = tas7line + 1
+        
+        if DEBUG { mapData += "% Rendering \(planet.name) to map\n" }
+        let c1:CoordPair = hexLocToCoord(planet.coordinateX,y:planet.coordinateY)
+        var w:Double = strWidth(planet.starport, fontName: fontName1, fontSize: namePts)
+        mapData += "BT /\(fontId1) \(namePts~) Tf \((c1.x - w / 2)~) \((c1.y + 5)~) Td (\(planet.starport))Tj ET\n"
+        let dispName = planet.population >= 9 ? planet.name.uppercaseString : planet.name
+        w = strWidth(dispName, fontName: fontName1, fontSize: namePts * 0.75)
+        mapData += "BT /\(fontId1) \(namePts~) Tf \((c1.x - w / 2)~) \((c1.y - 6.0 - namePts)~) Td 75 Tz (\(dispName))Tj 100 Tz ET\n"
+        if planet.size == 0 {
+            mapData += asteroids(c1.x, y: c1.y, size: asteroidsSize)
+        } else {
+            mapData += "q 1 0 0 1 \(c1) cm "
+            if planet.hydrographics > 0 {
+                mapData += "/\(xobjPlanetDry)"
+            } else {
+                mapData += "/\(xobjPlanetWet)"
+            }
+            mapData +=  " Do Q\n"
+        }
+        if planet.gasGiant {
+            mapData += xobject(xobjGasGiant, at: c1 + CoordPair(x:10,y:10))
+            //            mapData += "q 1 0 0 1 \((c1 + CoordPair(x:10,y:10))) cm /\(xobjGasGiant) Do Q\n"
+        }
+        if planet.bases.contains(.N) {
+            mapData += xobject(xobjNavalBase, at: c1 - CoordPair(x:10,y:0))
+            //            mapData += "q 1 0 0 1 \((c1 - CoordPair(x:10,y:0))) cm /\(xobjNavalBase) Do Q\n"
+        }
+        if planet.bases.contains(.S) {
+            mapData += xobject(xobjScoutBase, at: c1 + CoordPair(x:-10,y:10))
+            //            mapData += "q 1 0 0 1 \((c1 + CoordPair(x:-10, y:10))) cm /\(xobjScoutBase) Do Q\n"
+        }
+    }
+    
+    func newPage(data: String) {
+        let contents = PdfContents(id:currObjId)
+        structure[currObjId] = contents
+        contents.body += "<< /Length \(data.characters.count)\n >>\nstream\n"
+        contents.body += data
+        contents.body += "\nendstream\n"
+        currObjId += 1
+        let page = PdfPage(id: currObjId, parent: pages!, contents: contents, procset: procset!, fonts: fonts, xobjects: xobjs, max: pageMax)
         pages?.kids.append(page)
         structure[currObjId] = page
         currObjId += 1
-        
-        catalog = Catalog(id: 1, /*outline: outline!, */pages: pages!)
-        structure[1] = catalog
-
-        //----------------------------------------------------------
-        // Draw TAS Form 6.
-        pageContent += "%-----------------------------------------------\n"
-        pageContent += "% Draw TAS Form 6.\n"
-        pageContent += "%-----------------------------------------------\n"
-        //----------------------------------------------------------
-        // draw box around map
-        pageContent += "4 w \(pageMargin.bl.s) \(mapBoxSize.s) re S\n"
-        let innerBoxBL = pageMargin.bl + mapBoxMargin.bl - CoordPair(x: 3, y: 3)
-        let innerBoxSzX = mapBoxSize.x + 5 - (mapBoxMargin.tr.x + mapBoxMargin.bl.x)
-        let innerBoxSzY = mapBoxSize.y + 6 - (mapBoxMargin.tr.y + mapBoxMargin.bl.y) - 39
-        pageContent += "\(innerBoxBL.s) \(innerBoxSzX) \(innerBoxSzY) re S\n"
-        pageContent += "\(pageMargin.bl.x) \(pageMargin.bl.y + mapBoxSize.y - 39) m \(pageMargin.bl.x + mapBoxSize.x) \(pageMargin.bl.y + mapBoxSize.y - 39) l S\n"
-        // draw labels on map form
-        pageContent += "BT /\(fontId2) \(headingPts) Tf \(pageMargin.bl.x) \(pageMargin.bl.y - 12) Td (TAS Form 6)Tj ET\n"
-
-        let lbl1 = "Subsector Map Grid"
-        let w = strWidth(lbl1, fontName: fontName2, fontSize: headingPts)
-        pageContent += "BT /\(fontId2) \(headingPts) Tf \((pageMargin.bl.x + mapBoxSize.x - w).f1()) \(pageMargin.bl.y - headingPts) Td (\(lbl1))Tj ET\n"
-        pageContent += "BT /\(fontId2) \(headingPts) Tf \(pageMargin.bl.x + 6) \(pageMax.y - pageMargin.tr.y - 33) Td  (SUBSECTOR MAP GRID)Tj ET\n"
-        pageContent += "BT /\(fontId1) \(textPts) Tf 200 \(pageMax.y - pageMargin.tr.y - textPts * 1.5) Td  (1. Subsector Name)Tj ET\n"
-
-        // draw hexagons in map
-        pageContent += "1 w\n"
-        pageContent += "190 \(pageMargin.bl.y + mapBoxSize.y) m 190 \(pageMargin.bl.y + mapBoxSize.y - 39) l S\n"
-        pageContent += "340 \(pageMargin.bl.y + mapBoxSize.y) m 340 \(pageMargin.bl.y + mapBoxSize.y - 39) l S\n"
-        pageContent += "0.5 g 0.5 G\n"
-
-        for x in 1 ... 8 {
-            for y in 1 ... 10 {
-                let c:CoordPair = hexLocToCoord(x, y: y)
-                let s:String = String(format:"%02d%02d",arguments:[x,y])
-                pageContent += hex(c.x, y:c.y, height:hexHeight, label: s)
-            }
-        }
-        pageContent += "0.0 g 0.0 G\n"
-        pageContent += "%-----------------------------------------------\n"
-       
-        pageContent += "q 1 0 0 1 \(pageMargin.bl.x * 2 + 364 + pageMargin.tr.x) \(pageMargin.bl.y) cm /\(xobjTASForm7) Do Q\n"
-    }
-    
-    func display(planet: Planet) {
-        if line > 17 {
-            listPage += 1
-            
-            switch(listPage) {
-            case 3:
-                page2Content += "q 1 0 0 1 \(pageMargin.bl.x * 2 + 364 + pageMargin.tr.x) \(pageMargin.bl.y) cm /\(xobjTASForm7) Do Q\n"
-                
-            case 2:
-                page2Content += "q 1 0 0 1 \(pageMargin.bl.s) cm /\(xobjTASForm7) Do Q\n"
-            case 5:
-                page3Content += "q 1 0 0 1 \(pageMargin.bl.x * 2 + 364 + pageMargin.tr.x) \(pageMargin.bl.y) cm /\(xobjTASForm7) Do Q\n"
-            case 4:
-                page3Content += "q 1 0 0 1 \(pageMargin.bl.s) cm /\(xobjTASForm7) Do Q\n"
-            default: break
-            }
-            
-            line = 0
-            if listPage % 2 == 0 {
-                let contents = Contents(id:currObjId)
-                structure[currObjId] = contents
-                currObjId += 1
-                
-                let page = Page(id: currObjId, parent: pages!,
-                                contents: contents, procset: procset!,
-                                fonts: fonts, xobjects: xobjs, max: pageMax)
-                pages?.kids.append(page)
-                structure[currObjId] = page
-                currObjId += 1
-            }
-        }
-        var p: String = ""
-        p += "% Rendering \(planet.description) to list\n"
-        let c:CoordPair = listCoords(planet.coordinateX, y:planet.coordinateY)
-        p += "BT /\(fontId1) \(listPts) Tf \(c.s) Td (\(planet.name))Tj 104 0 Td "
-        let ins = 12.0
-        p += String(format:"5.5 Tc (%02d%02d)Tj 0 Tc 60 0 Td (%@)Tj \(ins) 0 Td (%1X)Tj \(ins) 0 Td (%1X)Tj \(ins) 0 Td (%1X)Tj \(ins) 0 Td (%1X)Tj \(ins) 0 Td (%1X)Tj \(ins) 0 Td(%1X)Tj \(ins) 0 Td (%1X)Tj \(ins) 0 Td ",
-            arguments:[planet.coordinateX, planet.coordinateY, planet.starport,
-                planet.size, planet.atmosphere,
-                planet.hydrographics, planet.population,
-                planet.government, planet.lawLevel,
-                planet.technologicalLevel])
-        p += "6 5.5 Td 90 Tz ("
-        p += planet.gasGiant ? "G " : ""
-        p += planet.navalBase ? "N " : ""
-        p += planet.scoutBase ? "S " : ""
-        p += ")Tj "
-        p += "0 -11 Td ("
-        p += planet.shortTradeClassifications
-        p += ")Tj 100 Tz\n"
-        p += "ET\n"
-        switch(listPage) {
-            case 1: pageContent += p
-            case 2, 3: page2Content += p
-            default: page3Content += p
-        }
-
-        line = line + 1
-        
-        pageContent += "% Rendering \(planet.description) to map\n"
-        let c1:CoordPair = hexLocToCoord(planet.coordinateX,y:planet.coordinateY)
-        var w:Double = strWidth(planet.starport, fontName: fontName1, fontSize: namePts)
-        pageContent += "BT /\(fontId1) \(namePts) Tf \((c1.x - w / 2).f1()) \(c1.y + 5) Td (\(planet.starport))Tj ET\n"
-        let dispName = planet.population >= 9 ? planet.name!.uppercaseString : planet.name
-        w = strWidth(dispName!, fontName: fontName1, fontSize: namePts * 0.75)
-        pageContent += "BT /\(fontId1) \(namePts) Tf \((c1.x - w / 2).f1()) \(c1.y - 6.0 - namePts) Td 75 Tz (\(dispName))Tj 100 Tz ET\n"
-        if planet.size == 0 {
-            pageContent += asteroids(c1.x, y: c1.y, size: asteroidsSize)
-        } else {
-            pageContent += "q 1 0 0 1 \(c1.s) cm "
-            if planet.hydrographics > 0 {
-                pageContent += "/\(xobjPlanetDry)"
-            } else {
-                pageContent += "/\(xobjPlanetWet)"
-            }
-            pageContent +=  " Do Q\n"
-        }
-        if planet.gasGiant {
-            pageContent += "q 1 0 0 1 \((c1 + CoordPair(x:10,y:10)).s) cm /\(xobjGasGiant) Do Q\n"
-        }
-        if planet.navalBase {
-            pageContent += "q 1 0 0 1 \((c1 - CoordPair(x:10,y:0)).s) cm /\(xobjNavalBase) Do Q\n"
-        }
-        if planet.scoutBase {
-            pageContent += "q 1 0 0 1 \((c1 + CoordPair(x:-10, y:10)).s) cm /\(xobjScoutBase) Do Q\n"
-        }
     }
     
     func end() {
-        // finish contents objects first
-        contents1?.body += "<< /Length \(pageContent.characters.count)\n >>\nstream\n"
-        contents1?.body += pageContent
-        contents1?.body += "\nendstream\n"
+        // produce TAS Form 6 page
+        newPage(mapData)
         
-        if pages!.kids.count > 1 {
-            pages!.kids[1]?.contents?.body += "<< /Length \(page2Content.characters.count)\n >>\nstream\n"
-            pages!.kids[1]?.contents?.body += page2Content
-            pages!.kids[1]?.contents?.body += "\nendstream\n"
-        }
-        if pages!.kids.count > 2 {
-            pages!.kids[2]?.contents?.body += "<< /Length \(page3Content.characters.count)\n >>\nstream\n"
-            pages!.kids[2]?.contents?.body += page3Content
-            pages!.kids[2]?.contents?.body += "\nendstream\n"
+        for subsectorPage in subsectorData {
+            newPage(subsectorPage)
         }
         
+        // ok now we handle the star system details.
+        for systemPage in systemData {
+            newPage(systemPage)
+        }
+        // sort the structure in id order
         let structure1 = structure.sort({$0.0 < $1.0})
         
         let pdfHdr = "%PDF-1.4\n%\u{8f}\u{8f}\n"
@@ -798,7 +1092,7 @@ class Pdf {
             pdfContent += m.content
             offset += m.content.characters.count
         }
-
+        
         pdfContent += xref
         
         pdfContent += "trailer\n"

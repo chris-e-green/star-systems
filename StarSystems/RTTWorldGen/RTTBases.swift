@@ -5,43 +5,11 @@
 
 import Foundation
 
-
-
-enum Bases: CustomStringConvertible {
+enum RTTBases: String, CustomStringConvertible {
     case A, B, C, D, E, F, G, H, J, K, L, M, GC, MH, SH, TA, TC
     case N, P, Q, R, S, T, U, V, W, X, Y, Z
     var description: String {
-        switch self {
-        case A: return "A"
-        case B: return "B"
-        case C: return "C"
-        case D: return "D"
-        case E: return "E"
-        case F: return "F"
-        case G: return "G"
-        case H: return "H"
-        case J: return "J"
-        case K: return "K"
-        case L: return "L"
-        case M: return "M"
-        case GC: return "GC"
-        case MH: return "MH"
-        case N: return "N"
-        case P: return "P"
-        case Q: return "Q"
-        case R: return "R"
-        case S: return "S"
-        case SH: return "SH"
-        case T: return "T"
-        case TA: return "TA"
-        case TC: return "TC"
-        case U: return "U"
-        case V: return "V"
-        case W: return "W"
-        case X: return "X"
-        case Y: return "Y"
-        case Z: return "Z"
-        }
+        return self.rawValue
     }
     var longDescription: String {
         switch self {

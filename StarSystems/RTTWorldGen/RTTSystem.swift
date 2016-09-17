@@ -5,15 +5,24 @@
 
 import Foundation
 
-class RTTSystem:CustomStringConvertible {
+class RTTSystem: CustomStringConvertible {
     var stars:[RTTStar] = []
     var age:Int // system age in billions of years
     var present = Set<StarOrbits>()
     var description: String {
         var result: String = ""
-        result += "System is \(age) billion years old, containing \(stars.count) stars:\n"
+        result += "System is \(age) billion years old, there \(stars.count.strord("star")):\n"
         for s in stars {
-            result += "\t\(s.description)"
+            result += "\t\(s)"
+        }
+        result += "Orbits present: \(present)\n"
+        return result
+    }
+    var verboseDesc: String {
+        var result: String = ""
+        result += "System is \(age) billion years old, there \(stars.count.strord("star")):\n"
+        for s in stars {
+            result += "\t\(s.verboseDesc)"
         }
         result += "Orbits present: \(present)\n"
         return result

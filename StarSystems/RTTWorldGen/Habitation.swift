@@ -5,15 +5,10 @@
 
 import Foundation
 
-enum Habitation: CustomStringConvertible {
+enum Habitation: String, CustomStringConvertible {
     case Homeworld, Colony, Outpost, Uninhabited
     var description: String {
-        switch self {
-        case Homeworld: return "Homeworld"
-        case Colony: return "Colony"
-        case Outpost: return "Outpost"
-        case Uninhabited: return "Uninhabited"
-        }
+        return self.rawValue
     }
 }
 

@@ -5,15 +5,11 @@
 
 import Foundation
 
-enum PlanetOrbit :Int, CustomStringConvertible{
-    case Epistellar = 0
+enum PlanetOrbit :String, CustomStringConvertible{
+    case Epistellar
     case Inner
     case Outer
     var description: String {
-        switch self {
-        case Epistellar: return "Epistellar"
-        case Inner: return "Inner"
-        case Outer: return "Outer"
-        }
+        return self.rawValue
     }
 }

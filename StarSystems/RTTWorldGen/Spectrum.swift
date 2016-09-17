@@ -4,7 +4,7 @@
 //
 
 import Foundation
-enum Spectrum : CustomStringConvertible{
+enum Spectrum : String, CustomStringConvertible{
     case A
     case F
     case G
@@ -13,15 +13,7 @@ enum Spectrum : CustomStringConvertible{
     case L
     case D
     var description: String {
-        switch self {
-        case A: return "A"
-        case F: return "F"
-        case G: return "G"
-        case K: return "K"
-        case M: return "M"
-        case L: return "L"
-        case D: return "D"
-        }
+        return self.rawValue
     }
     var longDescription: String {
         switch (self) {

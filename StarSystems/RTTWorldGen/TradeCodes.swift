@@ -4,10 +4,13 @@
 //
 
 import Foundation
-enum TradeCodes: CustomStringConvertible {
+enum TradeCodes: String, CustomStringConvertible {
     case Ag, As, De, Fl, Ga, Hi, Ht, Ic, In, Lo
     case Lt, Na, Ni, Po, Ri, St, Wa, Va, Zo
     var description: String {
+        return self.rawValue
+    }
+    var longDescription: String {
         switch self {
         case Ag: return "Agricultural"
         case As: return "Asteroid Belt"

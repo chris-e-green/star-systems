@@ -74,12 +74,24 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-u=A123456-B"
+            argument = "-u=C66A546-B"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-u=C000546-B"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-u=C06A546-B"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-j=~/gui.json"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-n"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-g"
@@ -90,11 +102,11 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-N=Vulcan"
+            argument = "-N=Guiabidigoob"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-c=01,08"
+            argument = "-c=05,06"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

@@ -1,0 +1,412 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5A4160555C9631F46F703A0F /* TradeCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A416911249DEDE1FC526FFB /* TradeCodes.swift */; };
+		5A41612710AF0D6A73B01995 /* Chemistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A41682F2E3BAF285D23D9F0 /* Chemistry.swift */; };
+		5A41614069DE12CE5CF00127 /* StarOrbits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A41635C1241E158C4503F8A /* StarOrbits.swift */; };
+		5A4163437AF5E44D4ED636A7 /* PlanetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A416D495D28003DFA71C17E /* PlanetType.swift */; };
+		5A416509A854A4FEB1F997C5 /* Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A41621DD4E385D4C1429A9D /* Name.swift */; };
+		5A41688D5094C9EB0E5E3D40 /* Luminosity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A41625D09D573603CA8955C /* Luminosity.swift */; };
+		5A4168FD83B8BFA44857ED53 /* RTTPlanet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4163C0A090E9AB709DFEE9 /* RTTPlanet.swift */; };
+		5A416931DBEBAC984B283647 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4169CD5F4AF1BDDEAEE10B /* Entity.swift */; };
+		5A4169B08DCB174B3F7B2556 /* Pdf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4161823CA9160770ED54E9 /* Pdf.swift */; };
+		5A416B3AF5A2EA46E245D716 /* PlanetOrbit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A416D1619D3B969BED61B09 /* PlanetOrbit.swift */; };
+		5A416B44C08762E8B71E1A0F /* Spectrum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A416CF8D3A8A0C92F7B85BC /* Spectrum.swift */; };
+		5A416BB4346F676509297115 /* RTTStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A416DA41195921100B77264 /* RTTStar.swift */; };
+		5A416D374B434C2AC808C913 /* RTTSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4166D70A41844469B65600 /* RTTSystem.swift */; };
+		5A416E1CAE15F04A176D1000 /* Habitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A416A5351D441ED2489839C /* Habitation.swift */; };
+		5A416ECE14A440EDC99ED85D /* RTTBases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A416082CD20F64058A286FE /* RTTBases.swift */; };
+		831CBE991D014F03006F9182 /* Subsector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831CBE981D014F03006F9182 /* Subsector.swift */; };
+		8338515C1CA39A310058E510 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338515B1CA39A310058E510 /* main.swift */; };
+		833851631CA39A9E0058E510 /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851621CA39A9E0058E510 /* Dice.swift */; };
+		833851781CA7B0F20058E510 /* Star.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851771CA7B0F20058E510 /* Star.swift */; };
+		8338517A1CA7B1080058E510 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851791CA7B1080058E510 /* Planet.swift */; };
+		8338517C1CA7B11B0058E510 /* Satellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338517B1CA7B11B0058E510 /* Satellite.swift */; };
+		8338517E1CA7B13D0058E510 /* StarSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338517D1CA7B13D0058E510 /* StarSystem.swift */; };
+		83DD95A71D2293D300ADEAF3 /* EmptyOrbit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DD95A61D2293D300ADEAF3 /* EmptyOrbit.swift */; };
+		83DD95A91D2293F000ADEAF3 /* GasGiant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DD95A81D2293F000ADEAF3 /* GasGiant.swift */; };
+		83E913A41D27850500DC8600 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E913A31D27850500DC8600 /* JSON.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		833851561CA39A310058E510 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5A416082CD20F64058A286FE /* RTTBases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTTBases.swift; sourceTree = "<group>"; };
+		5A4161823CA9160770ED54E9 /* Pdf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pdf.swift; sourceTree = "<group>"; };
+		5A41621DD4E385D4C1429A9D /* Name.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Name.swift; sourceTree = "<group>"; };
+		5A41625D09D573603CA8955C /* Luminosity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Luminosity.swift; sourceTree = "<group>"; };
+		5A41635C1241E158C4503F8A /* StarOrbits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarOrbits.swift; sourceTree = "<group>"; };
+		5A4163C0A090E9AB709DFEE9 /* RTTPlanet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTTPlanet.swift; sourceTree = "<group>"; };
+		5A4166D70A41844469B65600 /* RTTSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTTSystem.swift; sourceTree = "<group>"; };
+		5A41682F2E3BAF285D23D9F0 /* Chemistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chemistry.swift; sourceTree = "<group>"; };
+		5A416911249DEDE1FC526FFB /* TradeCodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeCodes.swift; sourceTree = "<group>"; };
+		5A4169CD5F4AF1BDDEAEE10B /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		5A416A5351D441ED2489839C /* Habitation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Habitation.swift; sourceTree = "<group>"; };
+		5A416CF8D3A8A0C92F7B85BC /* Spectrum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spectrum.swift; sourceTree = "<group>"; };
+		5A416D1619D3B969BED61B09 /* PlanetOrbit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanetOrbit.swift; sourceTree = "<group>"; };
+		5A416D495D28003DFA71C17E /* PlanetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanetType.swift; sourceTree = "<group>"; };
+		5A416DA41195921100B77264 /* RTTStar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTTStar.swift; sourceTree = "<group>"; };
+		831CBE981D014F03006F9182 /* Subsector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subsector.swift; sourceTree = "<group>"; };
+		833851581CA39A310058E510 /* StarSystems */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = StarSystems; sourceTree = BUILT_PRODUCTS_DIR; };
+		8338515B1CA39A310058E510 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		833851621CA39A9E0058E510 /* Dice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dice.swift; sourceTree = "<group>"; };
+		833851771CA7B0F20058E510 /* Star.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Star.swift; sourceTree = "<group>"; };
+		833851791CA7B1080058E510 /* Planet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
+		8338517B1CA7B11B0058E510 /* Satellite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Satellite.swift; sourceTree = "<group>"; };
+		8338517D1CA7B13D0058E510 /* StarSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarSystem.swift; sourceTree = "<group>"; };
+		83DD95A61D2293D300ADEAF3 /* EmptyOrbit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyOrbit.swift; sourceTree = "<group>"; };
+		83DD95A81D2293F000ADEAF3 /* GasGiant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GasGiant.swift; sourceTree = "<group>"; };
+		83E913A31D27850500DC8600 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		833851551CA39A310058E510 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5A416E0FF6F73FD228F6E226 /* RTTWorldGen */ = {
+			isa = PBXGroup;
+			children = (
+				5A416082CD20F64058A286FE /* RTTBases.swift */,
+				5A41682F2E3BAF285D23D9F0 /* Chemistry.swift */,
+				5A4169CD5F4AF1BDDEAEE10B /* Entity.swift */,
+				5A416A5351D441ED2489839C /* Habitation.swift */,
+				5A41625D09D573603CA8955C /* Luminosity.swift */,
+				5A4163C0A090E9AB709DFEE9 /* RTTPlanet.swift */,
+				5A416D1619D3B969BED61B09 /* PlanetOrbit.swift */,
+				5A416D495D28003DFA71C17E /* PlanetType.swift */,
+				5A416CF8D3A8A0C92F7B85BC /* Spectrum.swift */,
+				5A416DA41195921100B77264 /* RTTStar.swift */,
+				5A41635C1241E158C4503F8A /* StarOrbits.swift */,
+				5A4166D70A41844469B65600 /* RTTSystem.swift */,
+				5A416911249DEDE1FC526FFB /* TradeCodes.swift */,
+			);
+			path = RTTWorldGen;
+			sourceTree = "<group>";
+		};
+		8338514F1CA39A310058E510 = {
+			isa = PBXGroup;
+			children = (
+				8338515A1CA39A310058E510 /* StarSystems */,
+				833851591CA39A310058E510 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		833851591CA39A310058E510 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				833851581CA39A310058E510 /* StarSystems */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8338515A1CA39A310058E510 /* StarSystems */ = {
+			isa = PBXGroup;
+			children = (
+				8338515B1CA39A310058E510 /* main.swift */,
+				831CBE981D014F03006F9182 /* Subsector.swift */,
+				833851621CA39A9E0058E510 /* Dice.swift */,
+				833851771CA7B0F20058E510 /* Star.swift */,
+				833851791CA7B1080058E510 /* Planet.swift */,
+				8338517B1CA7B11B0058E510 /* Satellite.swift */,
+				8338517D1CA7B13D0058E510 /* StarSystem.swift */,
+				5A4161823CA9160770ED54E9 /* Pdf.swift */,
+				5A41621DD4E385D4C1429A9D /* Name.swift */,
+				5A416E0FF6F73FD228F6E226 /* RTTWorldGen */,
+				83DD95A61D2293D300ADEAF3 /* EmptyOrbit.swift */,
+				83DD95A81D2293F000ADEAF3 /* GasGiant.swift */,
+				83E913A31D27850500DC8600 /* JSON.swift */,
+			);
+			path = StarSystems;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		833851571CA39A310058E510 /* StarSystems */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8338515F1CA39A310058E510 /* Build configuration list for PBXNativeTarget "StarSystems" */;
+			buildPhases = (
+				833851541CA39A310058E510 /* Sources */,
+				833851551CA39A310058E510 /* Frameworks */,
+				833851561CA39A310058E510 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StarSystems;
+			productName = StarSystems;
+			productReference = 833851581CA39A310058E510 /* StarSystems */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		833851501CA39A310058E510 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "Christopher Green";
+				TargetAttributes = {
+					833851571CA39A310058E510 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = 833851531CA39A310058E510 /* Build configuration list for PBXProject "StarSystems" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 8338514F1CA39A310058E510;
+			productRefGroup = 833851591CA39A310058E510 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				833851571CA39A310058E510 /* StarSystems */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		833851541CA39A310058E510 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				833851631CA39A9E0058E510 /* Dice.swift in Sources */,
+				8338515C1CA39A310058E510 /* main.swift in Sources */,
+				833851781CA7B0F20058E510 /* Star.swift in Sources */,
+				8338517A1CA7B1080058E510 /* Planet.swift in Sources */,
+				8338517E1CA7B13D0058E510 /* StarSystem.swift in Sources */,
+				8338517C1CA7B11B0058E510 /* Satellite.swift in Sources */,
+				83E913A41D27850500DC8600 /* JSON.swift in Sources */,
+				831CBE991D014F03006F9182 /* Subsector.swift in Sources */,
+				5A4169B08DCB174B3F7B2556 /* Pdf.swift in Sources */,
+				5A416509A854A4FEB1F997C5 /* Name.swift in Sources */,
+				83DD95A91D2293F000ADEAF3 /* GasGiant.swift in Sources */,
+				5A416ECE14A440EDC99ED85D /* RTTBases.swift in Sources */,
+				5A41612710AF0D6A73B01995 /* Chemistry.swift in Sources */,
+				5A416931DBEBAC984B283647 /* Entity.swift in Sources */,
+				5A416E1CAE15F04A176D1000 /* Habitation.swift in Sources */,
+				5A41688D5094C9EB0E5E3D40 /* Luminosity.swift in Sources */,
+				5A4168FD83B8BFA44857ED53 /* RTTPlanet.swift in Sources */,
+				5A416B3AF5A2EA46E245D716 /* PlanetOrbit.swift in Sources */,
+				5A4163437AF5E44D4ED636A7 /* PlanetType.swift in Sources */,
+				83DD95A71D2293D300ADEAF3 /* EmptyOrbit.swift in Sources */,
+				5A416B44C08762E8B71E1A0F /* Spectrum.swift in Sources */,
+				5A416BB4346F676509297115 /* RTTStar.swift in Sources */,
+				5A41614069DE12CE5CF00127 /* StarOrbits.swift in Sources */,
+				5A416D374B434C2AC808C913 /* RTTSystem.swift in Sources */,
+				5A4160555C9631F46F703A0F /* TradeCodes.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		8338515D1CA39A310058E510 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_ASSIGN_ENUM = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_PEDANTIC = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8338515E1CA39A310058E510 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_ASSIGN_ENUM = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_PEDANTIC = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		833851601CA39A310058E510 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		833851611CA39A310058E510 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		833851531CA39A310058E510 /* Build configuration list for PBXProject "StarSystems" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8338515D1CA39A310058E510 /* Debug */,
+				8338515E1CA39A310058E510 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8338515F1CA39A310058E510 /* Build configuration list for PBXNativeTarget "StarSystems" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				833851601CA39A310058E510 /* Debug */,
+				833851611CA39A310058E510 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 833851501CA39A310058E510 /* Project object */;
+}

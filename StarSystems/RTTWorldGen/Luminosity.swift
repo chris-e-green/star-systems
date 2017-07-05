@@ -15,10 +15,10 @@ enum Luminosity : String, CustomStringConvertible{
     }
     var longDescription: String {
         switch self {
-        case III: return "Giant"
-        case IV: return "Subgiant"
-        case V: return "Main Sequence"
-        case Ve: return "Flare"
+        case .III: return "Giant"
+        case .IV: return "Subgiant"
+        case .V: return "Main Sequence"
+        case .Ve: return "Flare"
         }
     }
 }

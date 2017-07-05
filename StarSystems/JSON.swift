@@ -51,12 +51,12 @@ enum jsonLabels: String, CustomStringConvertible {
 class JsonFile {
     var jsonFilename:String?
     
-    func writeJson(jsonData:String) {
+    func writeJson(_ jsonData:String) {
         if let filename = jsonFilename {
             do {
-                print("Writing JSON to \(filename)")
-                let fn:NSString = filename
-                try jsonData.writeToFile(fn.stringByExpandingTildeInPath, atomically: true, encoding: NSUTF8StringEncoding)
+                let fn = NSString(string:filename).expandingTildeInPath
+                print("Writing JSON to \(fn)")
+                try jsonData.write(toFile: fn, atomically: true, encoding: String.Encoding.utf8)
             } catch {
                 print("Error writing JSON file. \(error)")
             }
@@ -70,9 +70,9 @@ class JsonFile {
     func readJson()->[[String:AnyObject]]? {
         if let filename = jsonFilename {
             do {
-                let jsonStream = NSInputStream(fileAtPath: filename)
+                let jsonStream = InputStream(fileAtPath: filename)
                 jsonStream?.open()
-                let jsonData = try NSJSONSerialization.JSONObjectWithStream(jsonStream!, options: NSJSONReadingOptions())
+                let jsonData = try JSONSerialization.jsonObject(with: jsonStream!, options: JSONSerialization.ReadingOptions())
                 jsonStream?.close()
                 return jsonData as? [[String:AnyObject]]
             } catch {

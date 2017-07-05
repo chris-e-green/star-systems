@@ -9,14 +9,14 @@
 import Foundation
 
 enum SystemNature: Int, CustomStringConvertible {
-    case Solo = 0 // leaving this as Int because it makes it simple to do some DM work later
-    case Binary
-    case Trinary
+    case solo = 0 // leaving this as Int because it makes it simple to do some DM work later
+    case binary
+    case trinary
     var description:String {
         switch self {
-        case .Solo: return "Solo"
-        case .Binary: return "Binary"
-        case .Trinary: return "Trinary"
+        case .solo: return "Solo"
+        case .binary: return "Binary"
+        case .trinary: return "Trinary"
         }
     }
 }
@@ -55,13 +55,13 @@ class StarSystem : CustomStringConvertible {
         var result: [Planet] = []
         for star in stars {
             let h = star.getPlanets()
-            result.appendContentsOf(h)
+            result.append(contentsOf: h)
             if DEBUG { print("added \(h) to allPlanets") }
         }
         return result
     }
     
-    func getAllAvailOrbits(zones: Set<Zone>)->[(Star, Float)] {
+    func getAllAvailOrbits(_ zones: Set<Zone>)->[(Star, Float)] {
         var result: [(Star, Float)] = []
         for star in stars {
             let s1 = star.getAvailOrbits(zones, createIfNone: false)
@@ -87,7 +87,7 @@ class StarSystem : CustomStringConvertible {
         return getAllAvailOrbits(Set<Zone>([Zone.H, Zone.O]))
     }
     
-    func availOrbit(zones:Set<Zone>)->(Star, Float)? {
+    func availOrbit(_ zones:Set<Zone>)->(Star, Float)? {
         let allAvail = getAllAvailOrbits(zones)
         let possCount = allAvail.count
         if possCount == 0 {
@@ -203,10 +203,10 @@ class StarSystem : CustomStringConvertible {
             stars.removeAll()
             // roll system basic nature
             switch Dice.roll(2) {
-            case 2 ..<  8: basicNature = .Solo
-            case 8 ..< 12: basicNature = .Binary
-            case 12: basicNature = .Trinary
-            default: basicNature = .Solo
+            case 2 ..<  8: basicNature = .solo
+            case 8 ..< 12: basicNature = .binary
+            case 12: basicNature = .trinary
+            default: basicNature = .solo
             }
             
             /* determine primary type and size. Keep type and size rolls as they
@@ -631,7 +631,7 @@ class StarSystem : CustomStringConvertible {
         result += ".\n"
         //        result += "The primary star is \(primary)\n"
         for star in stars {
-            result += String(count: 70, repeatedValue: Character("-"))
+            result += String(repeating: "-", count: 70)
             result += "\n"
             if star.parent == nil {
                 result += "Primary ".padding(10)
@@ -640,7 +640,7 @@ class StarSystem : CustomStringConvertible {
             }
 //            if let p = star.parent { if let n = p.name { result += "(p=\(n))" } }
             result += "\t\t\(star)\n"
-            result += String(count: 70, repeatedValue: Character("="))
+            result += String(repeating: "=", count: 70)
             result += "\n"
         }
         //        result += "Primary \(primary)\n"

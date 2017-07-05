@@ -4,6 +4,26 @@
 //
 
 import Foundation
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class RTTSystem: CustomStringConvertible {
     var stars:[RTTStar] = []
@@ -127,10 +147,10 @@ class RTTSystem: CustomStringConvertible {
                 repeat {
                     if i < s.planets.count - 1 {
                         switch s.planets[i].type {
-                        case .Dwarf: s.planets[i].type = .Stygian
-                        case .Terrestrial: s.planets[i].type = .Acheronian
-                        case .Helian: s.planets[i].type = .Asphodelian
-                        case .Jovian: s.planets[i].type = .Chthonian
+                        case .dwarf: s.planets[i].type = .stygian
+                        case .terrestrial: s.planets[i].type = .acheronian
+                        case .helian: s.planets[i].type = .asphodelian
+                        case .jovian: s.planets[i].type = .chthonian
                         default: break
                         }
                     }

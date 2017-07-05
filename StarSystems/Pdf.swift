@@ -9,12 +9,12 @@
 import Foundation
 import AppKit
 
-postfix operator ~ {}
+postfix operator ~
 postfix func ~ (value: Double)->String {
     var result = String(format: "%.1f", value)
-    if result[result.endIndex.advancedBy(-2)...result.endIndex.advancedBy(-1)] == ".0" {
-        result.removeAtIndex(result.endIndex.advancedBy(-1))
-        result.removeAtIndex(result.endIndex.advancedBy(-1))
+    if result[result.characters.index(result.endIndex, offsetBy: -2)...result.characters.index(result.endIndex, offsetBy: -1)] == ".0" {
+        result.remove(at: result.characters.index(result.endIndex, offsetBy: -1))
+        result.remove(at: result.characters.index(result.endIndex, offsetBy: -1))
     }
     return result
 }
@@ -295,12 +295,12 @@ class Pdf {
     var nsfonts        : [String : NSFont] = [:]
     var currObjId = 2
     
-    func leftPad(num: Int)->String {
+    func leftPad(_ num: Int)->String {
         let ofsStr = ("0000000000" + String(num))
-        return ofsStr.substringFromIndex(ofsStr.endIndex.advancedBy(-10))
+        return ofsStr.substring(from: ofsStr.characters.index(ofsStr.endIndex, offsetBy: -10))
     }
     
-    func strWidth(str:String, fontName: String, fontSize:Double) -> Double {
+    func strWidth(_ str:String, fontName: String, fontSize:Double) -> Double {
         var font:NSFont?
         font = nsfonts["\(fontName)\(fontSize)"]
         if font == nil {
@@ -312,19 +312,19 @@ class Pdf {
         return width
     }
     
-    func hline(y: Double, minX: Double, maxX: Double)->String {
+    func hline(_ y: Double, minX: Double, maxX: Double)->String {
         return "\(minX~) \(y~) m \(maxX~) \(y~) l S\n"
     }
     
-    func vline(x: Double, minY: Double, maxY: Double)->String {
+    func vline(_ x: Double, minY: Double, maxY: Double)->String {
         return "\(x~) \(minY~) m \(x~) \(maxY~) l S\n"
     }
     
-    func xobject(xobjName: String, at: CoordPair)->String {
+    func xobject(_ xobjName: String, at: CoordPair)->String {
         return "q 1 0 0 1 \(at) cm /\(xobjName) Do Q\n"
     }
     
-    func circle(x:Double, y:Double, radius: Double, filled:Bool, blue:Bool)->String {
+    func circle(_ x:Double, y:Double, radius: Double, filled:Bool, blue:Bool)->String {
         let magic:Double = radius * 0.551784
         var circleStr = ""
         if DEBUG { circleStr += "% circle at (\(x~), \(y~)) r=\(radius~)\n" }
@@ -345,7 +345,7 @@ class Pdf {
         return circleStr
     }
     
-    func asteroids(x:Double, y:Double, size: Double)->String {
+    func asteroids(_ x:Double, y:Double, size: Double)->String {
         var asteroidStr = ""
         if DEBUG { asteroidStr += "% asteroid at (\(x~), \(y~))\n" }
         var xdisp : Double = 0.0
@@ -359,7 +359,7 @@ class Pdf {
         return asteroidStr
     }
     
-    func triangle(x:Double, y:Double, size:Double)->String {
+    func triangle(_ x:Double, y:Double, size:Double)->String {
         var triangleStr = ""
         if DEBUG { triangleStr += "% triangle at (\(x~), \(y~))\n" }
         triangleStr += "\((x - size / 2.0)~) \(y~) m \(x~) \((y + 0.866 * size)~) l "
@@ -367,7 +367,7 @@ class Pdf {
         return triangleStr
     }
     
-    func star(x:Double, y: Double, size:Double)->String {
+    func star(_ x:Double, y: Double, size:Double)->String {
         let xf1:Double = 0.809 * size
         let yf1:Double = 0.182 * size
         let xf2:Double = 0.191 * size
@@ -385,7 +385,7 @@ class Pdf {
         return starStr
     }
     
-    func drawHex(x: Double, y: Double, height: Double)-> String {
+    func drawHex(_ x: Double, y: Double, height: Double)-> String {
         let topBottomVar:Double = invsqrt3 * height / 2.0
         let middleVar:Double = invsqrt3 * height
         let heightVar:Double = height / 2.0
@@ -401,7 +401,7 @@ class Pdf {
         return s
     }
     
-    func hex(x: Double, y: Double, height: Double, label: String)-> String {
+    func hex(_ x: Double, y: Double, height: Double, label: String)-> String {
         var hexStr = ""
         if DEBUG { hexStr += "% hex at (\(x~), \(y~))\n" }
         let (fn, fid) = fontDetails[0]
@@ -411,7 +411,7 @@ class Pdf {
         return hexStr
     }
     
-    func hexLocToCoord(x: Int, y: Int, map: Bool = false) -> CoordPair {
+    func hexLocToCoord(_ x: Int, y: Int, map: Bool = false) -> CoordPair {
         // if map is true, we are drawing the hexes on the map so our coordinates are based on zero in the form context.
         var ptsX = 0.0
         var ptsY = 0.0
@@ -433,12 +433,12 @@ class Pdf {
         return CoordPair(x: ptsX, y: ptsY)
     }
     
-    func listCoords(x: Int, y: Int) -> CoordPair {
+    func listCoords(_ x: Int, y: Int) -> CoordPair {
         return CoordPair(x: tasForm7ListTL.x,
                          y: tasForm7ListTL.y - Double(tas7line + 1) * listLineHeight)
     }
     
-    func showText(text: String, x: Double, y: Double, heading:Bool = false, small: Bool = true, narrow: Bool = false)->String {
+    func showText(_ text: String, x: Double, y: Double, heading:Bool = false, small: Bool = true, narrow: Bool = false)->String {
         var result = "BT /F"
         if heading {
             result += "2 \(headingPts~)"
@@ -509,7 +509,7 @@ class Pdf {
         return result
     }
     
-    func drawISForm7(first:Bool = true)->String {
+    func drawISForm7(_ first:Bool = true)->String {
         /*
          Content locations:
          - field 1: bl.x = form.bl.x + 240, bl.y = form.tr.y - headingPts - 18, tr.x = form.tr.x - 5, tr.y = form.tr.y - headingPts - 2
@@ -530,7 +530,7 @@ class Pdf {
         let boxLineWidth = 4.0
         let divLineWidth = 1.0
         
-        func lineToY(lineNum:Double)->Double {
+        func lineToY(_ lineNum:Double)->Double {
             return form.y - 20 - (lineNum - 1) * hLineHeight
         }
         
@@ -834,7 +834,7 @@ class Pdf {
     //    if it didn't fit, then it must be more than one line long. We split it into words
     //      and progressively move the last word to a second line, until the first line
     //      fits. The first and second lines then become the return value.
-    func composite(content: String, blockWidth: Double)->String {
+    func composite(_ content: String, blockWidth: Double)->String {
         var result = ""
         var line1 = content
         var line2 = ""
@@ -842,11 +842,11 @@ class Pdf {
             // 1 line format is 6 0 Td 75 Tz (line1)Tj 100 Tz"
             result = "2 0 Td 60 Tz (\(line1))Tj 100 Tz"
         } else {
-            var contentArray = line1.componentsSeparatedByString(" ")
-            let lastIdx = contentArray.endIndex.advancedBy(-1)
-            for (i, _) in contentArray.enumerate().reverse() {
-                line1 = contentArray[0...(i - 1)].joinWithSeparator(" ")
-                line2 = contentArray[i...lastIdx].joinWithSeparator(" ")
+            var contentArray = line1.components(separatedBy: " ")
+            let lastIdx = contentArray.endIndex.advanced(by: -1)
+            for (i, _) in contentArray.enumerated().reversed() {
+                line1 = contentArray[0...(i - 1)].joined(separator: " ")
+                line2 = contentArray[i...lastIdx].joined(separator: " ")
                 if strWidth(line1, fontName: fontName1, fontSize: 11) * 0.6 < blockWidth {
                     // we have a short enough line 1 now.
                     result = "2 5.5 Td 60 Tz (\(line1))Tj 0 -11 Td (\(line2))Tj 100 Tz"
@@ -858,7 +858,7 @@ class Pdf {
         return result
     }
     
-    func displaySat(orbitstr: String, suborbitstr: String, o: Satellite, y: Double, isSat: Bool = false) -> String {
+    func displaySat(_ orbitstr: String, suborbitstr: String, o: Satellite, y: Double, isSat: Bool = false) -> String {
         let orbit1col = 50.0 // right side because right-aligned
         let orbit2col = 77.0 // right side because right-aligned
         let namecol = 90.0
@@ -888,7 +888,7 @@ class Pdf {
         return s
     }
     
-    func display(starSystem: StarSystem) {
+    func display(_ starSystem: StarSystem) {
         let p = starSystem.mainWorld!
         p.coordinateX = starSystem.coordinateX
         p.coordinateY = starSystem.coordinateY
@@ -904,7 +904,7 @@ class Pdf {
             s += showText(star.name, x: 100, y: mapBoxSize.y - 35, heading: false, small: false)
             s += showText(star.specSize, x: 250, y: mapBoxSize.y - 35, heading: false, small: false)
             s += showText("\(star.magnitude)", x: 330, y: mapBoxSize.y - 35, heading: false, small: false)
-            let sortedOrbits = star.satellites.orbits.sort({$0.0 < $1.0})
+            let sortedOrbits = star.satellites.orbits.sorted(by: {$0.0 < $1.0})
             // make a sorted array of all orbits
             var orbitLines = [(Int,Int,Satellite)]()
             for (i, o) in sortedOrbits {
@@ -913,7 +913,7 @@ class Pdf {
                 // we are doing a star, we don't, because it will be processed separately. We do need
                 // to make sure close companions are presented, but they have no satellites of their own.
                 if o is Planet || o is GasGiant {
-                    let sortedSuborbits = o.satellites.orbits.sort({$0.0 < $1.0})
+                    let sortedSuborbits = o.satellites.orbits.sorted(by: {$0.0 < $1.0})
                     for (i1, o1) in sortedSuborbits {
                         orbitLines.append((-1, i1, o1))
                     }
@@ -932,7 +932,7 @@ class Pdf {
             var line = 0.0
             for (stellarOrbit, moonOrbit, satellite) in orbitLines {
                 if line == 18 {
-                    systemData[systemData.endIndex.advancedBy(-1)] += s
+                    systemData[systemData.endIndex.advanced(by: -1)] += s
                     s = ""
                     systemData.append(xobject(xobjISForm7a, at: pageMargin.bl - CoordPair(x: 0, y: headingPts)))
                     s += showText(star.name, x: 100, y: mapBoxSize.y - 10, heading: false, small: false)
@@ -953,11 +953,11 @@ class Pdf {
                 }
                 line += 1
             }
-            systemData[systemData.endIndex.advancedBy(-1)] += s
+            systemData[systemData.endIndex.advanced(by: -1)] += s
         }
     }
     
-    func pdfPlanet(planet: Planet)->String {
+    func pdfPlanet(_ planet: Planet)->String {
         var planetStr = ""
         planetStr += String(format:"0 Tc (%@)Tj 12 0 Td (%@)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td(%1X)Tj 12 0 Td (%1X)Tj 12 0 Td ", arguments:[planet.starport, planet.getSize(),
             planet.atmosphere, planet.hydrographics, planet.population,
@@ -986,7 +986,7 @@ class Pdf {
         return planetStr
     }
 
-    func display(planet: Planet) {
+    func display(_ planet: Planet) {
         if tas7line > 17 {
             tas7line = 0
             // create a new page string (with append) and start it off with a new form invocation.
@@ -1018,7 +1018,7 @@ class Pdf {
         p += composite(ggBaseTC, blockWidth: 115)
         p += "\nET\n"
         // add it to the current/last page
-        subsectorData[subsectorData.endIndex.advancedBy(-1)]  += p
+        subsectorData[subsectorData.endIndex.advanced(by: -1)]  += p
         
         tas7line = tas7line + 1
         
@@ -1026,7 +1026,7 @@ class Pdf {
         let c1:CoordPair = hexLocToCoord(planet.coordinateX,y:planet.coordinateY)
         var w:Double = strWidth(planet.starport, fontName: fontName1, fontSize: namePts)
         mapData += "BT /\(fontId1) \(namePts~) Tf \((c1.x - w / 2)~) \((c1.y + 5)~) Td (\(planet.starport))Tj ET\n"
-        let dispName = planet.population >= 9 ? planet.name.uppercaseString : planet.name
+        let dispName = planet.population >= 9 ? planet.name.uppercased() : planet.name
         w = strWidth(dispName, fontName: fontName1, fontSize: namePts * 0.75)
         mapData += "BT /\(fontId1) \(namePts~) Tf \((c1.x - w / 2)~) \((c1.y - 6.0 - namePts)~) Td 75 Tz (\(dispName))Tj 100 Tz ET\n"
         if planet.size == 0 {
@@ -1054,7 +1054,7 @@ class Pdf {
         }
     }
     
-    func newPage(data: String) {
+    func newPage(_ data: String) {
         let contents = PdfContents(id:currObjId)
         structure[currObjId] = contents
         contents.body += "<< /Length \(data.characters.count)\n >>\nstream\n"
@@ -1080,7 +1080,7 @@ class Pdf {
             newPage(systemPage)
         }
         // sort the structure in id order
-        let structure1 = structure.sort({$0.0 < $1.0})
+        let structure1 = structure.sorted(by: {$0.0 < $1.0})
         
         let pdfHdr = "%PDF-1.4\n%\u{8f}\u{8f}\n"
         pdfContent += pdfHdr

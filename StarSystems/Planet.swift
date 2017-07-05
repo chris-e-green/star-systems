@@ -10,8 +10,8 @@ import Foundation
 
 extension String {
     // shorthand padding with spaces to a given length
-    func padding(length: Int) -> String {
-        return self.stringByPaddingToLength(length, withString: " ", startingAtIndex: 0)
+    func padding(_ length: Int) -> String {
+        return self.padding(toLength: length, withPad: " ", startingAt: 0)
     }
 }
 
@@ -120,7 +120,7 @@ class Planet: Satellite, CustomStringConvertible {
             var first = true
             for f in facilities {
                 if first { first = false } else { result += ", " }
-                result += String(f)
+                result += String(describing: f)
             }
             return result
         }
@@ -142,7 +142,7 @@ class Planet: Satellite, CustomStringConvertible {
             var first = true
             for tc in tradeClassifications {
                 if first { first = false } else { tcs += ", " }
-                tcs += String(tc)
+                tcs += String(describing: tc)
             }
             return tcs
         }
@@ -461,11 +461,11 @@ class Planet: Satellite, CustomStringConvertible {
     }
     
     // MARK: Functions
-    func generateRandomPlanet(planetoid: Bool = false) {
+    func generateRandomPlanet(_ planetoid: Bool = false) {
         if debugRolls { rollHistory["from_scratch"] = 1 }
         let nameGen : Name = Name(maxLength:maxNameLength)
         var roll = 0
-        name = String(nameGen)
+        name = String(describing: nameGen)
         //generate starport
         rollStarport()
         //generate naval base
@@ -516,7 +516,7 @@ class Planet: Satellite, CustomStringConvertible {
         setTradeClassifications()
     }
     
-    func generateRandomPlanet(orbit: Float, starType: StarType, zone: Zone, planetoid: Bool = false) {
+    func generateRandomPlanet(_ orbit: Float, starType: StarType, zone: Zone, planetoid: Bool = false) {
         if debugRolls { rollHistory["from_star"] = 1 }
         var roll = 0
         if planetoid {
@@ -588,7 +588,7 @@ class Planet: Satellite, CustomStringConvertible {
         // also need to make sure it's not > main world. Will do this elsewhere.
     }
     
-    func checkPopulation(maxPopulation:Int) {
+    func checkPopulation(_ maxPopulation:Int) {
         if population >= maxPopulation {
             population = maxPopulation - 1
             if population < 0 { population = 0 }
@@ -602,7 +602,7 @@ class Planet: Satellite, CustomStringConvertible {
         default: return String(format:"%1X",size)
         }
     }
-    func setSize(newSize: String) {
+    func setSize(_ newSize: String) {
         switch(newSize) {
         case "R": size = -2
         case "S": size = -1
@@ -720,7 +720,7 @@ class Planet: Satellite, CustomStringConvertible {
         if technologicalLevel > 15 {technologicalLevel = 15}
     }
     
-    func setFacilities(mainWorld: Planet) {
+    func setFacilities(_ mainWorld: Planet) {
         if debugRolls { rollHistory["facilities"] = 1 }
         facilities.removeAll()
         if zone == Zone.H && atmosphere >= 4 && atmosphere <= 9 && hydrographics >= 4 && hydrographics <= 8 && population >= 2 {
@@ -744,7 +744,7 @@ class Planet: Satellite, CustomStringConvertible {
         }
     }
     
-    func setSatelliteAttribs(mainWorld: Planet) {
+    func setSatelliteAttribs(_ mainWorld: Planet) {
         if debugRolls { rollHistory["sat_attribs"] = 1 }
         var dm = 0
         var roll = 0

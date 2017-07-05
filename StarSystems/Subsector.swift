@@ -27,7 +27,7 @@ class Subsector  {
     var json: String {
         var j: String = "{\n\"\(jsonLabels.subsector)\": "
         j += "[\n"
-        for (x, p) in planets.enumerate() {
+        for (x, p) in planets.enumerated() {
             j += p.json
             if x < planets.count - 1 {
                 j += ",\n"
@@ -40,7 +40,7 @@ class Subsector  {
     }
     var json2: String {
         var j: String = "{\n\"\(jsonLabels.subsector)\": [\n"
-        for (x, s) in starSystems.enumerate() {
+        for (x, s) in starSystems.enumerated() {
             j += s.json
             if x < starSystems.count - 1 {
                 j += ",\n"
@@ -52,7 +52,7 @@ class Subsector  {
         return j
     }
     
-    func generatePdf(filename: String, starSysPrint: Bool = false) {
+    func generatePdf(_ filename: String, starSysPrint: Bool = false) {
         let pdf : Pdf = Pdf()
         pdf.start()
         if starSysPrint {
@@ -66,8 +66,9 @@ class Subsector  {
         }
         pdf.end()
         do {
-            print("Writing PDF to \(filename)")
-            try pdf.pdfContent.writeToFile(filename, atomically: true, encoding: NSUTF8StringEncoding)
+            let fn = NSString(string:filename).expandingTildeInPath
+            print("Writing PDF to \(fn)")
+            try pdf.pdfContent.write(toFile: fn, atomically: true, encoding: String.Encoding.utf8)
         } catch {
             print("EXCEPTION: \(error) writing \(pdf.pdfContent)")
         }
@@ -81,43 +82,46 @@ class Subsector  {
         }
     }
     
-    func serialize(filename:String) {
+    func serialize(_ filename:String) {
         do {
-            print("Writing XML to \(filename)")
-            try xml.writeToFile(filename, atomically: true, encoding: NSUTF8StringEncoding)
+            let fn = NSString(string:filename).expandingTildeInPath
+            print("Writing XML to \(fn)")
+            try xml.write(toFile: fn, atomically: true, encoding: String.Encoding.utf8)
         } catch {
             print("EXCEPTION: \(error) writing XML file.")
         }
     }
     
-    func writeJson(filename:String) {
+    func writeJson(_ filename:String) {
         do {
-            print("Writing JSON to \(filename)")
-            try json.writeToFile(filename, atomically: true, encoding: NSUTF8StringEncoding)
+            let fn = NSString(string:filename).expandingTildeInPath
+            print("Writing JSON to \(fn)")
+            try json.write(toFile: fn, atomically: true, encoding: String.Encoding.utf8)
         } catch {
             print("EXCEPTION: \(error) writing JSON file.")
         }
         
     }
-    func writeJson2(filename:String) {
+    func writeJson2(_ filename:String) {
         do {
-            print("Writing JSON to \(filename)")
-            try json2.writeToFile(filename, atomically: true, encoding: NSUTF8StringEncoding)
+            let fn = NSString(string:filename).expandingTildeInPath
+            print("Writing JSON to \(fn)")
+            try json2.write(toFile: fn, atomically: true, encoding: String.Encoding.utf8)
         } catch {
             print("EXCEPTION: \(error) writing JSON file.")
         }
         
     }
     init(xml:String) {
-        let parser = NSXMLParser(stream: NSInputStream(fileAtPath: xml)!)
+        let parser = XMLParser(stream: InputStream(fileAtPath: xml)!)
         parser.parse()
     }
     
     init(jsonFilename: String) {
         do {
-            let jsonStream = NSInputStream(fileAtPath: jsonFilename)
+            let jsonStream = InputStream(fileAtPath: jsonFilename)
             jsonStream?.open()
-            let jsonData = try NSJSONSerialization.JSONObjectWithStream(jsonStream!, options: NSJSONReadingOptions())
+            let jsonData = try JSONSerialization.jsonObject(with: jsonStream!, options: JSONSerialization.ReadingOptions()) as! [String:AnyObject]
             jsonStream?.close()
             if let jsonSubsector = jsonData["\(jsonLabels.subsector)"] as? [[String:AnyObject]] {
                 for jsonPlanet in jsonSubsector {
@@ -140,6 +144,6 @@ class Subsector  {
                 }
             }
         }
-        name = String(Name(maxLength: 8))
+        name = String(describing: Name(maxLength: 8))
     }
 }

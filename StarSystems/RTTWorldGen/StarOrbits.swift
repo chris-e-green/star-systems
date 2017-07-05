@@ -13,7 +13,7 @@ enum StarOrbits : String, CustomStringConvertible{
     case Distant
     var description: String {
         switch self {
-        case BrownDwarf: return "Brown Dwarf"
+        case .BrownDwarf: return "Brown Dwarf"
         default: return self.rawValue
         }
     }

@@ -20,12 +20,12 @@ enum StarType:String, CustomStringConvertible {
     case Z
     var description: String {
         switch self {
-        case O, B, A: return "Light Blue"
-        case F: return "White"
-        case G: return "Yellow"
-        case K: return "Orange"
-        case M: return "Deep Red"
-        case Z: return "Undefined"
+        case .O, .B, .A: return "Light Blue"
+        case .F: return "White"
+        case .G: return "Yellow"
+        case .K: return "Orange"
+        case .M: return "Deep Red"
+        case .Z: return "Undefined"
         }
     }
 }
@@ -42,14 +42,14 @@ enum StarSize:String,CustomStringConvertible {
     case Z
     var description:String {
         switch self {
-        case Ia: return "Bright Supergiant"
-        case Ib: return "Weaker Supergiant"
-        case II: return "Bright Giant"
-        case III: return "Giant"
-        case IV: return "Subgiant"
-        case V: return "Main Sequence"
-        case D: return "White Dwarf"
-        case Z: return "Undefined"
+        case .Ia: return "Bright Supergiant"
+        case .Ib: return "Weaker Supergiant"
+        case .II: return "Bright Giant"
+        case .III: return "Giant"
+        case .IV: return "Subgiant"
+        case .V: return "Main Sequence"
+        case .D: return "White Dwarf"
+        case .Z: return "Undefined"
         }
     }
 }
@@ -80,13 +80,13 @@ enum Zone: String, CustomStringConvertible {
     case Z
     var description:String {
         switch self {
-        case O: return "Outer"
-        case H: return "Habitable"
-        case I: return "Inner"
-        case U: return "Unavailable"
-        case W: return "Within star"
-        case C: return "Close"
-        case Z: return "Undefined"
+        case .O: return "Outer"
+        case .H: return "Habitable"
+        case .I: return "Inner"
+        case .U: return "Unavailable"
+        case .W: return "Within star"
+        case .C: return "Close"
+        case .Z: return "Undefined"
         }
     }
 }
@@ -491,7 +491,7 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
     ///     - createIfNone: Defaults to `true`. Callers that want to count available orbits should supply `false`.
     ///
     /// - Returns: An array of empty orbits that are within the requested `Zone`s.
-    func getAvailOrbits(zones:Set<Zone>, createIfNone: Bool=true)->[Float] {
+    func getAvailOrbits(_ zones:Set<Zone>, createIfNone: Bool=true)->[Float] {
         var orbits:[Float] = []
         for i in 0...maxOrbitNum {
             if zones.contains(getZone(i)!) && getSatellite(i) == nil {
@@ -543,8 +543,8 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
     func getHabOrbit()->Float? {
         var result: Float?
         if let zones:[Zone] = tableOfZones[self.starDetail] {
-            if zones.indexOf(Zone.H) != nil {
-                result = Float(zones.indexOf(Zone.H)!)
+            if zones.index(of: Zone.H) != nil {
+                result = Float(zones.index(of: Zone.H)!)
             }
         }
         return result
@@ -555,7 +555,7 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
     /// - parameters:
     ///     - zones: The `Zone`s that the satellites must occupy.
     /// - returns: An array of satellites that are with the requested `Zone`s.
-    func getSatellites(zones:Set<Zone>)->[Satellite] {
+    func getSatellites(_ zones:Set<Zone>)->[Satellite] {
         var satellites:[Satellite] = []
         for i in 0...maxOrbitNum {
             if zones.contains(getZone(i)!) && getSatellite(i) != nil {
@@ -613,7 +613,7 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
     ///     A tuple containing
     ///     - orbitNum: The orbit number.
     ///     - inFarOrbit: True if the orbit number is Far, and thus the companion could have its own companion.
-    func getCompanionOrbit(dm: Int)->(orbitNum: Float, inFarOrbit: Bool) {
+    func getCompanionOrbit(_ dm: Int)->(orbitNum: Float, inFarOrbit: Bool) {
         /* curiously, the distribution of possible companion orbits is seemingly quite
          arbitrary.
          

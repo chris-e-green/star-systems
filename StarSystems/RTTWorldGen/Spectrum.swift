@@ -17,13 +17,13 @@ enum Spectrum : String, CustomStringConvertible{
     }
     var longDescription: String {
         switch (self) {
-        case A: return "bluish-white"
-        case F: return "white"
-        case G: return "yellow"
-        case K: return "orange"
-        case M: return "red"
-        case L: return "brown dwarf"
-        case D: return "white dwarf"
+        case .A: return "bluish-white"
+        case .F: return "white"
+        case .G: return "yellow"
+        case .K: return "orange"
+        case .M: return "red"
+        case .L: return "brown dwarf"
+        case .D: return "white dwarf"
         }
     }
 }

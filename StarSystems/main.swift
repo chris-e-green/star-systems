@@ -12,7 +12,7 @@ import Foundation
 let DEBUG=false
 
 func printSyntax() {
-    print("\(Process.arguments[0]) -u=UWP [-n] [-s] [-g] [-c=x,y] [-N=name]")
+    print("\(CommandLine.arguments[0]) -u=UWP [-n] [-s] [-g] [-c=x,y] [-N=name]")
     print("\tGenerates a full star system from an existing planet.")
     print("\t-u=UWP sets the planetary profile, formatted A123456-7")
     print("\t-n if a naval base is present, -s if a scout base is present,")
@@ -20,22 +20,22 @@ func printSyntax() {
     print("\t-c=x,y sets optional coordinates")
     print("\t-N=name sets the name of the planet, otherwise one will be generated.")
     print()
-    print("\(Process.arguments[0]) -f")
+    print("\(CommandLine.arguments[0]) -f")
     print("\tGenerates a full star system from scratch.")
     print()
-    print("\(Process.arguments[0]) -b")
+    print("\(CommandLine.arguments[0]) -b")
     print("\tGenerates a basic planet.")
     print()
-    print("\(Process.arguments[0]) -r [-v]")
+    print("\(CommandLine.arguments[0]) -r [-v]")
     print("\tGenerates a system using RTT Worldgen rules.")
     print("\t-v displays verbose system description.")
     print()
-    print("\(Process.arguments[0]) -s [-x] {density} [file1.pdf] [file2.xml] [file3.json]")
+    print("\(CommandLine.arguments[0]) -s [-x] {density} [file1.pdf] [file2.xml] [file3.json]")
     print("\tGenerates a subsector to PDF/XML/JSON.")
     print("\twhere density is 1..5, and represents chance out of 6")
     print("\tsupplying filenames will produce file1.pdf, file2.xml, file3.json.")
     print("\tIf -x is specified, expanded star system details will be generated")
-   print("\(Process.arguments[0]) -j [-o] [-x] file1.json file2.pdf")
+   print("\(CommandLine.arguments[0]) -j [-o] [-x] file1.json file2.pdf")
     print("\tLoad a subsector from file1.json and generate file2.pdf")
     print("\tIf -o is specified, file1.json is rewritten (mainly to recalculate")
     print("\ttrade classifications).")
@@ -44,9 +44,9 @@ func printSyntax() {
 
 var planet:Planet
 
-if Process.argc > 1 {
-    let param1:String = Process.arguments[1]
-    let choice = param1[param1.startIndex...param1.startIndex.advancedBy(1)]
+if CommandLine.argc > 1 {
+    let param1:String = CommandLine.arguments[1]
+    let choice = param1[param1.startIndex...param1.characters.index(param1.startIndex, offsetBy: 1)]
     switch choice {
     case "-b":
         print("Generating basic system")
@@ -61,14 +61,14 @@ if Process.argc > 1 {
         var jsonfn:String?
         var pdffn:String?
         var expand = false
-        for fn in Process.arguments {
-            if fn.containsString(".xml") {
+        for fn in CommandLine.arguments {
+            if fn.contains(".xml") {
                 xmlfn = fn
             }
-            if fn.containsString(".json") {
+            if fn.contains(".json") {
                 jsonfn = fn
             }
-            if fn.containsString(".pdf") {
+            if fn.contains(".pdf") {
                 pdffn = fn
             }
             if let d = Int(fn) {
@@ -96,17 +96,17 @@ if Process.argc > 1 {
         var pdffn:String?
         var rewrite = false
         var expand = false
-        for fn in Process.arguments {
+        for fn in CommandLine.arguments {
             if fn == "-o" {
                 rewrite = true
             }
             if fn == "-s" {
                 expand = true
             }
-            if fn.containsString(".json") {
+            if fn.contains(".json") {
                 jsonfn = fn
             }
-            if fn.containsString(".pdf") {
+            if fn.contains(".pdf") {
                 pdffn = fn
             }
         }
@@ -140,8 +140,8 @@ if Process.argc > 1 {
     case "-r":
         print("Generating system using RTTWorldGen")
         var verbose = false
-        for fn in Process.arguments {
-            switch fn[fn.startIndex...fn.startIndex.advancedBy(1)] {
+        for fn in CommandLine.arguments {
+            switch fn[fn.startIndex...fn.characters.index(fn.startIndex, offsetBy: 1)] {
             case "-v": verbose = true
             default: break
             }
@@ -161,19 +161,19 @@ if Process.argc > 1 {
         var name: String?
         var json: Bool = false
         var jsonFile: String?
-        for fn in Process.arguments {
-            switch fn[fn.startIndex...fn.startIndex.advancedBy(1)] {
+        for fn in CommandLine.arguments {
+            switch fn[fn.startIndex...fn.characters.index(fn.startIndex, offsetBy: 1)] {
             case "-n": navalBase = true
             case "-s": scoutBase = true
             case "-g": gasGiant = true
-            case "-c": coords = fn[fn.startIndex.advancedBy(3)...fn.endIndex.advancedBy(-1)]
+            case "-c": coords = fn.components(separatedBy:"=")[1]
             case "-u":
-                upp = fn[fn.startIndex.advancedBy(3)...fn.endIndex.advancedBy(-1)]
+                upp = fn.components(separatedBy:"=")[1]
             case "-N":
-                name = fn[fn.startIndex.advancedBy(3)...fn.endIndex.advancedBy(-1)]
+                name = fn.components(separatedBy:"=")[1]
             case "-j":
                 json = true
-                jsonFile = fn[fn.startIndex.advancedBy(3)...fn.endIndex.advancedBy(-1)]
+                jsonFile = fn.components(separatedBy:"=")[1]
             default: break
             }
         }
@@ -183,10 +183,10 @@ if Process.argc > 1 {
                 planet.name = name!
             }
             if coords != nil {
-                let xcoord = coords![coords!.startIndex...coords!.rangeOfString(",")!.startIndex.advancedBy(-1)]
-                let ycoord = coords![coords!.rangeOfString(",")!.endIndex...coords!.endIndex.advancedBy(-1)]
-                planet.coordinateX = Int(xcoord)!
-                planet.coordinateY = Int(ycoord)!
+                if let coordParts = coords?.components(separatedBy:",") {
+                    planet.coordinateX = Int(coordParts[0])!
+                    planet.coordinateY = Int(coordParts[1])!
+                }
             }
             print("Generating from existing planet \(planet)")
 //            print (planet)
@@ -196,8 +196,6 @@ if Process.argc > 1 {
                 if let fn = jsonFile {
                     let jsonF = JsonFile(jsonFilename: fn)
                     jsonF.writeJson(starSystem.json)
-                } else {
-                    print("Error with filename \(jsonFile)")
                 }
             } 
         } else {

@@ -258,62 +258,62 @@ class RTTPlanet: Entity, CustomStringConvertible {
         super.init()
         if !satellite { // we don't want satellites to have satellites.
             switch type {
-            case .AsteroidBelt:
+            case .asteroidBelt:
                 switch Dice.roll() {
                 case 1...4:
-                    satellites.append(RTTPlanet(type: .SmallBody, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
+                    satellites.append(RTTPlanet(type: .smallBody, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
                 default:
-                    satellites.append(RTTPlanet(type: .SmallBody, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
-                    satellites.append(RTTPlanet(type: .Dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
+                    satellites.append(RTTPlanet(type: .smallBody, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
+                    satellites.append(RTTPlanet(type: .dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
                 }
-            case .Dwarf:
+            case .dwarf:
                 if Dice.roll() == 6 {
-                    satellites.append(RTTPlanet(type: .Dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
+                    satellites.append(RTTPlanet(type: .dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
                 }
-            case .Terrestrial:
+            case .terrestrial:
                 if Dice.roll() > 4 {
-                    satellites.append(RTTPlanet(type: .Dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
+                    satellites.append(RTTPlanet(type: .dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
                 }
-            case .Helian:
+            case .helian:
                 var count = Dice.roll() - 3
                 if count < 0 { count = 0 }
                 if count > 0 {
                     if Dice.roll() < 6 {
                         for _ in 1...count {
-                            satellites.append(RTTPlanet(type: .Dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
+                            satellites.append(RTTPlanet(type: .dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
                         }
                     } else {
                         for j in 1...count {
                             if j == 1 {
-                                satellites.append(RTTPlanet(type: .Terrestrial, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
+                                satellites.append(RTTPlanet(type: .terrestrial, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
                             } else {
-                                satellites.append(RTTPlanet(type: .Dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
+                                satellites.append(RTTPlanet(type: .dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
                             }
                         }
                     }
                 }
 
-            case .Jovian:
+            case .jovian:
                 let count = Dice.roll()
                 if Dice.roll() < 6 {
                     for _ in 1...count {
-                        satellites.append(RTTPlanet(type: .Dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
+                        satellites.append(RTTPlanet(type: .dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
                     }
                 } else {
                     if Dice.roll() < 6 {
                         for j in 1...count {
                             if j == 1 {
-                                satellites.append(RTTPlanet(type: .Terrestrial, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
+                                satellites.append(RTTPlanet(type: .terrestrial, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
                             } else {
-                                satellites.append(RTTPlanet(type: .Dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
+                                satellites.append(RTTPlanet(type: .dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
                             }
                         }
                     } else {
                         for j in 1...count {
                             if j == 1 {
-                                satellites.append(RTTPlanet(type: .Helian, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
+                                satellites.append(RTTPlanet(type: .helian, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
                             } else {
-                                satellites.append(RTTPlanet(type: .Dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
+                                satellites.append(RTTPlanet(type: .dwarf, orbit: self.orbit, star: self.star, parent: self, age: self.age, satellite: true))
                             }
                         }
                     }
@@ -323,7 +323,7 @@ class RTTPlanet: Entity, CustomStringConvertible {
                 } else {
                     rings = "Complex ring system"
                 }
-            case .SmallBody:
+            case .smallBody:
                 break
             default:
                 break
@@ -333,118 +333,118 @@ class RTTPlanet: Entity, CustomStringConvertible {
         // World Type
         // ==========
         switch type {
-        case .Dwarf:
+        case .dwarf:
             switch orbit {
             case .Epistellar:
                 var dm = 0
                 if let p = parent as? RTTPlanet {
-                    if p.type == .AsteroidBelt { dm = -2 }
+                    if p.type == .asteroidBelt { dm = -2 }
                 }
                 switch Dice.roll() + dm
                 {
-                case 1...3: self.type = .Rockball
-                case 4, 5: self.type = .Meltball
+                case 1...3: self.type = .rockball
+                case 4, 5: self.type = .meltball
                 default:
                     if Dice.roll() < 5 {
-                        self.type = .Hebean
+                        self.type = .hebean
                     } else {
-                        self.type = .Promethean
+                        self.type = .promethean
                     }
                 }
             case .Inner:
                 var dm = 0
                 if let p = parent as? RTTPlanet {
-                    if p.type == .AsteroidBelt { dm -= 2 }
-                    if p.type == .Helian { dm += 1 }
-                    if p.type == .Jovian { dm += 1 }
+                    if p.type == .asteroidBelt { dm -= 2 }
+                    if p.type == .helian { dm += 1 }
+                    if p.type == .jovian { dm += 1 }
                 }
                 var roll = Dice.roll() + dm
                 if roll < 1 { roll = 1 }
                 switch roll
                 {
-                case 1...4: self.type = .Rockball
-                case 5, 6: self.type = .Arean
-                case 7: self.type = .Meltball
+                case 1...4: self.type = .rockball
+                case 5, 6: self.type = .arean
+                case 7: self.type = .meltball
                 default:
                     if Dice.roll() < 5 {
-                        self.type = .Hebean
+                        self.type = .hebean
                     } else {
-                        self.type = .Promethean
+                        self.type = .promethean
                     }
                 }
             case .Outer:
                 var dm = 0
                 if let p = parent as? RTTPlanet {
-                    if p.type == .AsteroidBelt { dm -= 1 }
-                    if p.type == .Helian { dm += 1 }
-                    if p.type == .Jovian { dm += 2 }
+                    if p.type == .asteroidBelt { dm -= 1 }
+                    if p.type == .helian { dm += 1 }
+                    if p.type == .jovian { dm += 2 }
                 }
                 var roll = Dice.roll() + dm
                 if roll < 0 { roll = 0 }
                 switch roll {
-                case 0: self.type = .Rockball
-                case 1...4: self.type = .Snowball
-                case 5, 6: self.type = .Rockball
-                case 7: self.type = .Meltball
+                case 0: self.type = .rockball
+                case 1...4: self.type = .snowball
+                case 5, 6: self.type = .rockball
+                case 7: self.type = .meltball
                 default: switch Dice.roll() {
-                case 1...3: self.type = .Hebean
-                case 4, 5: self.type = .Arean
-                default: self.type = .Promethean
+                case 1...3: self.type = .hebean
+                case 4, 5: self.type = .arean
+                default: self.type = .promethean
                 }
                 }
             }
-        case .Terrestrial:
+        case .terrestrial:
             switch orbit {
             case .Epistellar:
                 switch Dice.roll() {
-                case 1...4: self.type = .JaniLithic
-                case 5: self.type = .Vesperian
-                default: self.type = .Telluric
+                case 1...4: self.type = .janiLithic
+                case 5: self.type = .vesperian
+                default: self.type = .telluric
                 }
             case .Inner:
                 switch Dice.roll(2) {
-                case 2...4: self.type = .Telluric
-                case 5, 6: self.type = .Arid
-                case 7: self.type = .Tectonic
-                case 8, 9: self.type = .Oceanic
-                case 10:  self.type = .Tectonic
-                default: self.type = .Telluric
+                case 2...4: self.type = .telluric
+                case 5, 6: self.type = .arid
+                case 7: self.type = .tectonic
+                case 8, 9: self.type = .oceanic
+                case 10:  self.type = .tectonic
+                default: self.type = .telluric
                 }
             case .Outer:
                 switch Dice.roll() + (satellite ? 2 : 0) {
-                case 1...4: self.type = .Arid
-                case 5, 6: self.type = .Tectonic
-                default: self.type = .Oceanic
+                case 1...4: self.type = .arid
+                case 5, 6: self.type = .tectonic
+                default: self.type = .oceanic
                 }
             }
-        case .Helian:
+        case .helian:
             switch orbit {
             case .Epistellar:
                 if Dice.roll() == 6 {
-                    self.type = .Asphodelian
+                    self.type = .asphodelian
                 }
             case .Inner:
                 if Dice.roll() > 4 {
-                    self.type = .Panthalassic
+                    self.type = .panthalassic
                 }
             default: break
             }
-        case .Jovian:
+        case .jovian:
             if orbit == .Epistellar && Dice.roll() == 6 {
-                self.type = .Chthonian
+                self.type = .chthonian
             }
         default: break
         }
 
         // World Generation
         // ================
-        if self.type == .Acheronian {
+        if self.type == .acheronian {
             size = Dice.roll() + 4
             atmosphere = 1
             hydrosphere = 0
             biosphere = 0
         }
-        if self.type == .Arean {
+        if self.type == .arean {
             size = Dice.roll() - 1
             var roll = Dice.roll() - (star.spectrum == .D ? 2 : 0)
             if roll < 4 { atmosphere = 1 } else { atmosphere = 10 }
@@ -472,7 +472,7 @@ class RTTPlanet: Entity, CustomStringConvertible {
             if biosphere < 0 { biosphere = 0 }
 
         }
-        if self.type == .Arid {
+        if self.type == .arid {
             size = Dice.roll() + 4
             let roll = Dice.roll()
             var dm = 0
@@ -502,19 +502,19 @@ class RTTPlanet: Entity, CustomStringConvertible {
             }
             hydrosphere = Dice.roll(1, sides:3)
         }
-        if self.type == .Asphodelian {
+        if self.type == .asphodelian {
             size = Dice.roll() + 9
             atmosphere = 1
             hydrosphere = 0
             biosphere = 0
         }
-        if self.type == .Chthonian {
+        if self.type == .chthonian {
             size = 16
             atmosphere = 1
             hydrosphere = 0
             biosphere = 0
         }
-        if self.type == .Hebean {
+        if self.type == .hebean {
             size = Dice.roll() - 1
             atmosphere = Dice.roll() + size - 6
             if atmosphere < 0 { atmosphere = 0 }
@@ -523,24 +523,24 @@ class RTTPlanet: Entity, CustomStringConvertible {
             if hydrosphere < 0 { hydrosphere = 0 }
             biosphere = 0
         }
-        if self.type == .Helian {
+        if self.type == .helian {
             size = Dice.roll() + 9
             atmosphere = 13
             switch Dice.roll() {
             case 3, 4: hydrosphere = Dice.roll(2) - 1
             case 5, 6: hydrosphere = 15
-            default: 0
+            default: hydrosphere = 0
             }
             biosphere = 0
         }
-        if self.type == .JaniLithic {
+        if self.type == .janiLithic {
             size = Dice.roll() + 4
             let roll = Dice.roll()
             if roll < 4 { atmosphere = 1 } else { atmosphere = 10 }
             hydrosphere = 0
             biosphere = 0
         }
-        if self.type == .Jovian {
+        if self.type == .jovian {
             size = 16
             atmosphere = 16
             hydrosphere = 16
@@ -556,13 +556,13 @@ class RTTPlanet: Entity, CustomStringConvertible {
                 if r1 < 4 { chemistry = .Water } else { chemistry = .Ammonia }
             }
         }
-        if self.type == .Meltball {
+        if self.type == .meltball {
             size = Dice.roll() - 1
             atmosphere = 1
             hydrosphere = 15
             biosphere = 0
         }
-        if self.type == .Oceanic {
+        if self.type == .oceanic {
             size = Dice.roll() + 4
             var roll = Dice.roll()
             if star.spectrum == .K && star.luminosity == .V { roll += 2 }
@@ -598,7 +598,7 @@ class RTTPlanet: Entity, CustomStringConvertible {
             }
             hydrosphere = 11
         }
-        if self.type == .Panthalassic {
+        if self.type == .panthalassic {
             size = Dice.roll() + 9
             atmosphere = Dice.roll() + 8
             if atmosphere > 13 { atmosphere = 13 }
@@ -626,7 +626,7 @@ class RTTPlanet: Entity, CustomStringConvertible {
             }
 
         }
-        if self.type == .Promethean {
+        if self.type == .promethean {
             size = Dice.roll() - 1
             var roll = Dice.roll()
             if star.spectrum == .L { roll += 2 }
@@ -653,7 +653,7 @@ class RTTPlanet: Entity, CustomStringConvertible {
             } else { atmosphere = 10 }
             hydrosphere = Dice.roll(2) - 2
         }
-        if self.type == .Rockball {
+        if self.type == .rockball {
             size = Dice.roll() - 1
             atmosphere = 0
             var roll = Dice.roll(2) + size - 11
@@ -664,13 +664,13 @@ class RTTPlanet: Entity, CustomStringConvertible {
             hydrosphere = roll
             biosphere = 0
         }
-        if self.type == .SmallBody {
+        if self.type == .smallBody {
             size = 0
             atmosphere = 0
             hydrosphere = 0
             biosphere = 0
         }
-        if self.type == .Snowball {
+        if self.type == .snowball {
             size = Dice.roll() - 1
             var subsurfaceOceans = false
             if Dice.roll() < 5 { atmosphere = 0 } else { atmosphere = 1 }
@@ -694,13 +694,13 @@ class RTTPlanet: Entity, CustomStringConvertible {
                 if biosphere < 0 { biosphere = 0 }
             }
         }
-        if self.type == .Stygian {
+        if self.type == .stygian {
             size = Dice.roll() - 1
             atmosphere = 0
             hydrosphere = 0
             biosphere = 0
         }
-        if self.type == .Tectonic {
+        if self.type == .tectonic {
             size = Dice.roll() + 4
             var roll = Dice.roll()
             if star.spectrum == .K && star.luminosity == .V { roll += 2 }
@@ -733,13 +733,13 @@ class RTTPlanet: Entity, CustomStringConvertible {
             else { atmosphere = 10 }
             hydrosphere = Dice.roll(2) - 2
         }
-        if self.type == .Telluric {
+        if self.type == .telluric {
             size = Dice.roll() + 4
             atmosphere = 12
             if Dice.roll() < 5 { hydrosphere = 0 } else { hydrosphere = 15 }
             biosphere = 0
         }
-        if self.type == .Vesperian {
+        if self.type == .vesperian {
             size = Dice.roll() + 4
             if Dice.roll(2) == 12 { chemistry = .Chlorine }
             else { chemistry = .Water }
@@ -758,7 +758,7 @@ class RTTPlanet: Entity, CustomStringConvertible {
         }
 
         // calculate desirability score
-        if self.type == .AsteroidBelt {
+        if self.type == .asteroidBelt {
             desirability = Dice.roll() - Dice.roll()
             if star.spectrum == .M && star.luminosity == .Ve {
                 desirability -= Dice.roll(1, sides:3)
@@ -899,7 +899,7 @@ class RTTPlanet: Entity, CustomStringConvertible {
         if atmosphere >= 4 && atmosphere <= 9 && hydrosphere >= 4 && hydrosphere <= 8 && population >= 5 && population <= 7 {
             tradeCodes.insert(.Ag)
         }
-        if self.type == .AsteroidBelt {
+        if self.type == .asteroidBelt {
             tradeCodes.insert(.As)
         }
         if atmosphere >= 2 && atmosphere <= 13 && hydrosphere == 0 {

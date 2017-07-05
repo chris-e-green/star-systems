@@ -13,7 +13,7 @@ class RTTStar: Entity, CustomStringConvertible {
     var age: Int
     var description: String {
         var result: String = ""
-        result += String(spectrum)
+        result += String(describing: spectrum)
         if let lum = luminosity {
             result += "-\(lum)"
         }
@@ -39,7 +39,7 @@ class RTTStar: Entity, CustomStringConvertible {
     }
     var verboseDesc: String {
         var result: String = ""
-        result += String(spectrum)
+        result += String(describing: spectrum)
         if let lum = luminosity {
             result += "-\(lum)"
         }
@@ -150,7 +150,7 @@ class RTTStar: Entity, CustomStringConvertible {
         default: spectrum = .L
         }
     }
-    func populatePlanets(count: Int, orbit: PlanetOrbit) {
+    func populatePlanets(_ count: Int, orbit: PlanetOrbit) {
         if count > 0
         {
             for _ in 1...count
@@ -158,15 +158,15 @@ class RTTStar: Entity, CustomStringConvertible {
                 switch Dice.roll() - (spectrum == .L ? 1 : 0)
                 {
                 case 0, 1:
-                    planets.append(RTTPlanet(type: .AsteroidBelt, orbit: orbit, star: self, parent: self, age: self.age))
+                    planets.append(RTTPlanet(type: .asteroidBelt, orbit: orbit, star: self, parent: self, age: self.age))
                 case 2:
-                    planets.append(RTTPlanet(type: .Dwarf, orbit: orbit, star: self, parent: self, age: self.age))
+                    planets.append(RTTPlanet(type: .dwarf, orbit: orbit, star: self, parent: self, age: self.age))
                 case 3:
-                    planets.append(RTTPlanet(type: .Terrestrial, orbit: orbit, star: self, parent: self, age: self.age))
+                    planets.append(RTTPlanet(type: .terrestrial, orbit: orbit, star: self, parent: self, age: self.age))
                 case 4:
-                    planets.append(RTTPlanet(type: .Helian, orbit: orbit, star: self, parent: self, age: self.age))
+                    planets.append(RTTPlanet(type: .helian, orbit: orbit, star: self, parent: self, age: self.age))
                 default:
-                    planets.append(RTTPlanet(type: .Jovian, orbit: orbit, star: self, parent: self, age: self.age))
+                    planets.append(RTTPlanet(type: .jovian, orbit: orbit, star: self, parent: self, age: self.age))
                 }
             }
         }

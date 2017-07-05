@@ -13,8 +13,8 @@
 import Foundation
 
 enum NameAlgorithm {
-    case RandomLetters
-    case Frontier
+    case randomLetters
+    case frontier
 }
 
 extension String {
@@ -25,7 +25,7 @@ extension String {
         return String(characters.suffix(1))
     }
     var uppercaseFirst: String {
-        return first.uppercaseString + String(characters.dropFirst())
+        return first.uppercased() + String(characters.dropFirst())
     }
 }
 
@@ -73,10 +73,10 @@ class Name:CustomStringConvertible {
         "lia", "an", "ar", "ur", "mi", "in", "ti", "qu", "so", "ed", "ess",
         "ex", "io", "ce", "ze", "fa", "ay", "wa", "da", "ack", "gre"]
     
-    init(maxLength:Int = 0, nameAlgorithm: NameAlgorithm = NameAlgorithm.Frontier) {
+    init(maxLength:Int = 0, nameAlgorithm: NameAlgorithm = NameAlgorithm.frontier) {
         self.algorithm = nameAlgorithm
         switch algorithm {
-        case .RandomLetters:
+        case .randomLetters:
         maxNameLength = maxLength
         let u = Int(arc4random_uniform(UInt32(wordLengthCD[0])))
         var nameLen = 1
@@ -92,7 +92,7 @@ class Name:CustomStringConvertible {
         var initLetter:Character = " "
         for index in 1..<initialLetterCD.count {
             if initialLetterCD[index] >= v {
-                initLetter = Character(UnicodeScalar(index+96))
+                initLetter = Character(UnicodeScalar(index+96)!)
                 break
             }
         }
@@ -105,14 +105,14 @@ class Name:CustomStringConvertible {
             for index in 1..<followingLetterCD[cl]!.count {
                 let value = followingLetterCD[cl]![index]
                 if value >= w {
-                    let letter = Character(UnicodeScalar(index+96))
+                    let letter = Character(UnicodeScalar(index+96)!)
                     cl = letter
                     break
                 }
             }
             name.append(cl)
         }
-        case .Frontier:
+        case .frontier:
             for _ in 0..<3 {
                 name += frontierBits[Int(arc4random_uniform(UInt32(frontierBits.count)))]
             }

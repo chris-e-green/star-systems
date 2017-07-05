@@ -9,7 +9,7 @@
 import Foundation
 
 extension Int {
-    func strord(things: String)->String {
+    func strord(_ things: String)->String {
         var result = ""
         if self == 1 {
             result += "is "
@@ -28,8 +28,8 @@ extension Int {
     
 }
 
-enum SatelliteError:ErrorType {
-    case OrbitInUse
+enum SatelliteError:Error {
+    case orbitInUse
 }
 
 class Satellites/* : CustomStringConvertible */{
@@ -37,12 +37,12 @@ class Satellites/* : CustomStringConvertible */{
     // while it's ambiguous, I treat Close and orbit 0 as two distinct positions. Close is orbit -1.
     var orbits: [Int:Satellite] = [:]
     
-    func addSatelliteAtOrbit(orbit: Float, newSatellite: Satellite) throws {
+    func addSatelliteAtOrbit(_ orbit: Float, newSatellite: Satellite) throws {
         let intOrbit:Int = Int(orbit * 10)
-        guard orbits[intOrbit] == nil else { throw SatelliteError.OrbitInUse }
+        guard orbits[intOrbit] == nil else { throw SatelliteError.orbitInUse }
         orbits[intOrbit] = newSatellite
     }
-    func getSatelliteAtOrbit(orbit: Float) -> Satellite? {
+    func getSatelliteAtOrbit(_ orbit: Float) -> Satellite? {
         let intOrbit:Int = Int(orbit * 10)
         return orbits[intOrbit]
     }
@@ -56,17 +56,17 @@ class Satellite {
     
     var satDesc: String {
         var result: String = ""
-        let pad = String(count: solarDepth, repeatedValue: Character("\t"))
-        let rpad = String(count: 2 - solarDepth, repeatedValue: Character("\t"))
+        let pad = String(repeating: "\t", count: solarDepth)
+        let rpad = String(repeating: "\t", count: 2 - solarDepth)
         
-        let sortedArray = satellites.orbits.sort({$0.0 < $1.0})
+        let sortedArray = satellites.orbits.sorted(by: {$0.0 < $1.0})
         
         for (i,o) in sortedArray {
             result += "\n\(pad)"
             if i != -10 {
                 var orbitstr = String(format:"%5.1f", arguments:[Float(i) / 10])
-                if orbitstr[orbitstr.endIndex.advancedBy(-2)...orbitstr.endIndex.advancedBy(-1)] == ".0" {
-                    orbitstr = orbitstr[orbitstr.startIndex...orbitstr.endIndex.advancedBy(-3)] + "  "
+                if orbitstr[orbitstr.characters.index(orbitstr.endIndex, offsetBy: -2)...orbitstr.characters.index(orbitstr.endIndex, offsetBy: -1)] == ".0" {
+                    orbitstr = orbitstr[orbitstr.startIndex...orbitstr.characters.index(orbitstr.endIndex, offsetBy: -3)] + "  "
                 }
                 if o.zone == .H { result += "*" } else { result += " " }
                 result += orbitstr
@@ -89,7 +89,7 @@ class Satellite {
     
     var satJSON: String {
         var result: String = ""
-        let sorted = satellites.orbits.sort({$0.0 < $1.0})
+        let sorted = satellites.orbits.sorted(by: {$0.0 < $1.0})
         
         for (i, o) in sorted {
             //            result += "\t\"\(jsonLabels.sat)\": {\n"
@@ -113,7 +113,7 @@ class Satellite {
         self.name = ""
     }
     
-    func addToOrbit(orbit: Float, newSatellite: Satellite)  {
+    func addToOrbit(_ orbit: Float, newSatellite: Satellite)  {
         do {
             try satellites.addSatelliteAtOrbit(orbit, newSatellite: newSatellite)
 //            if self is Star {
@@ -126,26 +126,26 @@ class Satellite {
 //                    }
 //                }
 //            }
-        } catch SatelliteError.OrbitInUse {
+        } catch SatelliteError.orbitInUse {
             if (getSatellite(orbit) is EmptyOrbit || getSatellite(orbit) is Star) && newSatellite is EmptyOrbit {
                 if DEBUG { print("Tried to add an empty orbit and collided with another companion") }
             } else {
-                print("EXCEPTION: Orbit \(orbit) in use (\(getSatellite(orbit))), can't add \(newSatellite)!")
+                print("EXCEPTION: Orbit \(orbit) in use, can't add \(newSatellite)!")
             }
         } catch {
             print("EXCEPTION: Something unexpected happened, \(error)")
         }
     }
     
-    func getSatellite(orbit: Float) -> Satellite? {
+    func getSatellite(_ orbit: Float) -> Satellite? {
         return satellites.getSatelliteAtOrbit(orbit)
     }
     
-    func getSatellite(orbit: Int) -> Satellite? {
+    func getSatellite(_ orbit: Int) -> Satellite? {
         return getSatellite(Float(orbit))
     }
     
-    func getZone(orbit: Float) -> Zone? {
+    func getZone(_ orbit: Float) -> Zone? {
         if self is Star {
             let s = self as! Star
             if let zones:[Zone] = tableOfZones[s.starDetail] {
@@ -193,12 +193,12 @@ class Satellite {
             if s is Planet {
                 result.append(s as! Planet)
             } else { if DEBUG { print("\(s.name) is not a planet") } }
-            result.appendContentsOf(s.getPlanets())
+            result.append(contentsOf: s.getPlanets())
         }
         return result
     }
     
-    func getMoonOrbit(dm: Int) -> Float {
+    func getMoonOrbit(_ dm: Int) -> Float {
         var orbit : Int
         repeat {
             switch Dice.roll(2) + dm {
@@ -237,17 +237,17 @@ class Satellite {
                 let (pa, p) = s.getMaxPop()
                 if p > maxPlanets.pop {
                     maxPlanets.planets.removeAll()
-                    maxPlanets.planets.appendContentsOf(pa)
+                    maxPlanets.planets.append(contentsOf: pa)
                     maxPlanets.pop = p
                 } else if p == maxPlanets.pop {
-                    maxPlanets.planets.appendContentsOf(pa)
+                    maxPlanets.planets.append(contentsOf: pa)
                 }
             }
         }
         return maxPlanets
     }
     
-    func getZone(orbit: Int) -> Zone? {
+    func getZone(_ orbit: Int) -> Zone? {
         return getZone(Float(orbit))
     }
     

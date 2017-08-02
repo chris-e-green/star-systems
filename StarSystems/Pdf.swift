@@ -307,7 +307,7 @@ class Pdf {
             font = NSFont(name: fontName, size:CGFloat(fontSize))
             nsfonts["\(fontName)\(fontSize)"] = font
         }
-        let ctl:CTLine = CTLineCreateWithAttributedString(NSAttributedString(string:str, attributes: [NSFontAttributeName:font!]))
+        let ctl:CTLine = CTLineCreateWithAttributedString(NSAttributedString(string:str, attributes: [NSAttributedStringKey.font:font!]))
         let width:Double = CTLineGetTypographicBounds(ctl, nil, nil, nil)// / 12.0 * fontSize
         return width
     }

@@ -50,7 +50,7 @@ if CommandLine.argc > 1 {
     switch choice {
     case "-b":
         print("Generating basic system")
-        var planet =  Planet()
+        let planet =  Planet()
         planet.generateRandomPlanet()
         print(planet)
         print(planet.xml)
@@ -91,7 +91,7 @@ if CommandLine.argc > 1 {
         if jsonfn != nil { subsector.writeJson(jsonfn!) }
 
     case "-j":
-        var path = "test.json"
+//        var path = "test.json"
         var jsonfn:String?
         var pdffn:String?
         var rewrite = false

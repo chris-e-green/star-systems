@@ -31,7 +31,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "133"
             endingLineNumber = "133"
-            landmarkName = "addToOrbit(orbit:newSatellite:)"
+            landmarkName = "addToOrbit(_:newSatellite:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -47,7 +47,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "837"
             endingLineNumber = "837"
-            landmarkName = "composite(content:blockWidth:)"
+            landmarkName = "composite(_:blockWidth:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -63,7 +63,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "845"
             endingLineNumber = "845"
-            landmarkName = "composite(content:blockWidth:)"
+            landmarkName = "composite(_:blockWidth:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

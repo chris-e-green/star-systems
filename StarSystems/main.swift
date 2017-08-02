@@ -86,7 +86,7 @@ if CommandLine.argc > 1 {
         if expand {
             subsector.populateStarSystems()
         }
-        if pdffn != nil { subsector.generatePdf(pdffn!, starSysPrint: true) }
+        if pdffn != nil { subsector.generatePdf(pdffn!, starSysPrint: expand) }
         if xmlfn != nil { subsector.serialize(xmlfn!) }
         if jsonfn != nil { subsector.writeJson(jsonfn!) }
 

@@ -10,7 +10,7 @@ import Foundation
 
 
 class Dice {
-    fileprivate var sides: Int = 6
+    var sides = 6
     
     static func roll(_ count: Int = 1, sides: Int = 6) -> Int {
         var total = 0

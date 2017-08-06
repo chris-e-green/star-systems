@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StarSystems/StarSystem.swift"
-            timestampString = "491470619.730337"
+            timestampString = "523686336.944906"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "581"
@@ -42,13 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StarSystems/Pdf.swift"
-            timestampString = "523356550.486764"
+            timestampString = "523439077.380439"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1107"
-            endingLineNumber = "1107"
-            landmarkName = "composite(_:blockWidth:)"
-            landmarkType = "7">
+            endingLineNumber = "1107">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -58,45 +56,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StarSystems/Pdf.swift"
-            timestampString = "523356550.486911"
+            timestampString = "523439077.38066"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1107"
-            endingLineNumber = "1107"
-            landmarkName = "composite(_:blockWidth:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StarSystems/main.swift"
-            timestampString = "523356550.487038"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "unknown"
-            landmarkType = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StarSystems/main.swift"
-            timestampString = "523356550.487852"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            endingLineNumber = "1107">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

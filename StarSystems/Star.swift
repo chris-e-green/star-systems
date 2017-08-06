@@ -54,6 +54,8 @@ enum StarSize:String,CustomStringConvertible {
     }
 }
 
+/// Contains the spectrum and size information for the star and a hash
+/// so that different stars can be compared.
 struct StarDetail:Hashable,Equatable {
     var t: StarType
     var d: Int
@@ -65,6 +67,7 @@ struct StarDetail:Hashable,Equatable {
     }
 }
 
+/// return true if the compared stars have the same spectrum and size
 func ==(lhs: StarDetail, rhs: StarDetail) -> Bool {
     return lhs.hashValue == rhs.hashValue
 }
@@ -91,6 +94,7 @@ enum Zone: String, CustomStringConvertible {
     }
 }
 
+/// the various stellar attributes from Traveller Book 6
 let stellarAttrs:[StarDetail:(bolMagnitude:Double,luminosity:Double, effTemp:Double, radii: Double, mass: Double)] = [
     StarDetail(t: .B, d: 0, s: .Ia):  (-9.6, 560_000,    22_000,   52,    60),
     StarDetail(t: .B, d: 5, s: .Ia):  (-8.5, 204_000,    14_200,   75,    30),
@@ -192,7 +196,7 @@ let stellarAttrs:[StarDetail:(bolMagnitude:Double,luminosity:Double, effTemp:Dou
     StarDetail(t: .M, d: 9, s: .D):   (15.9,       0.00003,2_700,   0.006, 1.11),
 
 ]
-/// the defined zones for each star type and size
+/// the defined zones for each star type and size from Traveller Book 6
 let tableOfZones:[StarDetail:[Zone]] = [
     //                            0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
     StarDetail(t: .B, d: 0, s: .Ia):  [.W,.U,.U,.U,.U,.U,.U,.U,.I,.I,.I,.I,.I,.H,.O],
@@ -550,11 +554,14 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
         return result
         
     }
-    /// Obtain all satellites within the supplied zones.
-    ///
-    /// - parameters:
-    ///     - zones: The `Zone`s that the satellites must occupy.
-    /// - returns: An array of satellites that are with the requested `Zone`s.
+    /**
+ Obtain all satellites within the supplied zones.
+     
+ - parameters:
+     - zones: The `Zone`s that the satellites must occupy.
+     
+ - returns: An array of satellites that are with the requested `Zone`s.
+ */
     func getSatellites(_ zones:Set<Zone>)->[Satellite] {
         var satellites:[Satellite] = []
         for i in 0...maxOrbitNum {
@@ -564,9 +571,11 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
         }
         return satellites
     }
-    /// Obtain a random available habitable or outer orbit.
-    ///
-    /// - Returns: A random unoccupied orbit within the habitable and outer zones.
+    /**
+ Obtain a random available habitable or outer orbit.
+ - Returns: A random unoccupied orbit within the habitable and outer zones. If
+     there are no available orbits in those zones, the outcome is undefined.
+ */
     func getAvailHabitableOrOuterOrbit()->Float? {
         // returns a random available habitable or outer orbit number.
         var o:Float?
@@ -579,9 +588,7 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
         return o
     }
     
-    /// The number of available habitable and outer orbits.
-    ///
-    /// - Returns: The number of available orbits in the habitable and outer zones.
+    /// The number of available orbits in the habitable and outer zones.
     var availHabOuterOrbits:Int {
         return getAvailOrbits(Set<Zone>([Zone.H, Zone.O]), createIfNone: false).count
     }
@@ -591,6 +598,11 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
         return getAvailOrbits(Set<Zone>([Zone.H, Zone.I, Zone.O, Zone.U]), createIfNone: false).count
     }
     
+    /**
+ Roll for the maximum number of orbits
+ - Returns:
+     the maximum number of orbits for the star as rolled
+ */
     func getMaxOrbitNum() -> Int {
         // determine maximum orbits
         var orbitDM : Int = 0
@@ -605,41 +617,46 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
         return result
     }
     
-    /// Obtain a random orbit for a companion star.
-    ///
-    /// - parameters:
-    ///     - dm: The dice modifier for the throw.
-    /// - Returns:
-    ///     A tuple containing
-    ///     - orbitNum: The orbit number.
-    ///     - inFarOrbit: True if the orbit number is Far, and thus the companion could have its own companion.
+    /**
+ Obtain a random orbit for a companion star.
+     
+ - parameters:
+     - dm: The dice modifier for the throw.
+ - Returns:
+     A tuple containing
+        - orbitNum: The orbit number.
+        - inFarOrbit: True if the orbit number is Far, and thus the
+                 companion could have its own companion.
+ - Note:
+     Curiously, the distribution of possible companion orbits is seemingly
+     quite arbitrary.
+     - orbit 4 is not possible(!);
+     - orbit 14 has about 1% chance;
+     - orbit 13 has a 2% chance;
+     - orbit 5 has a 3% chance;
+     - orbit 12 has a 4% chance;
+     - orbit 6 has a 5% chance;
+     - orbit 11 has a 6% chance;
+     - orbit 7 has a 7% chance;
+     - orbits 0, 1 and 8 have about 8% chance each;
+     - orbits 9 and 10 have a 9% chance each;
+     - orbit 2 has an 11% chance;
+     - orbit 3 has a 14% chance;
+     
+     However, this implementation is based on the rules as written, so the
+     weirdness remains. The only thing I've done is to turn the "far" orbits
+     into real ones: under the rules as written, "far" is 1D6 * 1,000 AU.
+     This puts
+     - 1 at about orbit 13.7,
+     - 2 at about orbit 14.7,
+     - 3 at about orbit 15.3,
+     - 4 at about orbit 15.7,
+     - 5 at about orbit 16 and
+     - 6 at about orbit 16.3.
+     
+     */
     func getCompanionOrbit(_ dm: Int)->(orbitNum: Float, inFarOrbit: Bool) {
-        /* curiously, the distribution of possible companion orbits is seemingly quite
-         arbitrary.
-         
-         orbit 4 is not possible(!);
-         orbit 14 has about 1% chance;
-         orbit 13 has a 2% chance;
-         orbit 5 has a 3% chance;
-         orbit 12 has a 4% chance;
-         orbit 6 has a 5% chance;
-         orbit 11 has a 6% chance;
-         orbit 7 has a 7% chance;
-         orbits 0, 1 and 8 have about 8% chance each;
-         orbits 9 and 10 have a 9% chance each;
-         orbit 2 has an 11% chance;
-         orbit 3 has a 14% chance;
-         
-         However, this implementation is based on the rules as written, so the
-         weirdness remains. The only thing I've done is to turn the "far" orbits into
-         real ones: under the rules as written, "far" is 1D6 * 1,000 AU. This puts
-         1 at about orbit 13.7,
-         2 at about orbit 14.7,
-         3 at about orbit 15.3,
-         4 at about orbit 15.7,
-         5 at about orbit 16 and
-         6 at about orbit 16.3.
-         */
+
         
         var farOrbit: Bool = false
         var orbit: Float

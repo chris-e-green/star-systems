@@ -77,15 +77,15 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-s"
+            argument = "-type subsector"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "1"
+            argument = "-density 1"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "~/tttt.pdf"
+            argument = "-pdf ~/tttt.pdf"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

@@ -12,117 +12,95 @@ import Foundation
 let DEBUG=false
 
 func printSyntax() {
-    print("\(CommandLine.arguments[0]) -u=UWP [-n] [-s] [-g] [-c=x,y] [-N=name]")
-    print("\tGenerates a full star system from an existing planet.")
-    print("\t-u=UWP sets the planetary profile, formatted A123456-7")
-    print("\t-n if a naval base is present, -s if a scout base is present,")
-    print("\t-g if a gas giant is present")
-    print("\t-c=x,y sets optional coordinates")
-    print("\t-N=name sets the name of the planet, otherwise one will be generated.")
+    print("\(CommandLine.arguments[0]) -type basicPlanet | subsector | processJson | basicStar | RTTWorldGen | fromUWP [options]")
     print()
-    print("\(CommandLine.arguments[0]) -f")
-    print("\tGenerates a full star system from scratch.")
+    print("\t-type basicPlanet")
+    print("\t\tGenerates a basic planet.")
     print()
-    print("\(CommandLine.arguments[0]) -b")
-    print("\tGenerates a basic planet.")
+    print("\t-type subsector -density {density} [-expanded YES|NO] [-pdf {file1}.pdf] [-xml {file2}.xml] [-json {file3}.json]")
+    print("\t\tGenerates a subsector to PDF/XML/JSON.")
+    print("\t\twhere density is 1..5, and represents chance out of 6")
+    print("\t\tsupplying filenames will produce file1.pdf, file2.xml, file3.json.")
+    print("\tIf -expanded is specified, expanded star system details will be generated")
     print()
-    print("\(CommandLine.arguments[0]) -r [-v]")
-    print("\tGenerates a system using RTT Worldgen rules.")
-    print("\t-v displays verbose system description.")
+    print("\t-type processJson [-overwrite YES|NO] [-expanded YES|NO] -json file1.json -pdf file2.pdf")
+    print("\t\tLoad a subsector from {file1}.json and generate {file2}.pdf")
+    print("\t\tIf -overwrite YES is specified, {file1}.json is rewritten (mainly to recalculate")
+    print("\t\ttrade classifications).")
+    print("\t\tIf -expanded YES is specified, expanded star system details will be generated")
     print()
-    print("\(CommandLine.arguments[0]) -s [-x] {density} [file1.pdf] [file2.xml] [file3.json]")
-    print("\tGenerates a subsector to PDF/XML/JSON.")
-    print("\twhere density is 1..5, and represents chance out of 6")
-    print("\tsupplying filenames will produce file1.pdf, file2.xml, file3.json.")
-    print("\tIf -x is specified, expanded star system details will be generated")
-   print("\(CommandLine.arguments[0]) -j [-o] [-x] file1.json file2.pdf")
-    print("\tLoad a subsector from file1.json and generate file2.pdf")
-    print("\tIf -o is specified, file1.json is rewritten (mainly to recalculate")
-    print("\ttrade classifications).")
-    print("\tIf -x is specified, expanded star system details will be generated")
+    print("\t-type basicStar")
+    print("\t\tGenerates a full star system from scratch.")
+    print()
+    print("\t-type RTTWorldGen [-verbose YES|NO]")
+    print("\t\tGenerates a system using RTT Worldgen rules.")
+    print("\t\t-verbose YES displays a verbose system description.")
+    print()
+    print("\t-type fromUWP")
+    print("-UWP {UWPString} [-navalBase YES|NO] [-scoutBase YES|NO] [-gasGiant YES|NO] [-coords x,y] [-name {name}]")
+    print("\t\tGenerates a full star system from an existing planet.")
+    print("\t\t-UWP UWPString sets the planetary profile, where UWPString is formatted A123456-7")
+    print("\t\t-navalBase YES if a naval base is present")
+    print("\t\t-scoutBase YES if a scout base is present")
+    print("\t\t-gasGiant YES if a gas giant is present")
+    print("\t\t-coords x,y sets optional coordinates")
+    print("\t\t-name {name} sets the name of the planet, otherwise one will be generated.")
+    print()
 }
 
 var planet:Planet
 
-if CommandLine.argc > 1 {
-    let param1:String = CommandLine.arguments[1]
-    let choice = param1[param1.startIndex...param1.characters.index(param1.startIndex, offsetBy: 1)]
-    switch choice {
-    case "-b":
-        print("Generating basic system")
+var cmdLineOpts:UserDefaults = UserDefaults.standard;
+
+let expanded = cmdLineOpts.bool(forKey: "expanded")
+let density = cmdLineOpts.integer(forKey: "density")
+let xmlfn:String? = cmdLineOpts.string(forKey: "xml")
+let jsonfn:String? = cmdLineOpts.string(forKey: "json")
+let pdffn:String? = cmdLineOpts.string(forKey: "pdf")
+let overwrite = cmdLineOpts.bool(forKey: "overwrite")
+let verbose = cmdLineOpts.bool(forKey: "verbose")
+let navalBase = cmdLineOpts.bool(forKey: "navalBase")
+let scoutBase = cmdLineOpts.bool(forKey: "scoutBase")
+let gasGiant = cmdLineOpts.bool(forKey: "gasGiant")
+let coords = cmdLineOpts.string(forKey: "coords")
+let upp = cmdLineOpts.string(forKey: "UWP")
+let name = cmdLineOpts.string(forKey: "name")
+
+if let type = cmdLineOpts.string(forKey: "type") {
+    switch type {
+    case "basicPlanet":
+        print("Generating basic system from scratch")
         let planet =  Planet()
         planet.generateRandomPlanet()
         print(planet)
-        print(planet.xml)
-    case "-s":
-        var density = 3
-//        var path = "test"
-        var xmlfn:String?
-        var jsonfn:String?
-        var pdffn:String?
-        var expand = false
-        for fn in CommandLine.arguments {
-            if fn.contains(".xml") {
-                xmlfn = fn
-            }
-            if fn.contains(".json") {
-                jsonfn = fn
-            }
-            if fn.contains(".pdf") {
-                pdffn = fn
-            }
-            if let d = Int(fn) {
-                density = d
-            }
-            if fn == "-x" {
-                expand = true
-            }
-        }
+    case "basicStar":
+        print("Generating system from scratch")
+        let star : StarSystem = StarSystem()
+        print(star)
+    case "subsector":
         if density > 5 || density < 1 {
             print("sorry, that density makes no sense.")
             abort()
         }
         let subsector: Subsector = Subsector(density: density)
-        if expand {
-            subsector.populateStarSystems()
-        }
-        if pdffn != nil { subsector.generatePdf(pdffn!, starSysPrint: expand) }
+        if expanded { subsector.populateStarSystems() }
+        if pdffn != nil { subsector.generatePdf(pdffn!, starSysPrint: expanded) }
         if xmlfn != nil { subsector.serialize(xmlfn!) }
         if jsonfn != nil { subsector.writeJson(jsonfn!) }
-
-    case "-j":
-//        var path = "test.json"
-        var jsonfn:String?
-        var pdffn:String?
-        var rewrite = false
-        var expand = false
-        for fn in CommandLine.arguments {
-            if fn == "-o" {
-                rewrite = true
-            }
-            if fn == "-s" {
-                expand = true
-            }
-            if fn.contains(".json") {
-                jsonfn = fn
-            }
-            if fn.contains(".pdf") {
-                pdffn = fn
-            }
-        }
+    case "processJson":
         if jsonfn != nil {
             let subsector: Subsector = Subsector(jsonFilename: jsonfn!)
-            if expand {
+            if expanded {
                 subsector.populateStarSystems()
                 subsector.writeJson2("testing2.json")
             }
             if pdffn != nil {
-                if expand {
+                if expanded {
                     subsector.generatePdf(pdffn!, starSysPrint: true)
                 } else {
                     subsector.generatePdf(pdffn!)
                 }
-                if rewrite {
+                if overwrite {
                     subsector.writeJson(jsonfn!)
                 }
             } else {
@@ -131,57 +109,16 @@ if CommandLine.argc > 1 {
         } else {
             print("A JSON file name must be supplied.")
         }
-
-
-    case "-f":
-        print("Generating system from scratch")
-        let star : StarSystem = StarSystem()
-        print(star)
-    case "-r":
+    case "RTTWorldGen":
         print("Generating system using RTTWorldGen")
-        var verbose = false
-        for fn in CommandLine.arguments {
-            switch fn[fn.startIndex...fn.characters.index(fn.startIndex, offsetBy: 1)] {
-            case "-v": verbose = true
-            default: break
-            }
-        }
         let rtt = RTTSystem()
-        if verbose {
-            print(rtt.verboseDesc)
-        } else {
-            print(rtt)
-        }
-    case "-u":
-        var navalBase = false
-        var scoutBase = false
-        var gasGiant = false
-        var coords : String?
-        var upp: String?
-        var name: String?
-        var json: Bool = false
-        var jsonFile: String?
-        for fn in CommandLine.arguments {
-            switch fn[fn.startIndex...fn.characters.index(fn.startIndex, offsetBy: 1)] {
-            case "-n": navalBase = true
-            case "-s": scoutBase = true
-            case "-g": gasGiant = true
-            case "-c": coords = fn.components(separatedBy:"=")[1]
-            case "-u":
-                upp = fn.components(separatedBy:"=")[1]
-            case "-N":
-                name = fn.components(separatedBy:"=")[1]
-            case "-j":
-                json = true
-                jsonFile = fn.components(separatedBy:"=")[1]
-            default: break
-            }
-        }
+        if verbose { print(rtt.verboseDesc) }
+        else { print(rtt) }
+    case "fromUWP":
+        print("Generating system from UWP")
         if upp != nil {
             planet = Planet.init(upp: upp!, scoutBase: scoutBase, navalBase: navalBase, gasGiant: gasGiant)
-            if name != nil {
-                planet.name = name!
-            }
+            if name != nil { planet.name = name! }
             if coords != nil {
                 if let coordParts = coords?.components(separatedBy:",") {
                     planet.coordinateX = Int(coordParts[0])!
@@ -189,20 +126,21 @@ if CommandLine.argc > 1 {
                 }
             }
             print("Generating from existing planet \(planet)")
-//            print (planet)
+            //            print (planet)
             let starSystem = StarSystem(newWorld: planet)
             print(starSystem)
-            if json {
-                if let fn = jsonFile {
-                    let jsonF = JsonFile(jsonFilename: fn)
-                    jsonF.writeJson(starSystem.json)
-                }
-            } 
+            if let fn = jsonfn {
+                let jsonF = JsonFile(jsonFilename: fn)
+                jsonF.writeJson(starSystem.json)
+            }
         } else {
-            print("the UWP must be supplied!")
+            print("The UWP must be supplied when generating from UWP!")
             printSyntax()
         }
     default:
         printSyntax()
     }
-} else { printSyntax() }
+} else {
+    printSyntax()
+}
+

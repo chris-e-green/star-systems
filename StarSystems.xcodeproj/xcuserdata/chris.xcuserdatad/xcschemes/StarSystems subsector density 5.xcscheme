@@ -76,11 +76,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-s"
+            argument = "-type subsector"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "5"
+            argument = "-density 5"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

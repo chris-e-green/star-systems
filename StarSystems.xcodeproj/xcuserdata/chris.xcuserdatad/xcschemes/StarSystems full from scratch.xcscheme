@@ -76,7 +76,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-f"
+            argument = "-type basicStar"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

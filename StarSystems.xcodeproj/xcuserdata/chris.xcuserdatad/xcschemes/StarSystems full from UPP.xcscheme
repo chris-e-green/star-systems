@@ -76,39 +76,43 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-u=C66A546-B"
+            argument = "-UWP C66A546-B"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-type fromUWP"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-UWP C000546-B"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-u=C000546-B"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-u=C06A546-B"
+            argument = "-UWP C06A546-B"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-j=~/gui.json"
+            argument = "-json ~/gui.json"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-n"
+            argument = "-navalBase YES"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-g"
+            argument = "-gasGiant YES"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-s"
+            argument = "-scoutBase YES"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-N=Guiabidigoob"
+            argument = "-name Guiabidigoob"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-c=05,06"
+            argument = "-coords 05,06"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

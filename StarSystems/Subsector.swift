@@ -8,10 +8,27 @@
 
 import Foundation
 
-class Subsector  {
+class Subsector:CustomStringConvertible  {
     var planets = [Planet]()
     var starSystems = [StarSystem]()
     var name: String = ""
+    
+    var description: String {
+        var result:String = ""
+        result += "Subsector name: \(name)\n"
+        
+        if starSystems.count>0 {
+            for (_, s) in starSystems.enumerated() {
+                result += "\(s)\n"
+            }
+        } else {
+            for (_, p) in planets.enumerated() {
+                result += "\(p)\n"
+            }
+        }
+        return result
+    }
+    
     var xml: String {
         var x: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
         x += "<\(jsonLabels.subsector)>\n"
@@ -24,6 +41,7 @@ class Subsector  {
         x += "</\(jsonLabels.subsector)>\n"
         return x
     }
+    
     var json: String {
         var j: String = "{\n\"\(jsonLabels.subsector)\": "
         j += "[\n"
@@ -52,27 +70,27 @@ class Subsector  {
         return j
     }
     
-    func generatePdf(_ filename: String, starSysPrint: Bool = false) {
-        let pdf : Pdf = Pdf()
-        pdf.start()
-        if starSysPrint {
-            for s in starSystems {
-                pdf.display(s)
-            }
-        } else {
-            for p in planets {
-                pdf.display(p)
-            }
-        }
-        pdf.end()
-        do {
-            let fn = NSString(string:filename).expandingTildeInPath
-            print("Writing PDF to \(fn)")
-            try pdf.pdfContent.write(toFile: fn, atomically: true, encoding: String.Encoding.utf8)
-        } catch {
-            print("EXCEPTION: \(error) writing \(pdf.pdfContent)")
-        }
-    }
+//    func generatePdf(_ filename: String, starSysPrint: Bool = false) {
+//        let pdf : Pdf = Pdf()
+//        pdf.start()
+//        if starSysPrint {
+//            for s in starSystems {
+//                pdf.display(s)
+//            }
+//        } else {
+//            for p in planets {
+//                pdf.display(p)
+//            }
+//        }
+//        pdf.end()
+//        do {
+//            let fn = NSString(string:filename).expandingTildeInPath
+//            print("Writing PDF to \(fn)")
+//            try pdf.pdfContent.write(toFile: fn, atomically: true, encoding: String.Encoding.utf8)
+//        } catch {
+//            print("EXCEPTION: \(error) writing \(pdf.pdfContent)")
+//        }
+//    }
     
     func populateStarSystems() {
         for p in planets {
@@ -133,7 +151,7 @@ class Subsector  {
         }
     }
     
-    init(density:Int) {
+    init(density:Int, withStarSystems: Bool = false) {
         let d : Dice = Dice(sides:6)
 
         for x in 1...8 {
@@ -145,5 +163,6 @@ class Subsector  {
             }
         }
         name = String(describing: Name(maxLength: 8))
+        if withStarSystems { populateStarSystems()}
     }
 }

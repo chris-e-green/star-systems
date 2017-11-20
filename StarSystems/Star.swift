@@ -9,7 +9,7 @@
 import Foundation
 
 /// Possible star spectral types
-enum StarType:String, CustomStringConvertible {
+enum StarType:String, CustomStringConvertible,Codable {
     case O
     case B
     case A
@@ -31,7 +31,7 @@ enum StarType:String, CustomStringConvertible {
 }
 
 /// Possible star sizes
-enum StarSize:String,CustomStringConvertible {
+enum StarSize:String,CustomStringConvertible,Codable {
     case Ia
     case Ib
     case II
@@ -56,7 +56,7 @@ enum StarSize:String,CustomStringConvertible {
 
 /// Contains the spectrum and size information for the star and a hash
 /// so that different stars can be compared.
-struct StarDetail:Hashable,Equatable {
+struct StarDetail:Hashable,Equatable,Codable {
     var t: StarType
     var d: Int
     var s: StarSize
@@ -310,6 +310,10 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
     var maxOrbitNum: Int = 0
     //    var hashValue: Int {get {return self.type.hashValue * 100 + self.decimal * 10 + self.size.hashValue}}
     
+    var specSizeDescription: String {
+        return "\(starDetail.t), \(starDetail.s) Star"
+    }
+    
     var starDesc: String {
         var result = ""
         //        let pad = String(count: depth, repeatedValue: Character(" "))
@@ -317,9 +321,14 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
         //        result += "\t\t\t"
         result += name.padding(maxNameLength)
         result += "\(specSize) "
-        result += "\t\t(\(starDetail.t), \(starDetail.s) Star)"
+        result += "\t\t(\(specSizeDescription))"
         return result
     }
+    
+    var verboseDesc: String {
+        return "\(name) (\(specSize)) is a \(specSizeDescription.lowercased())."
+    }
+    
     var specSize: String {
         var result = ""
         if starDetail.s == .D { result += "\(starDetail.s.rawValue)\(starDetail.t.rawValue)" }
@@ -443,9 +452,9 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
                 if p1.zone == Zone.H {
                     mainWorld = planet
                 } else {
-                    if p1.orbit < minOrbit {
+                    if p1.stellarOrbit < minOrbit {
                         mainWorld = planet
-                        minOrbit = p1.orbit
+                        minOrbit = p1.stellarOrbit
                     }
                 }
             }
@@ -488,13 +497,15 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
         return o
     }
     
-    /// Obtain all available orbits within the supplied zones.
-    ///
-    /// - parameters:
-    ///     - zones: The `Zone`s that the orbit must be within
+/**
+     Obtain all available orbits within the supplied zones.
+ 
+     - parameters:
+    //- zones: The `Zone`s that the orbit must be within
     ///     - createIfNone: Defaults to `true`. Callers that want to count available orbits should supply `false`.
     ///
     /// - Returns: An array of empty orbits that are within the requested `Zone`s.
+ */
     func getAvailOrbits(_ zones:Set<Zone>, createIfNone: Bool=true)->[Float] {
         var orbits:[Float] = []
         for i in 0...maxOrbitNum {
@@ -541,9 +552,11 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
         return result
     }
     
-    /// Return the habitable orbit for this star, if there is one.
-    ///
-    /// - returns: the orbit number of the habitable zone, or nil if there is no habitable zone.
+/**
+     Return the habitable orbit for this star, if there is one.
+     - returns: the orbit number of the habitable zone, or nil if
+     there is no habitable zone.
+ */
     func getHabOrbit()->Float? {
         var result: Float?
         if let zones:[Zone] = tableOfZones[self.starDetail] {
@@ -554,12 +567,12 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
         return result
         
     }
-    /**
+/**
  Obtain all satellites within the supplied zones.
-     
+
  - parameters:
      - zones: The `Zone`s that the satellites must occupy.
-     
+
  - returns: An array of satellites that are with the requested `Zone`s.
  */
     func getSatellites(_ zones:Set<Zone>)->[Satellite] {

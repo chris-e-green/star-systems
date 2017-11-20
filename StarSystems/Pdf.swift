@@ -12,9 +12,17 @@ import AppKit
 postfix operator ~
 postfix func ~ (value: Double)->String {
     var result = String(format: "%.1f", value)
-    if result[result.characters.index(result.endIndex, offsetBy: -2)...result.characters.index(result.endIndex, offsetBy: -1)] == ".0" {
-        result.remove(at: result.characters.index(result.endIndex, offsetBy: -1))
-        result.remove(at: result.characters.index(result.endIndex, offsetBy: -1))
+    if result[result.index(result.endIndex, offsetBy: -2)...result.index(result.endIndex, offsetBy: -1)] == ".0" {
+        result.remove(at: result.index(result.endIndex, offsetBy: -1))
+        result.remove(at: result.index(result.endIndex, offsetBy: -1))
+    }
+    return result
+}
+postfix func ~ (value: Float)->String {
+    var result = String(format: "%.1f", value)
+    if result[result.index(result.endIndex, offsetBy: -2)...result.index(result.endIndex, offsetBy: -1)] == ".0" {
+        result.remove(at: result.index(result.endIndex, offsetBy: -1))
+        result.remove(at: result.index(result.endIndex, offsetBy: -1))
     }
     return result
 }
@@ -209,7 +217,7 @@ class PdfXObject: PdfObj {
             s += "      >>\n"
         }
         s += "   >>\n"
-        s += "   /Length \(stream!.characters.count - 1)\n"
+        s += "   /Length \(stream!.count - 1)\n"
         s += ">>\n"
         s += "stream\n"
         s += stream!
@@ -297,7 +305,7 @@ class Pdf {
     
     func leftPad(_ num: Int)->String {
         let ofsStr = ("0000000000" + String(num))
-        return ofsStr.substring(from: ofsStr.characters.index(ofsStr.endIndex, offsetBy: -10))
+        return String(ofsStr[ofsStr.index(ofsStr.endIndex, offsetBy: -10)...])
     }
     
     func strWidth(_ str:String, fontName: String, fontSize:Double) -> Double {
@@ -959,9 +967,9 @@ class Pdf {
     
     func pdfPlanet(_ planet: Planet)->String {
         var planetStr = ""
-        planetStr += String(format:"0 Tc (%@)Tj 12 0 Td (%@)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td(%1X)Tj 12 0 Td (%1X)Tj 12 0 Td ", arguments:[planet.starport, planet.getSize(),
-            planet.atmosphere, planet.hydrographics, planet.population,
-            planet.government, planet.lawLevel, planet.technologicalLevel])
+        planetStr += String(format:"0 Tc (%@)Tj 12 0 Td (%@)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td(%1X)Tj 12 0 Td (%1X)Tj 12 0 Td ", arguments:[planet.starport, planet.size,
+            planet._atmosphere, planet._hydrographics, planet._population,
+            planet._government, planet._lawLevel, planet._technologicalLevel])
         var basesTCFacilities = ""
         var bases = ""
         if planet.bases.contains(.N) && planet.bases.contains(.S) {
@@ -997,8 +1005,8 @@ class Pdf {
         let c:CoordPair = listCoords(planet.coordinateX, y:planet.coordinateY)
         p += "BT /\(fontId1) \(listPts~) Tf \(c) Td (\(planet.name))Tj "
         p += String(format:"104 0 Td 5.5 Tc (%02d%02d)Tj 0 Tc 60 0 Td ", arguments:[planet.coordinateX, planet.coordinateY])
-        p += String(format:"(%@)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td(%1X)Tj 12 0 Td (%1X)Tj 12 0 Td ", arguments:[planet.starport, planet.size, planet.atmosphere, planet.hydrographics, planet.population, planet.government, planet.lawLevel,
-            planet.technologicalLevel])
+        p += String(format:"(%@)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td(%1X)Tj 12 0 Td (%1X)Tj 12 0 Td ", arguments:[planet.starport, planet._size, planet._atmosphere, planet._hydrographics, planet._population, planet._government, planet._lawLevel,
+            planet._technologicalLevel])
 //        p += "6 5.5 Td 90 Tz ("
         var ggBaseTC = ""
         ggBaseTC += planet.gasGiant ? "G" : ""
@@ -1026,14 +1034,14 @@ class Pdf {
         let c1:CoordPair = hexLocToCoord(planet.coordinateX,y:planet.coordinateY)
         var w:Double = strWidth(planet.starport, fontName: fontName1, fontSize: namePts)
         mapData += "BT /\(fontId1) \(namePts~) Tf \((c1.x - w / 2)~) \((c1.y + 5)~) Td (\(planet.starport))Tj ET\n"
-        let dispName = planet.population >= 9 ? planet.name.uppercased() : planet.name
+        let dispName = planet._population >= 9 ? planet.name.uppercased() : planet.name
         w = strWidth(dispName, fontName: fontName1, fontSize: namePts * 0.75)
         mapData += "BT /\(fontId1) \(namePts~) Tf \((c1.x - w / 2)~) \((c1.y - 6.0 - namePts)~) Td 75 Tz (\(dispName))Tj 100 Tz ET\n"
-        if planet.size == 0 {
+        if planet._size == 0 {
             mapData += asteroids(c1.x, y: c1.y, size: asteroidsSize)
         } else {
             mapData += "q 1 0 0 1 \(c1) cm "
-            if planet.hydrographics > 0 {
+            if planet._hydrographics > 0 {
                 mapData += "/\(xobjPlanetDry)"
             } else {
                 mapData += "/\(xobjPlanetWet)"
@@ -1057,7 +1065,7 @@ class Pdf {
     func newPage(_ data: String) {
         let contents = PdfContents(id:currObjId)
         structure[currObjId] = contents
-        contents.body += "<< /Length \(data.characters.count)\n >>\nstream\n"
+        contents.body += "<< /Length \(data.count)\n >>\nstream\n"
         contents.body += data
         contents.body += "\nendstream\n"
         currObjId += 1
@@ -1085,12 +1093,12 @@ class Pdf {
         let pdfHdr = "%PDF-1.4\n%\u{8f}\u{8f}\n"
         pdfContent += pdfHdr
         
-        var offset:Int = pdfHdr.characters.count + 2
+        var offset:Int = pdfHdr.count + 2
         var xref : String = "xref\n0 \(structure1.count + 1)\n0000000000 65535 f \n"
         for (_, m) in structure1 {
             xref += "\(leftPad(offset)) 00000 n \n"
             pdfContent += m.content
-            offset += m.content.characters.count
+            offset += m.content.count
         }
         
         pdfContent += xref

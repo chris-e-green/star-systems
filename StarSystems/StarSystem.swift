@@ -26,7 +26,7 @@ class StarSystem : CustomStringConvertible {
     var subsectorName:   String = ""
     var primary:         Star   = Star()  // the primary star. Companions are satellites.
     var stars:           [Star] = []      // all *orbitable* stars in the system.
-    var starCount:       Int    = 0       // The number of stars, including non-orbital (close) companions.
+//    var starCount:       Int    = 0       // The number of stars, including non-orbital (close) companions.
     var mainWorld:       Planet?          // the main world. Can be supplied, or generated.
                                           // It will ultimately be a link to a satellite.
     var gasGiants:       Bool   = false   // per system
@@ -112,7 +112,7 @@ class StarSystem : CustomStringConvertible {
     var allNavalBaseCandidates:[Planet] {
         var result: [Planet] = []
         for p in allPlanets {
-            if p.population >= 3 && p != mainWorld! {
+            if p._population >= 3 && p != mainWorld! {
                 result.append(p)
                 if DEBUG { print("added \(p) to naval base candidates") }
             } else {
@@ -129,7 +129,7 @@ class StarSystem : CustomStringConvertible {
     var allScoutBaseCandidates:[Planet] {
         var result: [Planet] = []
         for p in allPlanets {
-            if p.population >= 2 && p != mainWorld! {
+            if p._population >= 2 && p != mainWorld! {
                 result.append(p)
                 if DEBUG { print("added \(p) to scout base candidates") }
             } else {
@@ -176,11 +176,11 @@ class StarSystem : CustomStringConvertible {
         var unavailable = [(min: Float, max: Float)]()
         if newWorld != nil {
             mainWorldSupplied = true
-            if (newWorld!.atmosphere >= 4 && newWorld!.atmosphere <= 9) || newWorld!.population >= 8 {
+            if (newWorld!._atmosphere >= 4 && newWorld!._atmosphere <= 9) || newWorld!._population >= 8 {
                 dmRequired = true
             }
             // most of the time the main world must be placed in a habitable zone, except in the following cases.
-            if newWorld!.atmosphere <= 1 || newWorld!.atmosphere >= 10 || newWorld!.size == 0 {
+            if newWorld!._atmosphere <= 1 || newWorld!._atmosphere >= 10 || newWorld!._size == 0 {
                 if DEBUG { print("mainworld does not need habitable zone") }
                 mainWorldNeedsHabitable = false
             }
@@ -287,6 +287,7 @@ class StarSystem : CustomStringConvertible {
         // TODO: if we are doing a continuation, we must have a habitable orbit. I guess if we end up without one at all, we
         //       will just regenerate the stars until we do!
         
+        
         // now, for each star in the system, we can determine captured planets and empty orbits.
         
         for star in stars {
@@ -306,7 +307,8 @@ class StarSystem : CustomStringConvertible {
                 emptyOrbits = usableOrbits
                 if DEBUG { print("reduced empty orbits to \(emptyOrbits)") }
             }
-            
+            // TODO: It's evidently possible to end up with negative empty orbits and negative usable orbits. Need to trap this.
+
             if star.maxOrbitNum >= 2 {
                 for i in 0 ..< emptyOrbits {
                     var orbit : Float = 0.0
@@ -504,7 +506,7 @@ class StarSystem : CustomStringConvertible {
             for orbit in star.getAvailOrbits(Set<Zone>([Zone.H, Zone.I, Zone.O])) {
                 let planet = Planet(orbit: orbit, starType: star.starDetail.t, zone: star.getZone(orbit)!, planetoid: false, parent: star)
                 if let mw = mainWorld {
-                    planet.checkPopulation(mw.population)
+                    planet.checkPopulation(mw._population)
                 }
                 star.addToOrbit(orbit, newSatellite: planet)
                 if DEBUG { print("Added planet to orbit \(orbit) on star \(star.name)") }
@@ -515,7 +517,7 @@ class StarSystem : CustomStringConvertible {
                 var moonCount = 0
                 let orbit = Float(orbitIdx) / 10
                 if satellite is Planet {
-                    if (satellite as! Planet).size > 0 {
+                    if (satellite as! Planet)._size > 0 {
                         moonCount = d.roll() - 3
                     }
                 } else if satellite is GasGiant {
@@ -533,14 +535,14 @@ class StarSystem : CustomStringConvertible {
                     var moon : Planet
                     repeat {
                         moon = Planet(orbit: orbit, starType: star.starDetail.t, zone: star.getZone(orbit)!, planetoid: false, parent: satellite)
-                        if moon.getSize() == "R" { ringCount += 1 }
-                    } while ringCount > 3 && moon.getSize() == "R"
+                        if moon.size == "R" { ringCount += 1 }
+                    } while ringCount > 3 && moon.size == "R"
                     if let mw = mainWorld {
-                        moon.checkPopulation(mw.population)
+                        moon.checkPopulation(mw._population)
                     }
                     
                     var sOrbit:Float = 0
-                    if moon.getSize() == "R" { // rings are handled differently
+                    if moon.size == "R" { // rings are handled differently
                         //TODO: System can't deal with more than three generated rings.
                         // the rules don't cater for the possibility that orbits 1,2 and 3 are occupied already. I have to!
                         if satellite.getSatellite(1) == nil || satellite.getSatellite(2) == nil || satellite.getSatellite(3) == nil {
@@ -580,18 +582,21 @@ class StarSystem : CustomStringConvertible {
 
             for p in primary.getPlanets() {
                 if p != mw { // don't mess with the mainworld...
-                    if p.size != -2 { // Rings don't get satellite attribs
+                    if p._size != -2 { // Rings don't get satellite attribs
                         p.setSatelliteAttribs(mw)
                     } else {
                         p.starport = "Y" // set rings with no spaceport
                     }
-                    switch p.size {
+                    switch p._size {
                     case -2: p.name = "Ring System"
                     case 0: p.name = "Planetoid Belt"
                     default: p.name = Name.init(maxLength: p.maxNameLength).description
                     }
                     // if the planet has no population, clearly it has no trade.
-                    if p.population > 0 { p.setTradeClassifications() }
+                    if p._population > 0 { p.setTradeClassifications() }
+                }
+                if mw.name.isEmpty {
+                    mw.name = Name.init(maxLength: p.maxNameLength).description
                 }
             }
             if mw.bases.contains(.S) { // can't have additional bases if we don't have one on the main world.
@@ -623,7 +628,7 @@ class StarSystem : CustomStringConvertible {
     
     var description:String {
         var result: String = ""
-        if let m = mainWorld { result += "\(m.name) " } else { result += "This " }
+        if let m = mainWorld { result += "\(m)\n\(m.name) " } else { result += "This " }
         result += "is a \(basicNature) Star System"
         if basicNature.rawValue != stars.count - 1 {
             result += ", but has \(stars.count) stars"

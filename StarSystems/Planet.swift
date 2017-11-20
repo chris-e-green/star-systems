@@ -99,13 +99,13 @@ class Planet: Satellite, CustomStringConvertible {
 //    var scoutBase: Bool = false
     var bases = Set<Base>()
     //    var name: String?
-    var size: Int = 0
-    var atmosphere: Int = 0
-    var hydrographics: Int = 0
-    var population: Int = 0
-    var government: Int = 0
-    var lawLevel: Int = 0
-    var technologicalLevel: Int = 0
+    var _size: Int = 0
+    var _atmosphere: Int = 0
+    var _hydrographics: Int = 0
+    var _population: Int = 0
+    var _government: Int = 0
+    var _lawLevel: Int = 0
+    var _technologicalLevel: Int = 0
     var debugRolls = false
     var rollHistory: [String:Int] = [:]
     var tradeClassifications = Set<TradeClass>()
@@ -129,7 +129,7 @@ class Planet: Satellite, CustomStringConvertible {
         get {
             var tcs = ""
             var first = true
-            for tc in tradeClassifications {
+            for tc in tradeClassifications.sorted(by: {$0.description < $1.description}) {
                 if first { first = false } else { tcs += ", " }
                 tcs += tc.rawValue
             }
@@ -140,28 +140,24 @@ class Planet: Satellite, CustomStringConvertible {
         get {
             var tcs = ""
             var first = true
-            for tc in tradeClassifications {
+            for tc in tradeClassifications.sorted(by: {$0.description < $1.description}) {
                 if first { first = false } else { tcs += ", " }
                 tcs += String(describing: tc)
             }
             return tcs
         }
     }
+    var baseStr : String {
+        var result: String = ""
+        if gasGiant {result += " G"} else {result += "  "}
+        if bases.contains(.N) && bases.contains(.S) { result += " A" }
+        else if bases.contains(.N) { result += " N" }
+        else if bases.contains(.S) { result += " S" }
+        else if facilities.contains(Facility.MilitaryBase) { result += " M" } else { result += "  " }
+        return result
+    }
     
     var description: String {
-        var baseStr : String = ""
-        //        if navalBase {bases += " N"} else {bases += "  "}
-        //        if scoutBase {bases += " S"} else {bases += "  "}
-        if gasGiant {baseStr += " G"} else {baseStr += "  "}
-//        if facilities.contains(Facility.MilitaryBase) { bases += " M" } else { bases += "  " }
-        if bases.contains(.N) && bases.contains(.S) { baseStr += " A" }
-        else if bases.contains(.N) { baseStr += " N" }
-        else if bases.contains(.S) { baseStr += " S" }
-//        if navalBase {
-//            if scoutBase { baseStr += " A" }
-//            else { baseStr += " N" }
-//        } else if scoutBase { baseStr += " S" }
-        else if facilities.contains(Facility.MilitaryBase) { baseStr += " M" } else { baseStr += "  " }
         var result = ""
         result += name.padding(maxNameLength)
         if coordinateX != 0 && coordinateY != 0 {
@@ -180,7 +176,7 @@ class Planet: Satellite, CustomStringConvertible {
         return result
     }
     var uwp: String {
-        return String(format:"%@%@%1X%1X%1X%1X%1X-%1X",arguments:[starport,getSize(),atmosphere,hydrographics,population,government,lawLevel,technologicalLevel])
+        return String(format:"%@%@%@%@%@%@%@-%@",arguments:[starport,size,atmosphere,hydrographics,population,government,lawLevel,technologicalLevel])
     }
     
 //    var pdfDescription: String {
@@ -202,7 +198,7 @@ class Planet: Satellite, CustomStringConvertible {
             result += " },\n"
         }
         result += " \"\(jsonLabels.starport)\": \"\(starport)\",\n"
-        result += " \"\(jsonLabels.size)\": \"\(getSize())\",\n"
+        result += " \"\(jsonLabels.size)\": \"\(size)\",\n"
         result += " \"\(jsonLabels.atm)\": \(atmosphere),\n"
         result += " \"\(jsonLabels.hyd)\": \(hydrographics),\n"
         result += " \"\(jsonLabels.pop)\": \(population),\n"
@@ -222,7 +218,7 @@ class Planet: Satellite, CustomStringConvertible {
     }
     
     var sizeDescription:String {
-        switch size {
+        switch _size {
         case -2: return "Ring (around a world)"
         case -1: return "Small World (200 km)"
         case 0: return "Asteroid/Planetoid Belt"
@@ -258,7 +254,7 @@ class Planet: Satellite, CustomStringConvertible {
     
     
     var atmosphereDescription:String {
-        switch atmosphere {
+        switch _atmosphere {
         case 0: return "No atmosphere"
         case 1: return "Trace"
         case 2: return "Very thin, tainted"
@@ -280,16 +276,16 @@ class Planet: Satellite, CustomStringConvertible {
     }
     
     var hydrographicsDescription:String {
-        switch hydrographics {
+        switch _hydrographics {
         case 0: return "No free standing water"
-        case 1..<10: return "\(hydrographics*10)% water"
+        case 1..<10: return "\(_hydrographics*10)% water"
         case 10: return "No land masses"
         default: return ""
         }
     }
     
     var populationDescription:String {
-        switch population {
+        switch _population {
         case 0: return "No inhabitants"
         case 1: return "Tens of inhabitants"
         case 2: return "Hundreds of inhabitants"
@@ -306,7 +302,7 @@ class Planet: Satellite, CustomStringConvertible {
     }
     
     var governmentDescription:String {
-        switch government {
+        switch _government {
         case 0: return "No government structure"
         case 1: return "Company/Corporation"
         case 2: return "Participating Democracy"
@@ -326,7 +322,7 @@ class Planet: Satellite, CustomStringConvertible {
     }
     
     var lawLevelDescription:String {
-        switch lawLevel {
+        switch _lawLevel {
         case 0: return "No prohibitions"
         case 1: return "Body pistols undetectable by standard detectors, explosives (bombs, grenades), and poison gas prohibited"
         case 2: return "Portable energy weapons (laser carbine, laser rifle) prohibited. Ship's gunnery not affected"
@@ -342,7 +338,7 @@ class Planet: Satellite, CustomStringConvertible {
     }
     
     var techLevelDescription:String {
-        switch technologicalLevel {
+        switch _technologicalLevel {
         case 0: return "Stone Age. Primitive"
         case 1: return "Bronze Age to Middle Ages"
         case 2: return "circa 1400 to 1700"
@@ -361,6 +357,48 @@ class Planet: Satellite, CustomStringConvertible {
         case 15: return "Technical maximum Imperial"
         default: return ""
         }
+    }
+    
+    var verboseDesc: String {
+        if _size == -2 { return "This is a ring system around the planet. "}
+        if _size == 0 { return "This is an asteroid/planetoid belt. "}
+        var result = "\(name) is a "
+        if _size < 1 {
+            result += "\(sizeDescription.lowercased()). "
+        } else {
+            result += "planet with a diameter of roughly \(sizeDescription). "
+        }
+        result += "It has " + (_atmosphere==0 ?
+            "\(atmosphereDescription.lowercased()). " : "a \(atmosphereDescription.lowercased()) atmosphere. ")
+        result += "It has \(hydrographicsDescription.lowercased()) on its surface. "
+        result += "It has \(populationDescription.lowercased())"+(populationDescription.contains("inhabitants") ? "" : " inhabitants")
+        if _population > 0 {
+            result += " who live under a \(governmentDescription.lowercased()). Legally, \(lawLevelDescription.lowercased()). The technological level is equivalent to \(techLevelDescription.lowercased()).  "
+        } else { result += ". "}
+        if bases.count > 0 {
+            result += "There "
+            if bases.count == 1 {
+                result += "is a \(bases.first!.description.lowercased()) "
+            } else {
+                result += " are "
+                var b = ""
+                for base in bases {
+                    // TODO: that don't work. endIndex is after the last.
+                    if bases.index(of:base) == bases.endIndex {
+                        b += " and \(base.description.lowercased())s "
+                    } else if bases.index(of:base) == bases.startIndex {
+                        b += "\(base.description.lowercased())"
+                    } else {
+                        b += ", \(base.description.lowercased())"
+                    }
+                }
+                result += b
+            }
+            result += "present. "
+        }
+        debugPrint("there are ", bases.count, "bases")
+        debugPrint("there are ", facilities.count," facilities")
+        return result
     }
     
     var fullDescription:String {
@@ -398,16 +436,16 @@ class Planet: Satellite, CustomStringConvertible {
         self.starport = (fromJSON["\(jsonLabels.starport)"] as? String)!
         let sz = fromJSON["\(jsonLabels.size)"]
         if sz is String {
-            self.setSize((fromJSON["\(jsonLabels.size)"] as? String)!)
+            self.size = (fromJSON["\(jsonLabels.size)"] as? String)!
         } else { // support 'legacy' number type.
-            self.size = (fromJSON[jsonLabels.size.rawValue] as? Int)!
+            self._size = (fromJSON[jsonLabels.size.rawValue] as? Int)!
         }
-        self.atmosphere = (fromJSON["\(jsonLabels.atm)"] as? Int)!
-        self.hydrographics = (fromJSON["\(jsonLabels.hyd)"] as? Int)!
-        self.population = (fromJSON["\(jsonLabels.pop)"] as? Int)!
-        self.government = (fromJSON["\(jsonLabels.gov)"] as? Int)!
-        self.lawLevel = (fromJSON["\(jsonLabels.law)"] as? Int)!
-        self.technologicalLevel = (fromJSON["\(jsonLabels.tech)"] as? Int)!
+        self.atmosphere = (fromJSON["\(jsonLabels.atm)"] as? String)!
+        self.hydrographics = (fromJSON["\(jsonLabels.hyd)"] as? String)!
+        self.population = (fromJSON["\(jsonLabels.pop)"] as? String)!
+        self.government = (fromJSON["\(jsonLabels.gov)"] as? String)!
+        self.lawLevel = (fromJSON["\(jsonLabels.law)"] as? String)!
+        self.technologicalLevel = (fromJSON["\(jsonLabels.tech)"] as? String)!
         let n = (fromJSON["\(jsonLabels.naval)"] as? Bool)!
         if n { bases.insert(.N) }
         let s = (fromJSON["\(jsonLabels.scout)"] as? Bool)!
@@ -425,16 +463,16 @@ class Planet: Satellite, CustomStringConvertible {
         if navalBase { bases.insert(.N) }
         self.gasGiant = gasGiant
         var uppIndex = 0
-        for x in upp.characters {
+        for x in upp {
             switch uppIndex {
             case 0: starport = String(x)
-            case 1: size = Int(String(x), radix: 16) ?? 0
-            case 2: atmosphere = Int(String(x), radix: 16) ?? 0
-            case 3: hydrographics = Int(String(x), radix: 16) ?? 0
-            case 4: population = Int(String(x), radix: 16) ?? 0
-            case 5: government = Int(String(x), radix: 16) ?? 0
-            case 6: lawLevel = Int(String(x), radix: 16) ?? 0
-            case 8: technologicalLevel = Int(String(x), radix: 16) ?? 0
+            case 1: _size = Int(String(x), radix: 16) ?? 0
+            case 2: _atmosphere = Int(String(x), radix: 16) ?? 0
+            case 3: _hydrographics = Int(String(x), radix: 16) ?? 0
+            case 4: _population = Int(String(x), radix: 16) ?? 0
+            case 5: _government = Int(String(x), radix: 16) ?? 0
+            case 6: _lawLevel = Int(String(x), radix: 16) ?? 0
+            case 8: _technologicalLevel = Int(String(x), radix: 16) ?? 0
             default: break
             }
             uppIndex = uppIndex + 1
@@ -446,13 +484,13 @@ class Planet: Satellite, CustomStringConvertible {
     convenience init(starport: String, size: Int, atmosphere: Int, hydrographics: Int, population: Int, government: Int, lawLevel: Int, techLevel: Int, navalBase: Bool, scoutBase: Bool, gasGiant: Bool) {
         self.init()
         self.starport = starport
-        self.size = size
-        self.atmosphere = atmosphere
-        self.hydrographics = hydrographics
-        self.population = population
-        self.government = government
-        self.lawLevel = lawLevel
-        self.technologicalLevel = techLevel
+        self._size = size
+        self._atmosphere = atmosphere
+        self._hydrographics = hydrographics
+        self._population = population
+        self._government = government
+        self._lawLevel = lawLevel
+        self._technologicalLevel = techLevel
         if navalBase { bases.insert(.N) }
         if scoutBase { bases.insert(.S) }
         self.gasGiant = gasGiant
@@ -479,33 +517,33 @@ class Planet: Satellite, CustomStringConvertible {
         // calculate size
         roll = d.roll(2)
         if debugRolls { rollHistory["size"] = roll }
-        size = roll - 2
+        _size = roll - 2
         // calculate atmosphere
-        if size == 0 {
-            atmosphere = 0
+        if _size == 0 {
+            _atmosphere = 0
         } else {
             roll = d.roll(2)
             if debugRolls { rollHistory["atm"] = roll }
-            atmosphere = roll - 7 + size
+            _atmosphere = roll - 7 + _size
         }
-        if atmosphere < 0 { atmosphere = 0 }
+        if _atmosphere < 0 { _atmosphere = 0 }
         // calculate hydrographics
-        if size <= 1 {
-            hydrographics = 0
+        if _size <= 1 {
+            _hydrographics = 0
         } else {
             roll = d.roll(2)
             if debugRolls { rollHistory["hyd"] = roll }
-            hydrographics = roll - 7 + atmosphere
-            if atmosphere <= 1 || atmosphere >= 10 {
-                hydrographics = hydrographics - 4
+            _hydrographics = roll - 7 + _atmosphere
+            if _atmosphere <= 1 || _atmosphere >= 10 {
+                _hydrographics = _hydrographics - 4
             }
         }
-        if hydrographics < 0 {hydrographics = 0}
-        if hydrographics > 10 {hydrographics = 10}
+        if _hydrographics < 0 {_hydrographics = 0}
+        if _hydrographics > 10 {_hydrographics = 10}
         //calculate population
         roll = d.roll(2)
         if debugRolls { rollHistory["pop"] = roll }
-        population = roll - 2
+        _population = roll - 2
         // calculate government
         rollGovernment()
         // calculate law level
@@ -520,96 +558,146 @@ class Planet: Satellite, CustomStringConvertible {
         if debugRolls { rollHistory["from_star"] = 1 }
         var roll = 0
         if planetoid {
-            size = 0
+            _size = 0
         } else {
             if parent is Star {
                 // calculate size
                 let dm:Int = (orbit == 0 ? -5 : 0) + (orbit == 1 ? -4 : 0) + (orbit == 2 ? -2 : 0) + (starType == StarType.M ? -2 : 0)
                 roll = d.roll(2)
                 if debugRolls { rollHistory["size"] = roll }
-                size = roll - 2 + dm
-                if size <= 0 { size = -1 }
+                _size = roll - 2 + dm
+                if _size <= 0 { _size = -1 }
             } else {
                 if parent is Planet {
                     roll = d.roll()
                     if debugRolls { rollHistory["pl_sat_size"] = roll }
-                    size = (parent as! Planet).size - roll
+                    _size = (parent as! Planet)._size - roll
                 } else if parent is GasGiant {
                     if (parent as! GasGiant).size == .Large {
                         roll = d.roll(2)
                         if debugRolls { rollHistory["gg_sat_size"] = roll }
-                        size = roll - 4
+                        _size = roll - 4
                     } else {
                         roll = d.roll(2)
                         if debugRolls { rollHistory["gg_sat_size"] = roll }
-                        size = roll - 6
+                        _size = roll - 6
                     }
                 }
-                if size < 0 { size = -1 }
-                if size == 0 { size = -2 }
+                if _size < 0 { _size = -1 }
+                if _size == 0 { _size = -2 }
             }
         }
-        if size < 1 {
-            atmosphere = 0
+        if _size < 1 {
+            _atmosphere = 0
         } else {
             roll = d.roll(2)
             if debugRolls { rollHistory["atm"] = roll }
-            atmosphere = roll - 7 + size
-            if zone == Zone.I { atmosphere -= 2 }
-            if parent is Planet || parent is GasGiant { atmosphere -= 2 }
-            if zone == Zone.O { atmosphere -= 4 }
+            _atmosphere = roll - 7 + _size
+            if zone == Zone.I { _atmosphere -= 2 }
+            if parent is Planet || parent is GasGiant { _atmosphere -= 2 }
+            if zone == Zone.O { _atmosphere -= 4 }
         }
-        if atmosphere < 0 { atmosphere = 0 }
+        if _atmosphere < 0 { _atmosphere = 0 }
         
-        if size <= 0 || zone == Zone.I || (size <= 1 && parent is Star) {
-            hydrographics = 0
+        if _size <= 0 || zone == Zone.I || (_size <= 1 && parent is Star) {
+            _hydrographics = 0
         } else {
             roll = d.roll(2)
             if debugRolls { rollHistory["hyd"] = roll }
-            hydrographics = roll - 7 + atmosphere
-            if zone == Zone.O { hydrographics -= 2 }
-            if atmosphere <= 1 || atmosphere >= 10 {
-                hydrographics = hydrographics - 4
+            _hydrographics = roll - 7 + _atmosphere
+            if zone == Zone.O { _hydrographics -= 2 }
+            if _atmosphere <= 1 || _atmosphere >= 10 {
+                _hydrographics = _hydrographics - 4
             }
         }
-        if hydrographics < 0 {hydrographics = 0}
-        if hydrographics > 10 {hydrographics = 10}
+        if _hydrographics < 0 {_hydrographics = 0}
+        if _hydrographics > 10 {_hydrographics = 10}
         
         roll = d.roll(2)
         if debugRolls { rollHistory["pop"] = roll }
-        population = roll - 2
-        if zone == Zone.I { population -= 5 }
-        if parent is Star && zone == Zone.O { population -= 3 }
-        if parent is Planet && zone == Zone.O { population -= 4 }
-        if atmosphere != 5 && atmosphere != 6 && atmosphere != 8 { population -= 2 }
-        if size == -2 { population = 0 }
-        if parent is Planet && size >= -1 && size <= 4 { population -= 2 }
-        if population < 0 { population = 0 }
+        _population = roll - 2
+        if zone == Zone.I { _population -= 5 }
+        if parent is Star && zone == Zone.O { _population -= 3 }
+        if parent is Planet && zone == Zone.O { _population -= 4 }
+        if _atmosphere != 5 && _atmosphere != 6 && _atmosphere != 8 { _population -= 2 }
+        if _size == -2 { _population = 0 }
+        if parent is Planet && _size >= -1 && _size <= 4 { _population -= 2 }
+        if _population < 0 { _population = 0 }
         // also need to make sure it's not > main world. Will do this elsewhere.
     }
     
     func checkPopulation(_ maxPopulation:Int) {
-        if population >= maxPopulation {
-            population = maxPopulation - 1
-            if population < 0 { population = 0 }
+        if _population >= maxPopulation {
+            _population = maxPopulation - 1
+            if _population < 0 { _population = 0 }
         }
     }
     
-    func getSize()->String {
-        switch size {
-        case -2: return "R"
-        case -1: return "S"
-        default: return String(format:"%1X",size)
+    var size: String {
+        get {
+            switch _size {
+            case -2: return "R"
+            case -1: return "S"
+            default: return String(format:"%1X",_size)
+            }
+        }
+        set(newSize) {
+            switch(newSize) {
+            case "R": _size = -2
+            case "S": _size = -1
+            default: _size = Int(newSize, radix: 16) ?? 0
+            }
         }
     }
-    func setSize(_ newSize: String) {
-        switch(newSize) {
-        case "R": size = -2
-        case "S": size = -1
-        default: size = Int(newSize, radix: 16) ?? 0
+    var atmosphere: String {
+        get {
+            return String(format:"%1X", _atmosphere)
+        }
+        set(newAtmosphere) {
+            _atmosphere = Int(newAtmosphere, radix: 16) ?? 0
         }
     }
-    
+    var hydrographics: String {
+        get {
+            return String(format:"%1X", _hydrographics)
+        }
+        set(newHydrographics) {
+            _hydrographics = Int(newHydrographics, radix: 16) ?? 0
+        }
+    }
+    var population: String {
+        get {
+            return String(format:"%1X", _population)
+        }
+        set(newPopulation) {
+            _population = Int(newPopulation, radix: 16) ?? 0
+        }
+    }
+    var government: String {
+        get {
+            return String(format:"%1X", _government)
+        }
+        set(newGovernment) {
+            _government = Int(newGovernment, radix: 16) ?? 0
+        }
+    }
+    var lawLevel: String {
+        get {
+            return String(format:"%1X", _lawLevel)
+        }
+        set(newLawLevel) {
+            _lawLevel = Int(newLawLevel, radix: 16) ?? 0
+        }
+    }
+    var technologicalLevel: String {
+        get {
+            return String(format:"%1X", _technologicalLevel)
+        }
+        set(newTechLevel) {
+            _technologicalLevel = Int(newTechLevel, radix: 16) ?? 0
+        }
+    }
+
     func rollStarport() {
         let roll = d.roll(2)
         if debugRolls { rollHistory["starport"] = roll }
@@ -658,20 +746,20 @@ class Planet: Satellite, CustomStringConvertible {
     }
     
     func rollGovernment() {
-        if population > 0 {
+        if _population > 0 {
             let roll = d.roll(2)
             if debugRolls { rollHistory["gov"] = roll }
-            government = roll - 7 + population
-            if government < 0 {government = 0}
+            _government = roll - 7 + _population
+            if _government < 0 {_government = 0}
         }
     }
     
     func rollLawLevel() {
         let roll = d.roll(2)
         if debugRolls { rollHistory["law"] = roll }
-        lawLevel = roll - 7 + government
-        if lawLevel < 0 {lawLevel = 0}
-        if lawLevel > 15 {lawLevel = 15}
+        _lawLevel = roll - 7 + _government
+        if _lawLevel < 0 {_lawLevel = 0}
+        if _lawLevel > 15 {_lawLevel = 15}
     }
     
     func rollTechLevel() {
@@ -683,28 +771,28 @@ class Planet: Satellite, CustomStringConvertible {
         case "X": dm = -4
         default: break
         }
-        switch(size) {
+        switch(_size) {
         case -1..<2: dm += 2
         case 2..<5: dm += 1
         default: break
         }
-        switch(atmosphere) {
+        switch(_atmosphere) {
         case 0..<4: dm += 1
         case 10..<15: dm += 1
         default: break
         }
-        switch(hydrographics) {
+        switch(_hydrographics) {
         case 9: dm += 1
         case 10: dm += 2
         default: break
         }
-        switch(population) {
+        switch(_population) {
         case 1..<6: dm += 1
         case 9: dm += 2
         case 10: dm += 4
         default: break
         }
-        switch(government) {
+        switch(_government) {
         case 0: dm += 1
         case 5: dm += 1
         case 13: dm -= 2
@@ -712,33 +800,36 @@ class Planet: Satellite, CustomStringConvertible {
         }
         let roll = d.roll()
         if debugRolls { rollHistory["tech"] = roll }
-        technologicalLevel = roll + dm
+        _technologicalLevel = roll + dm
         
-        // although not specifically stated in the rules, it is clear from the example systems given.
-        if population == 0 { technologicalLevel = 0 }
-        if technologicalLevel < 0 {technologicalLevel = 0}
-        if technologicalLevel > 15 {technologicalLevel = 15}
+        // although not explicitly stated in the rules, it is clear from the example systems given that tech level is zero if population is zero.
+        if _population == 0 { _technologicalLevel = 0 }
+        if _technologicalLevel < 0 {_technologicalLevel = 0}
+        if _technologicalLevel > 15 {_technologicalLevel = 15}
     }
     
     func setFacilities(_ mainWorld: Planet) {
         if debugRolls { rollHistory["facilities"] = 1 }
         facilities.removeAll()
-        if zone == Zone.H && atmosphere >= 4 && atmosphere <= 9 && hydrographics >= 4 && hydrographics <= 8 && population >= 2 {
+        if zone == Zone.H &&
+            _atmosphere >= 4 && _atmosphere <= 9 &&
+            _hydrographics >= 4 && _hydrographics <= 8 &&
+            _population >= 2 {
             facilities.insert(.Farming)
         }
-        if mainWorld.tradeClassifications.contains(.In) && population >= 2 {
+        if mainWorld.tradeClassifications.contains(.In) && _population >= 2 {
             facilities.insert(.Mining)
         }
-        if government == 6 && population >= 5 {
+        if _government == 6 && _population >= 5 {
             facilities.insert(.Colony)
         }
-        if mainWorld.technologicalLevel > 8 && population > 0 {
-            if (d.roll(2) + mainWorld.technologicalLevel >= 10 ? 2 : 0) >= 11 {
+        if mainWorld._technologicalLevel > 8 && _population > 0 {
+            if (d.roll(2) + mainWorld._technologicalLevel >= 10 ? 2 : 0) >= 11 {
                 facilities.insert(.ResearchLaboratory)
             }
         }
-        if !mainWorld.tradeClassifications.contains(.Po) && population > 0 {
-            if d.roll(2) + (mainWorld.population >= 8 ? 1 : 0) + (mainWorld.atmosphere == atmosphere ? 2 : 0) >= 12 {
+        if !mainWorld.tradeClassifications.contains(.Po) && _population > 0 {
+            if d.roll(2) + (mainWorld._population >= 8 ? 1 : 0) + (mainWorld._atmosphere == _atmosphere ? 2 : 0) >= 12 {
                 facilities.insert(.MilitaryBase)
             }
         }
@@ -748,40 +839,40 @@ class Planet: Satellite, CustomStringConvertible {
         if debugRolls { rollHistory["sat_attribs"] = 1 }
         var dm = 0
         var roll = 0
-        if population > 0 {
-            if mainWorld.government == 6 { government = mainWorld.government }
+        if _population > 0 {
+            if mainWorld._government == 6 { _government = mainWorld._government }
             else {
-                if mainWorld.government >= 7 { dm = 1 }
+                if mainWorld._government >= 7 { dm = 1 }
                 roll = d.roll()
                 if debugRolls { rollHistory["sat_gov"] = roll }
                 switch roll + dm {
-                case 1: government = 0
-                case 2: government = 1
-                case 3: government = 2
-                case 4: government = 3
-                default: government = 6
+                case 1: _government = 0
+                case 2: _government = 1
+                case 3: _government = 2
+                case 4: _government = 3
+                default: _government = 6
                 }
             }
-            if government == 0 { lawLevel = 0 }
+            if _government == 0 { _lawLevel = 0 }
             else {
                 roll = d.roll()
                 if debugRolls { rollHistory["sat_law"] = roll }
-                lawLevel = roll - 3 + mainWorld.lawLevel
+                _lawLevel = roll - 3 + mainWorld._lawLevel
             }
-            if lawLevel < 0 { lawLevel = 0 }
-            if lawLevel > 15 { lawLevel = 15 }
-        } else { government = 0 }
+            if _lawLevel < 0 { _lawLevel = 0 }
+            if _lawLevel > 15 { _lawLevel = 15 }
+        } else { _government = 0 }
         setFacilities(mainWorld)
         if facilities.contains(.MilitaryBase) || facilities.contains(.ResearchLaboratory) {
-            technologicalLevel = mainWorld.technologicalLevel
+            _technologicalLevel = mainWorld._technologicalLevel
         } else {
-            technologicalLevel = mainWorld.technologicalLevel - 1
+            _technologicalLevel = mainWorld._technologicalLevel - 1
         }
-        if population == 0 { technologicalLevel = 0 }
-        if technologicalLevel < 0 { technologicalLevel = 0 }
+        if _population == 0 { _technologicalLevel = 0 }
+        if _technologicalLevel < 0 { _technologicalLevel = 0 }
         roll = d.roll()
         if debugRolls { rollHistory["spaceport"] = roll }
-        switch roll + (population >= 6 ? 2 : 0) - (population == 1 ? 2 : 0) - (population == 0 ? 3 : 0){
+        switch roll + (_population >= 6 ? 2 : 0) - (_population == 1 ? 2 : 0) - (_population == 0 ? 3 : 0){
         case -2...2: starport = "Y"
         case 3: starport = "H"
         case 4,5: starport = "G"
@@ -795,64 +886,66 @@ class Planet: Satellite, CustomStringConvertible {
         // start with a clean slate!
         tradeClassifications.removeAll()
         
-        if atmosphere >= 4 && atmosphere <= 9 && hydrographics >= 4 &&
-            hydrographics <= 8 && population >= 5 && population <= 7 {
+        if _atmosphere >= 4 && _atmosphere <= 9 && _hydrographics >= 4 &&
+            _hydrographics <= 8 && _population >= 5 && _population <= 7 {
             tradeClassifications.insert(.Ag)
         }
         
-        if size == 0 {
+        if _size == 0 {
             tradeClassifications.insert(.As)
         }
         
-        if population == 0 && government == 0 && lawLevel == 0 {
+        if _population == 0 && _government == 0 && _lawLevel == 0 {
             tradeClassifications.insert(.Ba)
         }
         
-        if hydrographics == 0 && atmosphere >= 2 {
+        if _hydrographics == 0 && _atmosphere >= 2 {
             tradeClassifications.insert(.De)
         }
         
-        if atmosphere >= 10 && hydrographics >= 1 {
+        if _atmosphere >= 10 && _hydrographics >= 1 {
             tradeClassifications.insert(.Fl)
         }
         
-        if population >= 9 {
+        if _population >= 9 {
             tradeClassifications.insert(.Hi)
         }
         
-        if (atmosphere == 0 || atmosphere == 1) && hydrographics >= 1 {
+        if (_atmosphere == 0 || _atmosphere == 1) && _hydrographics >= 1 {
             tradeClassifications.insert(.Ic)
         }
         
-        if (atmosphere <= 2 || atmosphere == 4 || atmosphere == 7 || atmosphere == 9) && population >= 9 {
+        if (_atmosphere <= 2 || _atmosphere == 4 || _atmosphere == 7 || _atmosphere == 9) && _population >= 9 {
             tradeClassifications.insert(.In)
         }
         
-        if (population <= 3) {
+        if (_population <= 3) {
             tradeClassifications.insert(.Lo)
         }
         
-        if atmosphere <= 3 && hydrographics <= 3 && population >= 6 {
+        if _atmosphere <= 3 && _hydrographics <= 3 && _population >= 6 {
             tradeClassifications.insert(.Na)
         }
         
-        if population <= 6 {
+        if _population <= 6 {
             tradeClassifications.insert(.Ni)
         }
         
-        if atmosphere >= 2 && atmosphere <= 5 && hydrographics <= 3 {
+        if _atmosphere >= 2 && _atmosphere <= 5 && _hydrographics <= 3 {
             tradeClassifications.insert(.Po)
         }
         
-        if (atmosphere == 6 || atmosphere == 8) && population >= 6 && population <= 8 && government >= 4 && government <= 9 {
+        if (_atmosphere == 6 || _atmosphere == 8) &&
+            _population >= 6 && _population <= 8 &&
+            _government >= 4 && _government <= 9 {
             tradeClassifications.insert(.Ri)
         }
         
-        if atmosphere == 0 {
+        if _atmosphere == 0 {
             tradeClassifications.insert(.Va)
         }
         
-        if hydrographics == 10 {
+        if _hydrographics == 10 {
             tradeClassifications.insert(.Wa)
         }
         
@@ -861,7 +954,7 @@ class Planet: Satellite, CustomStringConvertible {
     
 }
 func ==(left:Planet, right:Planet)->Bool {
-    return left.uwp == right.uwp && left.orbit == right.orbit && left.depth == right.depth
+    return left.uwp == right.uwp && left.stellarOrbit == right.stellarOrbit && left.depth == right.depth
 }
 func !=(left:Planet, right:Planet)->Bool {
     return !(left==right)

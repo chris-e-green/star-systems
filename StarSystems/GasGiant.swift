@@ -27,6 +27,9 @@ class GasGiant : Satellite, CustomStringConvertible {
         result += "\(size)\(satDesc)"
         return result
     }
+    var verboseDesc: String {
+        return "\(name) is a \(size.rawValue.lowercased()) gas giant."
+    }
     override var json: String {
         var result = ""
         result += "\"\(jsonLabels.gasgiant)\": {\n"

@@ -8,6 +8,8 @@
 
 import Cocoa
 
+let DEBUG=false
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 

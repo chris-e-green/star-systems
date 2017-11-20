@@ -23,12 +23,43 @@
 		5A416E1CAE15F04A176D1000 /* Habitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A416A5351D441ED2489839C /* Habitation.swift */; };
 		5A416ECE14A440EDC99ED85D /* RTTBases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A416082CD20F64058A286FE /* RTTBases.swift */; };
 		831CBE991D014F03006F9182 /* Subsector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831CBE981D014F03006F9182 /* Subsector.swift */; };
+		83206E661F3E98190085DB98 /* Star.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851771CA7B0F20058E510 /* Star.swift */; };
+		83206E671F3E98290085DB98 /* StarSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338517D1CA7B13D0058E510 /* StarSystem.swift */; };
+		83206E681F3E9B2A0085DB98 /* Subsector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831CBE981D014F03006F9182 /* Subsector.swift */; };
+		83206E691F3E9B2A0085DB98 /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851621CA39A9E0058E510 /* Dice.swift */; };
+		83206E6A1F3E9B2A0085DB98 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851791CA7B1080058E510 /* Planet.swift */; };
+		83206E6B1F3E9B2A0085DB98 /* Pdf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4161823CA9160770ED54E9 /* Pdf.swift */; };
+		83206E6C1F3E9B2A0085DB98 /* Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A41621DD4E385D4C1429A9D /* Name.swift */; };
+		83206E6D1F3E9B2A0085DB98 /* EmptyOrbit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DD95A61D2293D300ADEAF3 /* EmptyOrbit.swift */; };
+		83206E6E1F3E9B2A0085DB98 /* GasGiant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DD95A81D2293F000ADEAF3 /* GasGiant.swift */; };
+		83206E6F1F3E9B2A0085DB98 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E913A31D27850500DC8600 /* JSON.swift */; };
+		83206E701F3E9E540085DB98 /* Satellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338517B1CA7B11B0058E510 /* Satellite.swift */; };
 		8338515C1CA39A310058E510 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338515B1CA39A310058E510 /* main.swift */; };
 		833851631CA39A9E0058E510 /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851621CA39A9E0058E510 /* Dice.swift */; };
 		833851781CA7B0F20058E510 /* Star.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851771CA7B0F20058E510 /* Star.swift */; };
 		8338517A1CA7B1080058E510 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851791CA7B1080058E510 /* Planet.swift */; };
 		8338517C1CA7B11B0058E510 /* Satellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338517B1CA7B11B0058E510 /* Satellite.swift */; };
 		8338517E1CA7B13D0058E510 /* StarSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338517D1CA7B13D0058E510 /* StarSystem.swift */; };
+		833D9AF81FB8330B009D35DD /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833D9AF71FB8330B009D35DD /* MainWindow.swift */; };
+		833D9AFA1FB8367B009D35DD /* PlanetWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833D9AF91FB8367B009D35DD /* PlanetWindow.swift */; };
+		833D9AFC1FB98A0A009D35DD /* StarSystemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833D9AFB1FB98A0A009D35DD /* StarSystemViewController.swift */; };
+		833DA81E1F6DED7800AF0B30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833DA81D1F6DED7800AF0B30 /* AppDelegate.swift */; };
+		833DA8201F6DED7800AF0B30 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833DA81F1F6DED7800AF0B30 /* MasterViewController.swift */; };
+		833DA8221F6DED7800AF0B30 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833DA8211F6DED7800AF0B30 /* DetailViewController.swift */; };
+		833DA8251F6DED7800AF0B30 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 833DA8231F6DED7800AF0B30 /* Main.storyboard */; };
+		833DA8271F6DED7800AF0B30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 833DA8261F6DED7800AF0B30 /* Assets.xcassets */; };
+		833DA82A1F6DED7800AF0B30 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 833DA8281F6DED7800AF0B30 /* LaunchScreen.storyboard */; };
+		833DA82F1F6E135800AF0B30 /* Subsector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831CBE981D014F03006F9182 /* Subsector.swift */; };
+		833DA8301F6E135800AF0B30 /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851621CA39A9E0058E510 /* Dice.swift */; };
+		833DA8311F6E135800AF0B30 /* Star.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851771CA7B0F20058E510 /* Star.swift */; };
+		833DA8321F6E135800AF0B30 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851791CA7B1080058E510 /* Planet.swift */; };
+		833DA8331F6E135800AF0B30 /* Satellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338517B1CA7B11B0058E510 /* Satellite.swift */; };
+		833DA8341F6E135800AF0B30 /* StarSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338517D1CA7B13D0058E510 /* StarSystem.swift */; };
+		833DA8361F6E135800AF0B30 /* Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A41621DD4E385D4C1429A9D /* Name.swift */; };
+		833DA8371F6E135800AF0B30 /* EmptyOrbit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DD95A61D2293D300ADEAF3 /* EmptyOrbit.swift */; };
+		833DA8381F6E135800AF0B30 /* GasGiant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DD95A81D2293F000ADEAF3 /* GasGiant.swift */; };
+		833DA8391F6E135800AF0B30 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E913A31D27850500DC8600 /* JSON.swift */; };
+		83401EEA1F67D18800D6FB65 /* PlanetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83401EE91F67D18800D6FB65 /* PlanetViewController.swift */; };
 		83A9C0EE1F330BBF008418C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C0ED1F330BBF008418C8 /* AppDelegate.swift */; };
 		83A9C0F01F330BBF008418C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C0EF1F330BBF008418C8 /* ViewController.swift */; };
 		83A9C0F21F330BBF008418C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83A9C0F11F330BBF008418C8 /* Assets.xcassets */; };
@@ -74,6 +105,18 @@
 		833851791CA7B1080058E510 /* Planet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
 		8338517B1CA7B11B0058E510 /* Satellite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Satellite.swift; sourceTree = "<group>"; };
 		8338517D1CA7B13D0058E510 /* StarSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarSystem.swift; sourceTree = "<group>"; };
+		833D9AF71FB8330B009D35DD /* MainWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
+		833D9AF91FB8367B009D35DD /* PlanetWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetWindow.swift; sourceTree = "<group>"; };
+		833D9AFB1FB98A0A009D35DD /* StarSystemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarSystemViewController.swift; sourceTree = "<group>"; };
+		833DA81B1F6DED7800AF0B30 /* StarSystemsiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarSystemsiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		833DA81D1F6DED7800AF0B30 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		833DA81F1F6DED7800AF0B30 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		833DA8211F6DED7800AF0B30 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		833DA8241F6DED7800AF0B30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		833DA8261F6DED7800AF0B30 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		833DA8291F6DED7800AF0B30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		833DA82B1F6DED7800AF0B30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		83401EE91F67D18800D6FB65 /* PlanetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetViewController.swift; sourceTree = "<group>"; };
 		83A9C0EB1F330BBF008418C8 /* StarSystemsGUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarSystemsGUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83A9C0ED1F330BBF008418C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83A9C0EF1F330BBF008418C8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +131,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		833851551CA39A310058E510 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		833DA8181F6DED7800AF0B30 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -129,6 +179,7 @@
 			children = (
 				8338515A1CA39A310058E510 /* StarSystems */,
 				83A9C0EC1F330BBF008418C8 /* StarSystemsGUI */,
+				833DA81C1F6DED7800AF0B30 /* StarSystemsiOS */,
 				833851591CA39A310058E510 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -138,6 +189,7 @@
 			children = (
 				833851581CA39A310058E510 /* StarSystems */,
 				83A9C0EB1F330BBF008418C8 /* StarSystemsGUI.app */,
+				833DA81B1F6DED7800AF0B30 /* StarSystemsiOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -154,12 +206,26 @@
 				8338517D1CA7B13D0058E510 /* StarSystem.swift */,
 				5A4161823CA9160770ED54E9 /* Pdf.swift */,
 				5A41621DD4E385D4C1429A9D /* Name.swift */,
-				5A416E0FF6F73FD228F6E226 /* RTTWorldGen */,
 				83DD95A61D2293D300ADEAF3 /* EmptyOrbit.swift */,
 				83DD95A81D2293F000ADEAF3 /* GasGiant.swift */,
 				83E913A31D27850500DC8600 /* JSON.swift */,
+				5A416E0FF6F73FD228F6E226 /* RTTWorldGen */,
 			);
 			path = StarSystems;
+			sourceTree = "<group>";
+		};
+		833DA81C1F6DED7800AF0B30 /* StarSystemsiOS */ = {
+			isa = PBXGroup;
+			children = (
+				833DA81D1F6DED7800AF0B30 /* AppDelegate.swift */,
+				833DA81F1F6DED7800AF0B30 /* MasterViewController.swift */,
+				833DA8211F6DED7800AF0B30 /* DetailViewController.swift */,
+				833DA8231F6DED7800AF0B30 /* Main.storyboard */,
+				833DA8261F6DED7800AF0B30 /* Assets.xcassets */,
+				833DA8281F6DED7800AF0B30 /* LaunchScreen.storyboard */,
+				833DA82B1F6DED7800AF0B30 /* Info.plist */,
+			);
+			path = StarSystemsiOS;
 			sourceTree = "<group>";
 		};
 		83A9C0EC1F330BBF008418C8 /* StarSystemsGUI */ = {
@@ -171,6 +237,10 @@
 				83A9C0F31F330BBF008418C8 /* Main.storyboard */,
 				83A9C0F61F330BBF008418C8 /* Info.plist */,
 				83A9C0F71F330BBF008418C8 /* StarSystemsGUI.entitlements */,
+				83401EE91F67D18800D6FB65 /* PlanetViewController.swift */,
+				833D9AF71FB8330B009D35DD /* MainWindow.swift */,
+				833D9AF91FB8367B009D35DD /* PlanetWindow.swift */,
+				833D9AFB1FB98A0A009D35DD /* StarSystemViewController.swift */,
 			);
 			path = StarSystemsGUI;
 			sourceTree = "<group>";
@@ -194,6 +264,23 @@
 			productName = StarSystems;
 			productReference = 833851581CA39A310058E510 /* StarSystems */;
 			productType = "com.apple.product-type.tool";
+		};
+		833DA81A1F6DED7800AF0B30 /* StarSystemsiOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 833DA82E1F6DED7800AF0B30 /* Build configuration list for PBXNativeTarget "StarSystemsiOS" */;
+			buildPhases = (
+				833DA8171F6DED7800AF0B30 /* Sources */,
+				833DA8181F6DED7800AF0B30 /* Frameworks */,
+				833DA8191F6DED7800AF0B30 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StarSystemsiOS;
+			productName = StarSystemsiOS;
+			productReference = 833DA81B1F6DED7800AF0B30 /* StarSystemsiOS.app */;
+			productType = "com.apple.product-type.application";
 		};
 		83A9C0EA1F330BBF008418C8 /* StarSystemsGUI */ = {
 			isa = PBXNativeTarget;
@@ -226,6 +313,10 @@
 						CreatedOnToolsVersion = 7.3;
 						LastSwiftMigration = 0900;
 					};
+					833DA81A1F6DED7800AF0B30 = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
 					83A9C0EA1F330BBF008418C8 = {
 						CreatedOnToolsVersion = 9.0;
 					};
@@ -246,11 +337,22 @@
 			targets = (
 				833851571CA39A310058E510 /* StarSystems */,
 				83A9C0EA1F330BBF008418C8 /* StarSystemsGUI */,
+				833DA81A1F6DED7800AF0B30 /* StarSystemsiOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		833DA8191F6DED7800AF0B30 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				833DA82A1F6DED7800AF0B30 /* LaunchScreen.storyboard in Resources */,
+				833DA8271F6DED7800AF0B30 /* Assets.xcassets in Resources */,
+				833DA8251F6DED7800AF0B30 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		83A9C0E91F330BBF008418C8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -295,10 +397,45 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		833DA8171F6DED7800AF0B30 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				833DA82F1F6E135800AF0B30 /* Subsector.swift in Sources */,
+				833DA8301F6E135800AF0B30 /* Dice.swift in Sources */,
+				833DA8311F6E135800AF0B30 /* Star.swift in Sources */,
+				833DA8321F6E135800AF0B30 /* Planet.swift in Sources */,
+				833DA8331F6E135800AF0B30 /* Satellite.swift in Sources */,
+				833DA8341F6E135800AF0B30 /* StarSystem.swift in Sources */,
+				833DA8361F6E135800AF0B30 /* Name.swift in Sources */,
+				833DA8371F6E135800AF0B30 /* EmptyOrbit.swift in Sources */,
+				833DA8381F6E135800AF0B30 /* GasGiant.swift in Sources */,
+				833DA8391F6E135800AF0B30 /* JSON.swift in Sources */,
+				833DA8221F6DED7800AF0B30 /* DetailViewController.swift in Sources */,
+				833DA8201F6DED7800AF0B30 /* MasterViewController.swift in Sources */,
+				833DA81E1F6DED7800AF0B30 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		83A9C0E71F330BBF008418C8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83206E701F3E9E540085DB98 /* Satellite.swift in Sources */,
+				83206E681F3E9B2A0085DB98 /* Subsector.swift in Sources */,
+				83401EEA1F67D18800D6FB65 /* PlanetViewController.swift in Sources */,
+				83206E691F3E9B2A0085DB98 /* Dice.swift in Sources */,
+				83206E6A1F3E9B2A0085DB98 /* Planet.swift in Sources */,
+				83206E6B1F3E9B2A0085DB98 /* Pdf.swift in Sources */,
+				83206E6C1F3E9B2A0085DB98 /* Name.swift in Sources */,
+				833D9AF81FB8330B009D35DD /* MainWindow.swift in Sources */,
+				83206E6D1F3E9B2A0085DB98 /* EmptyOrbit.swift in Sources */,
+				833D9AFA1FB8367B009D35DD /* PlanetWindow.swift in Sources */,
+				83206E6E1F3E9B2A0085DB98 /* GasGiant.swift in Sources */,
+				83206E6F1F3E9B2A0085DB98 /* JSON.swift in Sources */,
+				83206E671F3E98290085DB98 /* StarSystem.swift in Sources */,
+				83206E661F3E98190085DB98 /* Star.swift in Sources */,
+				833D9AFC1FB98A0A009D35DD /* StarSystemViewController.swift in Sources */,
 				83A9C0F01F330BBF008418C8 /* ViewController.swift in Sources */,
 				83A9C0EE1F330BBF008418C8 /* AppDelegate.swift in Sources */,
 			);
@@ -307,6 +444,22 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		833DA8231F6DED7800AF0B30 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				833DA8241F6DED7800AF0B30 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		833DA8281F6DED7800AF0B30 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				833DA8291F6DED7800AF0B30 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		83A9C0F31F330BBF008418C8 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -489,6 +642,54 @@
 			};
 			name = Release;
 		};
+		833DA82C1F6DED7800AF0B30 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = StarSystemsiOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mgsdl.StarSystemsiOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		833DA82D1F6DED7800AF0B30 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = StarSystemsiOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mgsdl.StarSystemsiOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		83A9C0F91F330BBF008418C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -547,6 +748,15 @@
 			buildConfigurations = (
 				833851601CA39A310058E510 /* Debug */,
 				833851611CA39A310058E510 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		833DA82E1F6DED7800AF0B30 /* Build configuration list for PBXNativeTarget "StarSystemsiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				833DA82C1F6DED7800AF0B30 /* Debug */,
+				833DA82D1F6DED7800AF0B30 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

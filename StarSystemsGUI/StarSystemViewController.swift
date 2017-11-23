@@ -15,8 +15,6 @@ class StarSystemSplitViewController: NSSplitViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         for i in self.splitViewItems {
-            debugPrint(i.viewController)
-            debugPrint(i.viewController.view)
             if i.viewController is StarSystemMsgViewController {
                 msgController = i.viewController as? StarSystemMsgViewController
             }

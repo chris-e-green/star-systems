@@ -360,7 +360,7 @@ class Planet: Satellite, CustomStringConvertible {
     }
     
     var verboseDesc: String {
-        if _size == -2 { return "This is a ring system around the planet. "}
+        if _size == -2 { return "This is a ring system around \(parent!.name). "}
         if _size == 0 { return "This is an asteroid/planetoid belt. "}
         var result = "\(name) is a "
         if _size < 1 {
@@ -375,6 +375,13 @@ class Planet: Satellite, CustomStringConvertible {
         if _population > 0 {
             result += " who live under a \(governmentDescription.lowercased()). Legally, \(lawLevelDescription.lowercased()). The technological level is equivalent to \(techLevelDescription.lowercased()).  "
         } else { result += ". "}
+        if starport == "Y" { result += "The planet has no spaceport. "}
+        else if starport == "X" {
+            result += "The planet has no starport and is generally in a red travel zone. "
+        } else {
+            result += "The planet has a starport with " + starportDescription.lowercased()
+        }
+        
         if bases.count > 0 {
             result += "There "
             if bases.count == 1 {
@@ -383,8 +390,7 @@ class Planet: Satellite, CustomStringConvertible {
                 result += " are "
                 var b = ""
                 for base in bases {
-                    // TODO: that don't work. endIndex is after the last.
-                    if bases.index(of:base) == bases.endIndex {
+                    if bases.index(bases.index(of: base)!, offsetBy: 1) == bases.endIndex {
                         b += " and \(base.description.lowercased())s "
                     } else if bases.index(of:base) == bases.startIndex {
                         b += "\(base.description.lowercased())"
@@ -396,8 +402,26 @@ class Planet: Satellite, CustomStringConvertible {
             }
             result += "present. "
         }
-        debugPrint("there are ", bases.count, "bases")
-        debugPrint("there are ", facilities.count," facilities")
+        if facilities.count > 0 {
+            result += "There "
+            if facilities.count == 1 {
+                result += "is a \(facilities.first!.description.lowercased()) "
+            } else {
+                result += " is a "
+                var b = ""
+                for facility in facilities {
+                    if facilities.index(facilities.index(of: facility)!, offsetBy: 1) == facilities.endIndex {
+                        b += " and a \(facility.description.lowercased()) "
+                    } else if facilities.index(of:facility) == facilities.startIndex {
+                        b += "\(facility.description.lowercased())"
+                    } else {
+                        b += ", a \(facility.description.lowercased())"
+                    }
+                }
+                result += b
+            }
+            result += "present. "
+        }
         return result
     }
     

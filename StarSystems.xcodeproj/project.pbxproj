@@ -60,6 +60,8 @@
 		833DA8381F6E135800AF0B30 /* GasGiant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DD95A81D2293F000ADEAF3 /* GasGiant.swift */; };
 		833DA8391F6E135800AF0B30 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E913A31D27850500DC8600 /* JSON.swift */; };
 		83401EEA1F67D18800D6FB65 /* PlanetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83401EE91F67D18800D6FB65 /* PlanetViewController.swift */; };
+		839ECA281FC37B61002E88EC /* SubsectorWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839ECA271FC37B61002E88EC /* SubsectorWindow.swift */; };
+		839ECA2A1FC37BE1002E88EC /* StarSystemWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839ECA291FC37BE1002E88EC /* StarSystemWindow.swift */; };
 		83A9C0EE1F330BBF008418C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C0ED1F330BBF008418C8 /* AppDelegate.swift */; };
 		83A9C0F01F330BBF008418C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C0EF1F330BBF008418C8 /* ViewController.swift */; };
 		83A9C0F21F330BBF008418C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83A9C0F11F330BBF008418C8 /* Assets.xcassets */; };
@@ -117,6 +119,8 @@
 		833DA8291F6DED7800AF0B30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		833DA82B1F6DED7800AF0B30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83401EE91F67D18800D6FB65 /* PlanetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetViewController.swift; sourceTree = "<group>"; };
+		839ECA271FC37B61002E88EC /* SubsectorWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsectorWindow.swift; sourceTree = "<group>"; };
+		839ECA291FC37BE1002E88EC /* StarSystemWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarSystemWindow.swift; sourceTree = "<group>"; };
 		83A9C0EB1F330BBF008418C8 /* StarSystemsGUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarSystemsGUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83A9C0ED1F330BBF008418C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83A9C0EF1F330BBF008418C8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -241,6 +245,8 @@
 				833D9AF71FB8330B009D35DD /* MainWindow.swift */,
 				833D9AF91FB8367B009D35DD /* PlanetWindow.swift */,
 				833D9AFB1FB98A0A009D35DD /* StarSystemViewController.swift */,
+				839ECA271FC37B61002E88EC /* SubsectorWindow.swift */,
+				839ECA291FC37BE1002E88EC /* StarSystemWindow.swift */,
 			);
 			path = StarSystemsGUI;
 			sourceTree = "<group>";
@@ -431,12 +437,14 @@
 				833D9AF81FB8330B009D35DD /* MainWindow.swift in Sources */,
 				83206E6D1F3E9B2A0085DB98 /* EmptyOrbit.swift in Sources */,
 				833D9AFA1FB8367B009D35DD /* PlanetWindow.swift in Sources */,
+				839ECA2A1FC37BE1002E88EC /* StarSystemWindow.swift in Sources */,
 				83206E6E1F3E9B2A0085DB98 /* GasGiant.swift in Sources */,
 				83206E6F1F3E9B2A0085DB98 /* JSON.swift in Sources */,
 				83206E671F3E98290085DB98 /* StarSystem.swift in Sources */,
 				83206E661F3E98190085DB98 /* Star.swift in Sources */,
 				833D9AFC1FB98A0A009D35DD /* StarSystemViewController.swift in Sources */,
 				83A9C0F01F330BBF008418C8 /* ViewController.swift in Sources */,
+				839ECA281FC37B61002E88EC /* SubsectorWindow.swift in Sources */,
 				83A9C0EE1F330BBF008418C8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -70,27 +70,27 @@ class Subsector:CustomStringConvertible  {
         return j
     }
     
-//    func generatePdf(_ filename: String, starSysPrint: Bool = false) {
-//        let pdf : Pdf = Pdf()
-//        pdf.start()
-//        if starSysPrint {
-//            for s in starSystems {
-//                pdf.display(s)
-//            }
-//        } else {
-//            for p in planets {
-//                pdf.display(p)
-//            }
-//        }
-//        pdf.end()
-//        do {
-//            let fn = NSString(string:filename).expandingTildeInPath
-//            print("Writing PDF to \(fn)")
-//            try pdf.pdfContent.write(toFile: fn, atomically: true, encoding: String.Encoding.utf8)
-//        } catch {
-//            print("EXCEPTION: \(error) writing \(pdf.pdfContent)")
-//        }
-//    }
+    func generatePdf(_ filename: String, starSysPrint: Bool = false) {
+        let pdf : Pdf = Pdf()
+        pdf.start()
+        if starSysPrint {
+            for s in starSystems {
+                pdf.display(s)
+            }
+        } else {
+            for p in planets {
+                pdf.display(p)
+            }
+        }
+        pdf.end()
+        do {
+            let fn = NSString(string:filename).expandingTildeInPath
+            print("Writing PDF to \(fn)")
+            try pdf.pdfContent.write(toFile: fn, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            print("EXCEPTION: \(error) writing \(pdf.pdfContent)")
+        }
+    }
     
     func populateStarSystems() {
         for p in planets {

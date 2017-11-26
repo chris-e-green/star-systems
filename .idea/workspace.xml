@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="06b2592e-e8c7-4392-93dc-e54244608f54" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/StarSystems.iml" afterPath="$PROJECT_DIR$/.idea/StarSystems.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/project.xcworkspace/xcuserdata/chris.xcuserdatad/UserInterfaceState.xcuserstate" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/project.xcworkspace/xcuserdata/chris.xcuserdatad/UserInterfaceState.xcuserstate" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/xcschememanagement.plist" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/xcschememanagement.plist" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StarSystems/Subsector.swift" afterPath="$PROJECT_DIR$/StarSystems/Subsector.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StarSystems/Planet.swift" afterPath="$PROJECT_DIR$/StarSystems/Planet.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StarSystemsGUI/Base.lproj/Main.storyboard" afterPath="$PROJECT_DIR$/StarSystemsGUI/Base.lproj/Main.storyboard" />
     </list>
     <ignored path="StarSystems.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -109,18 +109,18 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Project Settings" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Project Settings" pinned="false" current-in-tab="false">
         <entry file="appcode.project-settings://adfadf7e">
           <provider selected="true" editor-type-id="AppCode.ProjectSettings">
             <state />
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TradeCodes.swift" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/StarSystems/RTTWorldGen/TradeCodes.swift">
+      <file leaf-file-name="Planet.swift" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/StarSystems/Planet.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+            <state relative-caret-position="304">
+              <caret line="406" column="16" lean-forward="true" selection-start-line="406" selection-start-column="16" selection-end-line="406" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -129,6 +129,11 @@
     </leaf>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Chris Green &lt;chris-e-green@users.noreply.github.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
@@ -136,7 +141,6 @@
       <list>
         <option value="$PROJECT_DIR$/StarSystems/BasicPlanet.swift" />
         <option value="$PROJECT_DIR$/StarSystems/Pdf.swift" />
-        <option value="$PROJECT_DIR$/StarSystems/Planet.swift" />
         <option value="$PROJECT_DIR$/StarSystems/main.swift" />
         <option value="$PROJECT_DIR$/StarSystems/Satellite.swift" />
         <option value="$PROJECT_DIR$/StarSystems/RTTSpectrum.swift" />
@@ -160,6 +164,7 @@
         <option value="$PROJECT_DIR$/StarSystems/StarSystem.swift" />
         <option value="$PROJECT_DIR$/StarSystems/RTTWorldGen/RTTPlanet.swift" />
         <option value="$PROJECT_DIR$/StarSystems/Subsector.swift" />
+        <option value="$PROJECT_DIR$/StarSystems/Planet.swift" />
       </list>
     </option>
   </component>
@@ -525,18 +530,27 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1463472797967</updated>
-      <workItem from="1511421068089" duration="1255000" />
+      <workItem from="1511421068089" duration="9835000" />
     </task>
+    <task id="LOCAL-00001" summary="Uncommented Subsector.generatePDF() routine (not entirely sure why I commented it out in the first place but I suspect I'll discover why soonnnn....)">
+      <created>1511424489665</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1511424489665</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1255000" />
+    <option name="totallyTimeSpent" value="9835000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1680" height="1028" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22280335" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -569,6 +583,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Uncommented Subsector.generatePDF() routine (not entirely sure why I commented it out in the first place but I suspect I'll discover why soonnnn....)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Uncommented Subsector.generatePDF() routine (not entirely sure why I commented it out in the first place but I suspect I'll discover why soonnnn....)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -669,6 +687,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8685">
           <caret line="579" column="0" lean-forward="false" selection-start-line="579" selection-start-column="0" selection-end-line="579" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -684,6 +703,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -724,6 +744,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -742,13 +763,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/StarSystems/NameData.plist" />
-    <entry file="file://$PROJECT_DIR$/StarSystems/Planet.swift">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2490">
-          <caret line="166" column="89" lean-forward="false" selection-start-line="166" selection-start-column="89" selection-end-line="166" selection-end-column="89" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/StarSystems/RTTWorldGen/Bases.swift" />
     <entry file="file://$PROJECT_DIR$/StarSystems/RTTWorldGen/Chemistry.swift">
       <provider selected="true" editor-type-id="text-editor">
@@ -890,6 +904,14 @@
     <entry file="appcode.project-settings://adfadf7e">
       <provider selected="true" editor-type-id="AppCode.ProjectSettings">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/StarSystems/Planet.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="406" column="16" lean-forward="true" selection-start-line="406" selection-start-column="16" selection-end-line="406" selection-end-column="16" />
+          <folding />
+        </state>
       </provider>
     </entry>
   </component>

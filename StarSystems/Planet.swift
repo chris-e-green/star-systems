@@ -84,6 +84,26 @@ enum TradeClass: String, CustomStringConvertible {
         case .Wa: return "Water World"
         }
     }
+    var verboseDesc: String {
+        switch self {
+        case .Ag: return "agricultural"
+        case .As: return "asteroid belt"
+        case .Ba: return "barren"
+        case .De: return "desert"
+        case .Fl: return "fluid oceans" // with
+        case .Hi: return "high population" // with
+        case .Ic: return "ice-capped"
+        case .In: return "industrial"
+        case .Lo: return "low population" // with
+        case .Na: return "non-agricultural"
+        case .Ni: return "non-industrial"
+        case .Po: return "poor"
+        case .Ri: return "rich"
+        case .Va: return "vacuum"
+        case .Wa: return "water world"
+        }
+
+    }
 }
 
 class Planet: Satellite, CustomStringConvertible {
@@ -331,7 +351,7 @@ class Planet: Satellite, CustomStringConvertible {
         case 5: return "Personal concealable firearms (pistols, revolvers) prohibited"
         case 6: return "Most firearms (all except shotguns) prohibited. The carrying of any type of weapon openly is discouraged"
         case 7: return "Shotguns are prohibited"
-        case 8: return "Long bladed weapons (all but daggers) are controoled, and open possession is prohibited"
+        case 8: return "Long bladed weapons (all but daggers) are controlled, and open possession is prohibited"
         case 9: return "Possession of any weapon outside one's residence is prohibited"
         default:return "Weapon possession is prohibited"
         }
@@ -364,63 +384,111 @@ class Planet: Satellite, CustomStringConvertible {
         if _size == 0 { return "This is an asteroid/planetoid belt. "}
         var result = "\(name) is a "
         if _size < 1 {
-            result += "\(sizeDescription.lowercased()). "
+            result += "\(sizeDescription.lowercased()) "
         } else {
-            result += "planet with a diameter of roughly \(sizeDescription). "
+            result += "planet with a diameter of roughly \(sizeDescription) "
         }
-        result += "It has " + (_atmosphere==0 ?
-            "\(atmosphereDescription.lowercased()). " : "a \(atmosphereDescription.lowercased()) atmosphere. ")
-        result += "It has \(hydrographicsDescription.lowercased()) on its surface. "
-        result += "It has \(populationDescription.lowercased())"+(populationDescription.contains("inhabitants") ? "" : " inhabitants")
+        result += "with " + (_atmosphere==0 ?
+            "\(atmosphereDescription.lowercased()) " : "a \(atmosphereDescription.lowercased()) atmosphere ")
+        result += "and \(hydrographicsDescription.lowercased()) on its surface. "
+        if _population == 1 {
+            result += "It has less than one hundred inhabitants"
+        } else {
+            result += "It has \(populationDescription.lowercased())" + (populationDescription.contains("inhabitants") ? "" : " inhabitants")
+        }
         if _population > 0 {
             result += " who live under a \(governmentDescription.lowercased()). Legally, \(lawLevelDescription.lowercased()). The technological level is equivalent to \(techLevelDescription.lowercased()).  "
         } else { result += ". "}
         if starport == "Y" { result += "The planet has no spaceport. "}
         else if starport == "X" {
             result += "The planet has no starport and is generally in a red travel zone. "
+        } else if starport == "H" || starport == "E" {
+            result += "The planet has a spaceport with \(starportDescription.lowercased()). "
         } else {
-            result += "The planet has a starport with " + starportDescription.lowercased()
+            result += "The planet has a starport of \(starportDescription.lowercased()). "
         }
-        
+
+        // verbose bases string
         if bases.count > 0 {
-            result += "There "
-            if bases.count == 1 {
-                result += "is a \(bases.first!.description.lowercased()) "
-            } else {
-                result += " are "
-                var b = ""
-                for base in bases {
-                    if bases.index(bases.index(of: base)!, offsetBy: 1) == bases.endIndex {
-                        b += " and \(base.description.lowercased())s "
-                    } else if bases.index(of:base) == bases.startIndex {
-                        b += "\(base.description.lowercased())"
-                    } else {
-                        b += ", \(base.description.lowercased())"
-                    }
+            result += "There is a "
+            var b = ""
+            for base in bases {
+                if bases.index(bases.index(of: base)!, offsetBy: 1) == bases.endIndex && bases.count != 1 {
+                    b += "and a \(base.description.lowercased()) "
+                } else if bases.index(of:base) == bases.startIndex {
+                    b += "\(base.description.lowercased()) "
+                } else {
+                    b += ", a \(base.description.lowercased()) "
                 }
-                result += b
             }
+            result += b
             result += "present. "
         }
+        // verbose facilities string
         if facilities.count > 0 {
-            result += "There "
-            if facilities.count == 1 {
-                result += "is a \(facilities.first!.description.lowercased()) "
-            } else {
-                result += " is a "
-                var b = ""
-                for facility in facilities {
-                    if facilities.index(facilities.index(of: facility)!, offsetBy: 1) == facilities.endIndex {
-                        b += " and a \(facility.description.lowercased()) "
-                    } else if facilities.index(of:facility) == facilities.startIndex {
-                        b += "\(facility.description.lowercased())"
-                    } else {
-                        b += ", a \(facility.description.lowercased())"
-                    }
+            result += "There is a "
+            var b = ""
+            for facility in facilities {
+                if facilities.index(facilities.index(of: facility)!, offsetBy: 1) == facilities.endIndex && facilities.count != 1 {
+                    b += "and a \(facility.description.lowercased()) "
+                } else if facilities.index(of:facility) == facilities.startIndex {
+                    b += "\(facility.description.lowercased()) "
+                } else {
+                    b += ", a \(facility.description.lowercased()) "
                 }
-                result += b
             }
+            result += b
             result += "present. "
+        }
+
+        // verbose trade classifications string
+        let nonWithTC = tradeClassifications.filter({$0 != .Lo && $0 != .Fl && $0 != .Hi})
+        let withTC = tradeClassifications.subtracting(nonWithTC)
+        if tradeClassifications.count > 0 {
+            result += "\(name) is a"
+            for tc in nonWithTC {
+                if nonWithTC.index(of:tc) != nonWithTC.startIndex {
+                    result += ","
+                }
+                 result += " \(tc.verboseDesc.lowercased())"
+            }
+            result += " world"
+            var with = ""
+            if withTC.count > 0 {
+                for tc in withTC {
+                    if with.isEmpty { with = " with"} else { with += " and"}
+                    with += " \(tc.verboseDesc.lowercased())"
+                }
+            }
+            result += with
+//            var with = ""
+//            for tc in tradeClassifications {
+//                if tc == .Lo || tc == .Fl || tc == .Hi {
+//                    if with.isEmpty {
+//                        with = " with"
+//                    } else {
+//                        with += " and"
+//                    }
+//                    with += tc.verboseDesc
+//                } else {
+//                    // last element
+//                    if tradeClassifications.index(tradeClassifications.index(of: tc)!, offsetBy: 1) == tradeClassifications.endIndex && tradeClassifications.count != 1 {
+//                        result += " and\(tc.verboseDesc.lowercased())"
+//                    } else
+//                    // first element
+//                    if tradeClassifications.index(of: tc) == tradeClassifications.startIndex {
+//                        let f = tc.verboseDesc.first!
+//                        if f == "a" || f == "e" || f == "i" || f == "o" || f == "u" {
+//                            result += "n"
+//                        }
+//                        result += " \(tc.verboseDesc.lowercased())"
+//                    } else {
+//                        result += ", \(tc.verboseDesc.lowercased())"
+//                    }
+//                }
+//            }
+//            result += with
+            result += "."
         }
         return result
     }

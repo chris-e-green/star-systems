@@ -326,7 +326,12 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
     }
     
     var verboseDesc: String {
-        return "\(name) (\(specSize)) is a \(specSizeDescription.lowercased())."
+        var result = "\(name) (\(specSize)) is a \(specSizeDescription.lowercased())"
+        if let p = parent as? Star {
+            result += " companion star to \(p.name)"
+        }
+        result += ". "
+        return result
     }
     
     var specSize: String {

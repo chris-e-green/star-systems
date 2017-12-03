@@ -376,9 +376,9 @@ class Satellite {
     /// A string describing the type of this satellite
     var type: String {
         if self is Star { return "Star" }
-        if self is GasGiant { return "GasGiant" }
+        if self is GasGiant { return "Gas Giant" }
         if self is Planet { return "Planet" }
-        if self is EmptyOrbit { return "EmptyOrbit" }
+        if self is EmptyOrbit { return "Empty Orbit" }
         return "Unknown Satellite"
     }
 }

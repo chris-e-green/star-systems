@@ -7,7 +7,7 @@
 		<key>RTTWorldGen.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>7</integer>
+			<integer>17</integer>
 		</dict>
 		<key>StarSystems basic system.xcscheme</key>
 		<dict>
@@ -24,6 +24,11 @@
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
+		<key>StarSystems macOS GUI.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
 		<key>StarSystems no parameters.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -32,27 +37,27 @@
 		<key>StarSystems subsector (1/2).xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>5</integer>
+			<integer>9</integer>
 		</dict>
 		<key>StarSystems subsector (1/6).xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>6</integer>
 		</dict>
 		<key>StarSystems subsector (2/3).xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>6</integer>
+			<integer>12</integer>
 		</dict>
 		<key>StarSystems subsector (2/6).xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>3</integer>
+			<integer>4</integer>
 		</dict>
 		<key>StarSystems subsector (5/6).xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>7</integer>
+			<integer>18</integer>
 		</dict>
 		<key>StarSystems subsector density 1.xcscheme</key>
 		<dict>
@@ -82,12 +87,7 @@
 		<key>StarSystems subsector from JSON.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>6</integer>
-		</dict>
-		<key>StarSystemsGUI.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>10</integer>
+			<integer>15</integer>
 		</dict>
 		<key>StarSystemsiOS.xcscheme</key>
 		<dict>

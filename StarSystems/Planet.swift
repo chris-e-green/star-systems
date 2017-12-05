@@ -446,15 +446,16 @@ class Planet: Satellite, CustomStringConvertible {
     }
     
     var verboseDesc: String {
-        if _size == -2 { return "This is a ring system around the \(parent!.type.lowercased()) \(parent!.name). "}
-        if _size == 0 { return "This is an asteroid/planetoid belt orbiting the \(parent!.type.lowercased()) \(parent!.name). "}
+        if _size == -2 { return "This is a ring system around the \(parent!.nameAndType). "}
+        if _size == 0 { return "This is an asteroid/planetoid belt orbiting the \(parent!.nameAndType). "}
+        let planetType = parent!.type == "Star" ? "planet" : "moon"
         var result = "\(name) is a "
-        if _size == -1 { result += "small (200km) "}
-        if (parent!.type == "Star") { result += "planet" } else { result += "moon"}
-        if _size != -1 {
-            result += " with a diameter of roughly \(sizeDescription) "
+        if _size == -1 {
+            result += "small (200km) \(planetType)"}
+        else {
+            result += "\(planetType) with a diameter of roughly \(sizeDescription) "
         }
-        result += " orbiting the \(parent!.type.lowercased()) \(parent!.name). "
+        result += " orbiting the \(parent!.nameAndType). "
         result += "It has " + (_atmosphere==0 ?
             "\(atmosphereDescription.lowercased()) " : "a \(atmosphereDescription.lowercased()) atmosphere ")
         result += "and \(hydrographicsDescription.lowercased()) on its surface. "
@@ -464,7 +465,15 @@ class Planet: Satellite, CustomStringConvertible {
             result += "It has \(populationDescription.lowercased())" + (populationDescription.contains("inhabitants") ? "" : " inhabitants")
         }
         if _population > 0 {
-            result += " who live under a \(governmentDescription.lowercased()). Legally, \(lawLevelDescription.lowercased()). The technological level is equivalent to \(techLevelDescription.lowercased()).  "
+            if _government > 0 {
+            result += " who live under a \(governmentDescription.lowercased()). "
+            } else {
+                result += " who have no government structure. "
+            }
+            result += "Legally, \(lawLevelDescription.lowercased()). "
+            result += "The technological level is "
+            if _technologicalLevel < 10 {result += "equivalent to " }
+            result += "\(techLevelDescription.lowercased()).  "
         } else { result += ". "}
         if starport == "Y" { result += "The planet has no spaceport. "}
         else if starport == "X" {

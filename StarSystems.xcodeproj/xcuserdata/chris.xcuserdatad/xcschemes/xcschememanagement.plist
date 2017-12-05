@@ -89,6 +89,11 @@
 			<key>orderHint</key>
 			<integer>15</integer>
 		</dict>
+		<key>StarSystemsGUI.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
 		<key>StarSystemsiOS.xcscheme</key>
 		<dict>
 			<key>orderHint</key>

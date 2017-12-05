@@ -381,5 +381,8 @@ class Satellite {
         if self is EmptyOrbit { return "Empty Orbit" }
         return "Unknown Satellite"
     }
+    var nameAndType: String {
+        return "\(type.lowercased()) \(name)"
+    }
 }
 

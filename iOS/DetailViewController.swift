@@ -26,12 +26,8 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var tradeClassField: UITextField!
     func configureView() {
         // Update the user interface for the detail item.
-        if let detail = detailItem {
-            if let label = detailDescriptionLabel {
-                label.text = detail.description
-            }
-        }
-        if let planet = detailPlanet {
+
+        if let planet = detailItem {
             if let planetname = planetNameField {
                 planetname.text = planet.name
             }
@@ -43,6 +39,27 @@ class DetailViewController: UIViewController {
             }
             if let starport = starportField {
                 starport.text = planet.starport
+            }
+            if let atmosphere = atmosphereField {
+                atmosphere.text = planet.atmosphere
+            }
+            if let size = sizeField {
+                size.text = planet.size
+            }
+            if let hydrographics = hydrographicsField {
+                hydrographics.text = planet.hydrographics
+            }
+            if let population = populationField {
+                population.text = planet.population
+            }
+            if let government = governmentField {
+                government.text = planet.government
+            }
+            if let lawLevel = lawLevelField {
+                lawLevel.text = planet.lawLevel
+            }
+            if let techLevel = techLevelField {
+                techLevel.text = planet.technologicalLevel
             }
         }
     }
@@ -57,18 +74,10 @@ class DetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    var detailPlanet: Planet? {
+    var detailItem: Planet? {
         didSet {
             configureView()
         }
     }
-    var detailItem: NSDate? {
-        didSet {
-            // Update the view.
-            configureView()
-        }
-    }
-
-
 }
 

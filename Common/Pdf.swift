@@ -7,7 +7,11 @@
 //
 
 import Foundation
+#if os(macOS)
 import AppKit
+#else
+import UIKit
+#endif
 
 postfix operator ~
 postfix func ~ (value: Double)->String {
@@ -300,7 +304,11 @@ class Pdf {
     var xobjs          : [PdfXObject] = []
     var structure      : [Int:PdfObj] = [:]
     var fonts          : [PdfFont] = []
+    #if os(macOS)
     var nsfonts        : [String : NSFont] = [:]
+    #else
+    var nsfonts        : [String : UIFont] = [:]
+    #endif
     var currObjId = 2
     
     func leftPad(_ num: Int)->String {
@@ -309,10 +317,18 @@ class Pdf {
     }
     
     func strWidth(_ str:String, fontName: String, fontSize:Double) -> Double {
+        #if os(macOS)
         var font:NSFont?
+        #else
+        var font:UIFont?
+        #endif
         font = nsfonts["\(fontName)\(fontSize)"]
         if font == nil {
+            #if os(macOS)
             font = NSFont(name: fontName, size:CGFloat(fontSize))
+            #else
+            font = UIFont(name: fontName, size: CGFloat(fontSize))
+            #endif
             nsfonts["\(fontName)\(fontSize)"] = font
         }
         let ctl:CTLine = CTLineCreateWithAttributedString(NSAttributedString(string:str, attributes: [NSAttributedStringKey.font:font!]))

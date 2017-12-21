@@ -60,6 +60,8 @@
 		833DA8381F6E135800AF0B30 /* GasGiant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DD95A81D2293F000ADEAF3 /* GasGiant.swift */; };
 		833DA8391F6E135800AF0B30 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E913A31D27850500DC8600 /* JSON.swift */; };
 		83401EEA1F67D18800D6FB65 /* PlanetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83401EE91F67D18800D6FB65 /* PlanetViewController.swift */; };
+		835FC0DC1FEBA29400646D50 /* Pdf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4161823CA9160770ED54E9 /* Pdf.swift */; };
+		835FC0DF1FEBA36800646D50 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 835FC0DE1FEBA36700646D50 /* Default-568h@2x.png */; };
 		839ECA281FC37B61002E88EC /* SubsectorWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839ECA271FC37B61002E88EC /* SubsectorWindow.swift */; };
 		839ECA2A1FC37BE1002E88EC /* StarSystemWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839ECA291FC37BE1002E88EC /* StarSystemWindow.swift */; };
 		83A9C0EE1F330BBF008418C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9C0ED1F330BBF008418C8 /* AppDelegate.swift */; };
@@ -119,6 +121,7 @@
 		833DA8291F6DED7800AF0B30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		833DA82B1F6DED7800AF0B30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83401EE91F67D18800D6FB65 /* PlanetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetViewController.swift; sourceTree = "<group>"; };
+		835FC0DE1FEBA36700646D50 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		839ECA271FC37B61002E88EC /* SubsectorWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsectorWindow.swift; sourceTree = "<group>"; };
 		839ECA291FC37BE1002E88EC /* StarSystemWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarSystemWindow.swift; sourceTree = "<group>"; };
 		83A9C0EB1F330BBF008418C8 /* StarSystemsGUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarSystemsGUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,9 +184,10 @@
 		8338514F1CA39A310058E510 = {
 			isa = PBXGroup;
 			children = (
-				8338515A1CA39A310058E510 /* StarSystems */,
-				83A9C0EC1F330BBF008418C8 /* StarSystemsGUI */,
-				833DA81C1F6DED7800AF0B30 /* StarSystemsiOS */,
+				835FC0DD1FEBA2D600646D50 /* Console */,
+				8338515A1CA39A310058E510 /* Common */,
+				83A9C0EC1F330BBF008418C8 /* MacOS */,
+				833DA81C1F6DED7800AF0B30 /* iOS */,
 				833851591CA39A310058E510 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -198,10 +202,9 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8338515A1CA39A310058E510 /* StarSystems */ = {
+		8338515A1CA39A310058E510 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				8338515B1CA39A310058E510 /* main.swift */,
 				831CBE981D014F03006F9182 /* Subsector.swift */,
 				833851621CA39A9E0058E510 /* Dice.swift */,
 				833851771CA7B0F20058E510 /* Star.swift */,
@@ -215,12 +218,13 @@
 				83E913A31D27850500DC8600 /* JSON.swift */,
 				5A416E0FF6F73FD228F6E226 /* RTTWorldGen */,
 			);
-			path = StarSystems;
+			path = Common;
 			sourceTree = "<group>";
 		};
-		833DA81C1F6DED7800AF0B30 /* StarSystemsiOS */ = {
+		833DA81C1F6DED7800AF0B30 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				835FC0DE1FEBA36700646D50 /* Default-568h@2x.png */,
 				833DA81D1F6DED7800AF0B30 /* AppDelegate.swift */,
 				833DA81F1F6DED7800AF0B30 /* MasterViewController.swift */,
 				833DA8211F6DED7800AF0B30 /* DetailViewController.swift */,
@@ -229,10 +233,18 @@
 				833DA8281F6DED7800AF0B30 /* LaunchScreen.storyboard */,
 				833DA82B1F6DED7800AF0B30 /* Info.plist */,
 			);
-			path = StarSystemsiOS;
+			path = iOS;
 			sourceTree = "<group>";
 		};
-		83A9C0EC1F330BBF008418C8 /* StarSystemsGUI */ = {
+		835FC0DD1FEBA2D600646D50 /* Console */ = {
+			isa = PBXGroup;
+			children = (
+				8338515B1CA39A310058E510 /* main.swift */,
+			);
+			path = Console;
+			sourceTree = "<group>";
+		};
+		83A9C0EC1F330BBF008418C8 /* MacOS */ = {
 			isa = PBXGroup;
 			children = (
 				83A9C0ED1F330BBF008418C8 /* AppDelegate.swift */,
@@ -248,7 +260,7 @@
 				839ECA271FC37B61002E88EC /* SubsectorWindow.swift */,
 				839ECA291FC37BE1002E88EC /* StarSystemWindow.swift */,
 			);
-			path = StarSystemsGUI;
+			path = MacOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,10 +333,12 @@
 					};
 					833DA81A1F6DED7800AF0B30 = {
 						CreatedOnToolsVersion = 9.0;
+						DevelopmentTeam = BD96TN239S;
 						ProvisioningStyle = Automatic;
 					};
 					83A9C0EA1F330BBF008418C8 = {
 						CreatedOnToolsVersion = 9.0;
+						DevelopmentTeam = BD96TN239S;
 					};
 				};
 			};
@@ -354,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				833DA82A1F6DED7800AF0B30 /* LaunchScreen.storyboard in Resources */,
+				835FC0DF1FEBA36800646D50 /* Default-568h@2x.png in Resources */,
 				833DA8271F6DED7800AF0B30 /* Assets.xcassets in Resources */,
 				833DA8251F6DED7800AF0B30 /* Main.storyboard in Resources */,
 			);
@@ -407,6 +422,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				835FC0DC1FEBA29400646D50 /* Pdf.swift in Sources */,
 				833DA82F1F6E135800AF0B30 /* Subsector.swift in Sources */,
 				833DA8301F6E135800AF0B30 /* Dice.swift in Sources */,
 				833DA8311F6E135800AF0B30 /* Star.swift in Sources */,
@@ -661,8 +677,9 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BD96TN239S;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = StarSystemsiOS/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mgsdl.StarSystemsiOS;
@@ -685,8 +702,9 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BD96TN239S;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = StarSystemsiOS/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mgsdl.StarSystemsiOS;
@@ -709,8 +727,9 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = StarSystemsGUI/StarSystemsGUI.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = BD96TN239S;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = StarSystemsGUI/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/MacOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mgsdl.StarSystemsGUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -730,8 +749,9 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = StarSystemsGUI/StarSystemsGUI.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = BD96TN239S;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = StarSystemsGUI/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/MacOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mgsdl.StarSystemsGUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";

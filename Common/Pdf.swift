@@ -15,20 +15,20 @@ import UIKit
 
 postfix operator ~
 postfix func ~ (value: Double)->String {
-    var result = String(format: "%.1f", value)
-    if result[result.index(result.endIndex, offsetBy: -2)...result.index(result.endIndex, offsetBy: -1)] == ".0" {
-        result.remove(at: result.index(result.endIndex, offsetBy: -1))
-        result.remove(at: result.index(result.endIndex, offsetBy: -1))
+    let result = String(format: "%.1f", value)
+    if result.hasSuffix(".0") {
+        return result.dropLast(2).description
+    } else {
+        return result
     }
-    return result
 }
 postfix func ~ (value: Float)->String {
-    var result = String(format: "%.1f", value)
-    if result[result.index(result.endIndex, offsetBy: -2)...result.index(result.endIndex, offsetBy: -1)] == ".0" {
-        result.remove(at: result.index(result.endIndex, offsetBy: -1))
-        result.remove(at: result.index(result.endIndex, offsetBy: -1))
+    let result = String(format: "%.1f", value)
+    if result.hasSuffix(".0") {
+        return result.dropLast(2).description
+    } else {
+        return result
     }
-    return result
 }
 
 struct CoordPair: CustomStringConvertible {
@@ -111,7 +111,7 @@ class PdfPage: PdfObj {
     var parent: PdfPages?
     var contents: PdfContents?
     var procset: PdfProcSet?
-    var fonts:[PdfFont]=[]
+    var fonts:[PdfFont] = []
     var xobjects:[PdfXObject]?
     var max: CoordPair?
     override var body: String {
@@ -196,8 +196,8 @@ class PdfXObject: PdfObj {
     var xobjId: String?
     var stream : String?
     var bbox : RectCoords?
-    var xobjs: [PdfXObject]=[]
-    var fonts:[PdfFont]=[]
+    var xobjs: [PdfXObject] = []
+    var fonts:[PdfFont] = []
     override var body: String {
         var s: String = ""
         s += "<<\n"
@@ -240,21 +240,20 @@ class PdfXObject: PdfObj {
 }
 
 class Pdf {
-    let fontDetails    : [(name: String, id: String)] = [("Helvetica", "F1"), ("Helvetica-Bold", "F2"), ("Helvetica-Oblique", "F3"), ("Courier", "F4")]
-    let fontName1      : String = "Helvetica"
-    let fontId1        : String = "F1"
-    let fontName2      : String = "Helvetica-Bold"
-    let fontId2        : String = "F2"
-    let xobjPlanetDry  : String = "circle-blue-filled"
-    let xobjPlanetWet  : String = "circle-blue-empty"
-    let xobjGasGiant   : String = "circle-black-filled"
-    let xobjNavalBase  : String = "triangle-black-filled"
-    let xobjScoutBase  : String = "star-black-filled"
-    let xobjTASForm6   : String = "tas-form-6"
-    let xobjTASForm7   : String = "tas-form-7"
-    let xobjISForm7    : String = "is-form-7"
-    let xobjISForm7a   : String = "is-form-7-continuation"
-    let xobjHex        : String = "hex"
+    let fontDetails    : [(name: String, id: String)] = [("Helvetica", "F1"),
+                                                         ("Helvetica-Bold", "F2"),
+                                                         ("Helvetica-Oblique", "F3"),
+                                                         ("Courier", "F4")]
+    let xobjPlanetDryId  : String = "circle-blue-filled"
+    let xobjPlanetWetId  : String = "circle-blue-empty"
+    let xobjGasGiantId   : String = "circle-black-filled"
+    let xobjNavalBaseId  : String = "triangle-black-filled"
+    let xobjScoutBaseId  : String = "star-black-filled"
+    let xobjTASForm6Id   : String = "tas-form-6"
+    let xobjTASForm7Id   : String = "tas-form-7"
+    let xobjISForm7Id    : String = "is-form-7"
+    let xobjISForm7aId   : String = "is-form-7-continuation"
+    let xobjHexId        : String = "hex"
     let coordPts       : Double = 5.0
     let namePts        : Double = 8.0
     let listPts        : Double = 11.0
@@ -294,9 +293,9 @@ class Pdf {
     var tas7line       : Int    = 0
     var is7line        : Int    = 0
     var is7continued   : Bool   = false
-    var mapData    : String = ""
-    var subsectorData = [String]()
-    var systemData = [String]()
+    var mapData        : String = ""
+    var subsectorData  = [String]()
+    var systemData     = [String]()
     var pdfContent     : String = ""
     var catalog        : PdfCatalog?
     var pages          : PdfPages?
@@ -305,9 +304,9 @@ class Pdf {
     var structure      : [Int:PdfObj] = [:]
     var fonts          : [PdfFont] = []
     #if os(macOS)
-    var nsfonts        : [String : NSFont] = [:]
+    var fontCache      : [String : NSFont] = [:]
     #else
-    var nsfonts        : [String : UIFont] = [:]
+    var fontCache      : [String : UIFont] = [:]
     #endif
     var currObjId = 2
     
@@ -322,14 +321,14 @@ class Pdf {
         #else
         var font:UIFont?
         #endif
-        font = nsfonts["\(fontName)\(fontSize)"]
+        font = fontCache["\(fontName)\(fontSize)"]
         if font == nil {
             #if os(macOS)
             font = NSFont(name: fontName, size:CGFloat(fontSize))
             #else
             font = UIFont(name: fontName, size: CGFloat(fontSize))
             #endif
-            nsfonts["\(fontName)\(fontSize)"] = font
+            fontCache["\(fontName)\(fontSize)"] = font
         }
         let ctl:CTLine = CTLineCreateWithAttributedString(NSAttributedString(string:str, attributes: [NSAttributedStringKey.font:font!]))
         let width:Double = CTLineGetTypographicBounds(ctl, nil, nil, nil)// / 12.0 * fontSize
@@ -428,10 +427,10 @@ class Pdf {
     func hex(_ x: Double, y: Double, height: Double, label: String)-> String {
         var hexStr = ""
         if DEBUG { hexStr += "% hex at (\(x~), \(y~))\n" }
-        let (fn, fid) = fontDetails[0]
-        hexStr += "q 1 0 0 1 \(x~) \(y~) cm /\(xobjHex) Do Q\n"
-        let labelWidth:Double = strWidth(label, fontName: fn, fontSize:coordPts)
-        hexStr += "BT /\(fid) \(coordPts~) Tf \((x - labelWidth / 2.0)~) \((y + 14.0)~) Td (\(label))Tj ET\n"
+
+        hexStr += "q 1 0 0 1 \(x~) \(y~) cm /\(xobjHexId) Do Q\n"
+        let labelWidth:Double = strWidth(label, fontName: fontDetails[0].name, fontSize:coordPts)
+        hexStr += "BT /\(fontDetails[0].id) \(coordPts~) Tf \((x - labelWidth / 2.0)~) \((y + 14.0)~) Td (\(label))Tj ET\n"
         return hexStr
     }
     
@@ -463,11 +462,11 @@ class Pdf {
     }
     
     func showText(_ text: String, x: Double, y: Double, heading:Bool = false, small: Bool = true, narrow: Bool = false)->String {
-        var result = "BT /F"
+        var result = "BT /"
         if heading {
-            result += "2 \(headingPts~)"
+            result += "\(fontDetails[1].id) \(headingPts~)"
         } else {
-            result += "1 "
+            result += "\(fontDetails[0].id) "
             if small {
                 result += "\(textPts~)"
             } else {
@@ -505,7 +504,8 @@ class Pdf {
         // draw labels on map form
         result += showText("TAS Form 6", x: 0, y: 0, heading: true)
         let lbl = "Subsector Map Grid"
-        let lblWidth = strWidth(lbl, fontName: fontName2, fontSize: headingPts)
+
+        let lblWidth = strWidth(lbl, fontName: fontDetails[1].name, fontSize: headingPts)
         result += showText(lbl, x: mapBoxSize.x - lblWidth, y: 0, heading: true)
         result += showText("SUBSECTOR MAP GRID", x: 6, y: form.y - 15, heading: true)
         result += showText("1. Subsector Name", x: 200, y: form.y)
@@ -647,7 +647,8 @@ class Pdf {
         var footer = "IS Form 7"
         if !first { footer += " (Reverse)" }
         formPdf += showText("IS Form 7", x: 0, y: 0, heading: true)
-        let footer2width = strWidth("Star System Data", fontName: fontName2, fontSize: headingPts)
+
+        let footer2width = strWidth("Star System Data", fontName: fontDetails[1].name, fontSize: headingPts)
         formPdf += showText("Star System Data", x: form.x - footer2width, y: 0, heading: true)
         return formPdf
     }
@@ -691,13 +692,13 @@ class Pdf {
         }
         result += showText("TAS Form 7", x: 0, y: 0, heading: true)
         let lbl = "Subsector World Data"
-        let lblWidth = strWidth(lbl, fontName: fontName2, fontSize: headingPts)
+        let lblWidth = strWidth(lbl, fontName: fontDetails[1].name, fontSize: headingPts)
         result += showText(lbl, x: form.x - lblWidth, y: 0, heading: true)
         result += showText("SUBSECTOR WORLD DATA", x: 10, y: form.y - 21, heading: true)
         result += showText("1. Date of Preparation", x: 210, y: form.y)
         result += showText("2. Subsector Name", x: 10, y: form.y - 33)
         result += showText("3. Sector Name", x: 210, y: form.y - 33)
-        result += "BT /F3 10 Tf 5 \((form.y - 85)~) Td (World Name)Tj 102 0 Td (Location)Tj 60 0 Td (UPP)Tj 110 0 Td (Remarks)Tj ET\n"
+        result += "BT /\(fontDetails[1].id) 10 Tf 5 \((form.y - 85)~) Td (World Name)Tj 102 0 Td (Location)Tj 60 0 Td (UPP)Tj 110 0 Td (Remarks)Tj ET\n"
         return result
     }
     
@@ -713,7 +714,7 @@ class Pdf {
             currObjId += 1
         }
         
-        var xobj = PdfXObject(id: currObjId, xobjId: xobjPlanetDry,
+        let xobjPlanetDry = PdfXObject(id: currObjId, xobjId: xobjPlanetDryId,
                               stream: circle(0, y:0, radius: planetRadius,
                                 filled:true, blue: true),
                               bbox: RectCoords(
@@ -723,11 +724,11 @@ class Pdf {
                                 tr: CoordPair(
                                     x: planetRadius,
                                     y:planetRadius)))
-        xobjs.append(xobj)
-        structure[currObjId] = xobj
+        xobjs.append(xobjPlanetDry)
+        structure[currObjId] = xobjPlanetDry
         currObjId += 1
         
-        xobj = PdfXObject(id: currObjId, xobjId: xobjPlanetWet,
+        let xobjPlanetWet = PdfXObject(id: currObjId, xobjId: xobjPlanetWetId,
                           stream: circle(0, y:0, radius:planetRadius,
                             filled:false, blue: true),
                           bbox: RectCoords(
@@ -737,11 +738,11 @@ class Pdf {
                             tr: CoordPair(
                                 x: 1.1 * planetRadius,
                                 y:1.1 * planetRadius)))
-        xobjs.append(xobj)
-        structure[currObjId] = xobj
+        xobjs.append(xobjPlanetWet)
+        structure[currObjId] = xobjPlanetWet
         currObjId += 1
         
-        xobj = PdfXObject(id: currObjId, xobjId: xobjGasGiant,
+        let xobjGasGiant = PdfXObject(id: currObjId, xobjId: xobjGasGiantId,
                           stream: circle(0, y:0, radius:gasGiantRadius,
                             filled:true, blue: false),
                           bbox: RectCoords(
@@ -751,11 +752,11 @@ class Pdf {
                             tr: CoordPair(
                                 x: gasGiantRadius,
                                 y:gasGiantRadius)))
-        xobjs.append(xobj)
-        structure[currObjId] = xobj
+        xobjs.append(xobjGasGiant)
+        structure[currObjId] = xobjGasGiant
         currObjId += 1
         
-        xobj = PdfXObject(id: currObjId, xobjId: xobjNavalBase,
+        let xobjNavalBase = PdfXObject(id: currObjId, xobjId: xobjNavalBaseId,
                           stream: triangle(0, y:0, size: navalBaseSize),
                           bbox: RectCoords(
                             bl: CoordPair(
@@ -764,11 +765,11 @@ class Pdf {
                             tr: CoordPair(
                                 x: navalBaseSize / 2,
                                 y: navalBaseSize)))
-        xobjs.append(xobj)
-        structure[currObjId] = xobj
+        xobjs.append(xobjNavalBase)
+        structure[currObjId] = xobjNavalBase
         currObjId += 1
         
-        xobj = PdfXObject(id: currObjId, xobjId: xobjScoutBase,
+        let xobjScoutBase = PdfXObject(id: currObjId, xobjId: xobjScoutBaseId,
                           stream: star(0, y:0, size:scoutBaseSize),
                           bbox: RectCoords(
                             bl: CoordPair(
@@ -777,11 +778,11 @@ class Pdf {
                             tr: CoordPair(
                                 x: scoutBaseSize,
                                 y:scoutBaseSize)))
-        xobjs.append(xobj)
-        structure[currObjId] = xobj
+        xobjs.append(xobjScoutBase)
+        structure[currObjId] = xobjScoutBase
         currObjId += 1
         
-        let hexXobj = PdfXObject(id: currObjId, xobjId: xobjHex,
+        let hexXobj = PdfXObject(id: currObjId, xobjId: xobjHexId,
                                  stream: drawHex(0, y: 0, height: hexHeight),
                                  bbox: RectCoords(
                                     bl: CoordPair(x: 0 - hexWidth, y: 0 - hexHeight),
@@ -790,44 +791,44 @@ class Pdf {
         structure[currObjId] = hexXobj
         currObjId += 1
         
-        xobj = PdfXObject(id: currObjId, xobjId: xobjTASForm6,
+        let xobjTASForm6 = PdfXObject(id: currObjId, xobjId: xobjTASForm6Id,
                           stream: drawTASForm6(),
                           bbox: RectCoords(
                             bl: CoordPair(x: -2, y: -2),
                             tr: CoordPair(x:366, y: mapBoxSize.y + headingPts + 2)),
                           fonts: fonts, xobjs:[hexXobj])
-        xobjs.append(xobj)
-        structure[currObjId] = xobj
+        xobjs.append(xobjTASForm6)
+        structure[currObjId] = xobjTASForm6
         currObjId += 1
         
-        xobj = PdfXObject(id: currObjId, xobjId: xobjTASForm7,
+        let xobjTASForm7 = PdfXObject(id: currObjId, xobjId: xobjTASForm7Id,
                           stream: drawTASForm7(),
                           bbox: RectCoords(
                             bl: CoordPair(x: -2, y: -2),
                             tr: CoordPair(x: 366, y: mapBoxSize.y + headingPts + 2)),
                           fonts:fonts)
-        xobjs.append(xobj)
-        structure[currObjId] = xobj
+        xobjs.append(xobjTASForm7)
+        structure[currObjId] = xobjTASForm7
         currObjId += 1
         
-        xobj = PdfXObject(id: currObjId, xobjId: xobjISForm7,
+        let xobjISForm7 = PdfXObject(id: currObjId, xobjId: xobjISForm7Id,
                           stream: drawISForm7(),
                           bbox: RectCoords(
                             bl: CoordPair(x: -2, y: -2),
                             tr: CoordPair(x: 366, y: mapBoxSize.y + headingPts + 2)),
                           fonts:fonts)
-        xobjs.append(xobj)
-        structure[currObjId] = xobj
+        xobjs.append(xobjISForm7)
+        structure[currObjId] = xobjISForm7
         currObjId += 1
         
-        xobj = PdfXObject(id: currObjId, xobjId: xobjISForm7a,
+        let xobjISForm7a = PdfXObject(id: currObjId, xobjId: xobjISForm7aId,
                           stream: drawISForm7(false),
                           bbox: RectCoords(
                             bl: CoordPair(x: -2, y: -2),
                             tr: CoordPair(x: 366, y: mapBoxSize.y + headingPts + 2)),
                           fonts:fonts)
-        xobjs.append(xobj)
-        structure[currObjId] = xobj
+        xobjs.append(xobjISForm7a)
+        structure[currObjId] = xobjISForm7a
         currObjId += 1
         
         pages = PdfPages(id:currObjId)
@@ -838,31 +839,29 @@ class Pdf {
         catalog = PdfCatalog(id: 1, /*outline: outline!, */pages: pages!)
         structure[1] = catalog
         
-        mapData = xobject(xobjTASForm6, at: pageMargin.bl - CoordPair(x:0, y:headingPts))
-        //        mapData = "q 1 0 0 1 \(pageMargin.bl - CoordPair(x:0, y:headingPts)) cm /\(xobjTASForm6) Do Q\n"
+        mapData = xobject(xobjTASForm6Id, at: pageMargin.bl - CoordPair(x:0, y:headingPts))
+
         // create a new TAS Form 7 page string (with append) and start it off with form invocation.
-        subsectorData.append(xobject(xobjTASForm7, at: pageMargin.bl - CoordPair(x:0, y:headingPts)))
-        //        subsectorData.append("q 1 0 0 1 \(pageMargin.bl - CoordPair(x:0, y:headingPts)) cm /\(xobjTASForm7) Do Q\n")
-        
-        // create a new IS Form 7 page string (with append) and start it off with form invocation.
-        //        systemData.append(xobject(xobjISForm7, at: pageMargin.bl - CoordPair(x:0, y:headingPts)))
-        //        systemData.append("q 1 0 0 1 \(pageMargin.bl - CoordPair(x:0, y:headingPts)) cm /\(xobjISForm7) Do Q\n")
+        subsectorData.append(xobject(xobjTASForm7Id, at: pageMargin.bl - CoordPair(x:0, y:headingPts)))
     }
     
-    // the purpose of composite is to take the supplied content string and turn it into an appropriate pdf text block.
-    // if the string is too long for a single line it will split into two lines and return; if it fits on a single line
-    // it will format as a single line and return that line block.
+    // the purpose of composite is to take the supplied content string and turn
+    // it into an appropriate pdf text block. If the string is too long for a
+    // single line it will split into two lines and return; if it fits on a
+    // single line it will format as a single line and return that line block.
     // blockWidth is in points.
     // proposed algorithm: 
-    //    first, check the string width as supplied. If it fits, we turn it into a single line.
-    //    if it didn't fit, then it must be more than one line long. We split it into words
-    //      and progressively move the last word to a second line, until the first line
-    //      fits. The first and second lines then become the return value.
+    //    first, check the string width as supplied.
+    //    If it fits, we turn it into a single line.
+    //    if it didn't fit, then it must be more than one line long. We split it
+    //      into words and progressively move the last word to a second line,
+    //      until the first line  fits. The first and second lines then become
+    //      the return value.
     func composite(_ content: String, blockWidth: Double)->String {
         var result = ""
         var line1 = content
         var line2 = ""
-        if strWidth(line1, fontName: fontName1, fontSize: 11) * 0.6 < blockWidth {
+        if strWidth(line1, fontName: fontDetails[0].name, fontSize: 11) * 0.6 < blockWidth {
             // 1 line format is 6 0 Td 75 Tz (line1)Tj 100 Tz"
             result = "2 0 Td 60 Tz (\(line1))Tj 100 Tz"
         } else {
@@ -871,7 +870,7 @@ class Pdf {
             for (i, _) in contentArray.enumerated().reversed() {
                 line1 = contentArray[0...(i - 1)].joined(separator: " ")
                 line2 = contentArray[i...lastIdx].joined(separator: " ")
-                if strWidth(line1, fontName: fontName1, fontSize: 11) * 0.6 < blockWidth {
+                if strWidth(line1, fontName: fontDetails[0].name, fontSize: 11) * 0.6 < blockWidth {
                     // we have a short enough line 1 now.
                     result = "2 5.5 Td 60 Tz (\(line1))Tj 0 -11 Td (\(line2))Tj 100 Tz"
                     break
@@ -889,14 +888,15 @@ class Pdf {
         let uwpcol = 172.0
         let desccol = 270.0
         var s = ""
-        let orb1W = strWidth(orbitstr, fontName: fontName1, fontSize: listPts) * 0.75
-        let orb2W = strWidth(suborbitstr, fontName: fontName1, fontSize: listPts) * 0.75
+
+        let orb1W = strWidth(orbitstr, fontName: fontDetails[0].name, fontSize: listPts) * 0.75
+        let orb2W = strWidth(suborbitstr, fontName: fontDetails[0].name, fontSize: listPts) * 0.75
         s += showText(orbitstr, x: orbit1col - orb1W, y: y, heading: false, small: false, narrow: true)
         s += showText(suborbitstr, x: orbit2col - orb2W, y: y, heading: false, small: false, narrow: true)
         s += showText(o.name, x: namecol, y: y, heading: false, small: false)
         if o is Planet {
             let p = o as! Planet
-            s += "BT /\(fontId1) \(listPts~) \(uwpcol~) \(y) Td "
+            s += "BT /\(fontDetails[0].id) \(listPts~) \(uwpcol~) \(y) Td "
             s += pdfPlanet(p)
             s += "ET\n"
         } else if o is GasGiant {
@@ -919,7 +919,7 @@ class Pdf {
         p.gasGiant = starSystem.gasGiants
         display(p)
         for star in starSystem.stars {
-            systemData.append(xobject(xobjISForm7, at: pageMargin.bl - CoordPair(x:0, y:headingPts)))
+            systemData.append(xobject(xobjISForm7Id, at: pageMargin.bl - CoordPair(x:0, y:headingPts)))
             
             var s = ""
             let loc = String(format: "%02d%02d", arguments:[p.coordinateX, p.coordinateY])
@@ -958,7 +958,7 @@ class Pdf {
                 if line == 18 {
                     systemData[systemData.endIndex.advanced(by: -1)] += s
                     s = ""
-                    systemData.append(xobject(xobjISForm7a, at: pageMargin.bl - CoordPair(x: 0, y: headingPts)))
+                    systemData.append(xobject(xobjISForm7aId, at: pageMargin.bl - CoordPair(x: 0, y: headingPts)))
                     s += showText(star.name, x: 100, y: mapBoxSize.y - 10, heading: false, small: false)
                     s += showText(star.specSize, x: 250, y: mapBoxSize.y - 10, heading: false, small: false)
                     s += showText("\(star.magnitude)", x: 330, y: mapBoxSize.y - 10, heading: false, small: false)
@@ -967,9 +967,7 @@ class Pdf {
                 let y = mapBoxSize.y - line * listLineHeight - 78
                 if stellarOrbit != -10 { //
                     let orbitstr = stellarOrbit == -1 ? "" : (Double(stellarOrbit) / 10)~
-                    // String(format:"%.1f", arguments:[Float(stellarOrbit) / 10])
                     let suborbitstr = moonOrbit == -1 ? "" : (Double(moonOrbit) / 10)~
-                    // String(format:"%.1f", arguments:[Float(moonOrbit) / 10])
                     s += displaySat(orbitstr, suborbitstr: suborbitstr, o: satellite, y: y)
                 } else { // close orbit, i.e. must be a star.
                     s += showText(satellite.name, x: 90, y: y, heading: false, small: false)
@@ -1014,12 +1012,12 @@ class Pdf {
         if tas7line > 17 {
             tas7line = 0
             // create a new page string (with append) and start it off with a new form invocation.
-            subsectorData.append(xobject(xobjTASForm7, at: pageMargin.bl - CoordPair(x:0, y:headingPts)))
+            subsectorData.append(xobject(xobjTASForm7Id, at: pageMargin.bl - CoordPair(x:0, y:headingPts)))
         }
         var p: String = ""
         if DEBUG { p += "% Rendering \(planet.name) to list\n" }
         let c:CoordPair = listCoords(planet.coordinateX, y:planet.coordinateY)
-        p += "BT /\(fontId1) \(listPts~) Tf \(c) Td (\(planet.name))Tj "
+        p += "BT /\(fontDetails[0].id) \(listPts~) Tf \(c) Td (\(planet.name))Tj "
         p += String(format:"104 0 Td 5.5 Tc (%02d%02d)Tj 0 Tc 60 0 Td ", arguments:[planet.coordinateX, planet.coordinateY])
         p += String(format:"(%@)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td (%1X)Tj 12 0 Td(%1X)Tj 12 0 Td (%1X)Tj 12 0 Td ", arguments:[planet.starport, planet._size, planet._atmosphere, planet._hydrographics, planet._population, planet._government, planet._lawLevel,
             planet._technologicalLevel])
@@ -1048,33 +1046,28 @@ class Pdf {
         
         if DEBUG { mapData += "% Rendering \(planet.name) to map\n" }
         let c1:CoordPair = hexLocToCoord(planet.coordinateX,y:planet.coordinateY)
-        var w:Double = strWidth(planet.starport, fontName: fontName1, fontSize: namePts)
-        mapData += "BT /\(fontId1) \(namePts~) Tf \((c1.x - w / 2)~) \((c1.y + 5)~) Td (\(planet.starport))Tj ET\n"
+        var w:Double = strWidth(planet.starport, fontName: fontDetails[0].name, fontSize: namePts)
+        mapData += "BT /\(fontDetails[0].id) \(namePts~) Tf \((c1.x - w / 2)~) \((c1.y + 5)~) Td (\(planet.starport))Tj ET\n"
         let dispName = planet._population >= 9 ? planet.name.uppercased() : planet.name
-        w = strWidth(dispName, fontName: fontName1, fontSize: namePts * 0.75)
-        mapData += "BT /\(fontId1) \(namePts~) Tf \((c1.x - w / 2)~) \((c1.y - 6.0 - namePts)~) Td 75 Tz (\(dispName))Tj 100 Tz ET\n"
+        w = strWidth(dispName, fontName: fontDetails[0].name, fontSize: namePts * 0.75)
+        mapData += "BT /\(fontDetails[0].id) \(namePts~) Tf \((c1.x - w / 2)~) \((c1.y - 6.0 - namePts)~) Td 75 Tz (\(dispName))Tj 100 Tz ET\n"
         if planet._size == 0 {
             mapData += asteroids(c1.x, y: c1.y, size: asteroidsSize)
         } else {
-            mapData += "q 1 0 0 1 \(c1) cm "
             if planet._hydrographics > 0 {
-                mapData += "/\(xobjPlanetDry)"
+                mapData += xobject(xobjPlanetDryId, at: c1)
             } else {
-                mapData += "/\(xobjPlanetWet)"
+                mapData += xobject(xobjPlanetWetId, at: c1)
             }
-            mapData +=  " Do Q\n"
         }
         if planet.gasGiant {
-            mapData += xobject(xobjGasGiant, at: c1 + CoordPair(x:10,y:10))
-            //            mapData += "q 1 0 0 1 \((c1 + CoordPair(x:10,y:10))) cm /\(xobjGasGiant) Do Q\n"
+            mapData += xobject(xobjGasGiantId, at: c1 + CoordPair(x:10,y:10))
         }
         if planet.bases.contains(.N) {
-            mapData += xobject(xobjNavalBase, at: c1 - CoordPair(x:10,y:0))
-            //            mapData += "q 1 0 0 1 \((c1 - CoordPair(x:10,y:0))) cm /\(xobjNavalBase) Do Q\n"
+            mapData += xobject(xobjNavalBaseId, at: c1 - CoordPair(x:10,y:0))
         }
         if planet.bases.contains(.S) {
-            mapData += xobject(xobjScoutBase, at: c1 + CoordPair(x:-10,y:10))
-            //            mapData += "q 1 0 0 1 \((c1 + CoordPair(x:-10, y:10))) cm /\(xobjScoutBase) Do Q\n"
+            mapData += xobject(xobjScoutBaseId, at: c1 + CoordPair(x:-10,y:10))
         }
     }
     

@@ -95,7 +95,7 @@ enum Zone: String, CustomStringConvertible {
 }
 
 /// the various stellar attributes from Traveller Book 6
-let stellarAttrs:[StarDetail:(bolMagnitude:Double,luminosity:Double, effTemp:Double, radii: Double, mass: Double)] = [
+let stellarAttrs:[StarDetail:(bolMagnitude:Double, luminosity:Double, effTemp:Double, radii: Double, mass: Double)] = [
     StarDetail(t: .B, d: 0, s: .Ia):  (-9.6, 560_000,    22_000,   52,    60),
     StarDetail(t: .B, d: 5, s: .Ia):  (-8.5, 204_000,    14_200,   75,    30),
     StarDetail(t: .A, d: 0, s: .Ia):  (-7.8, 107_000,     9_000,  135,    18),

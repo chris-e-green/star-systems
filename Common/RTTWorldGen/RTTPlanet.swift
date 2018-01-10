@@ -5,11 +5,6 @@
 
 import Foundation
 
-extension Int {
-    var b36:String {
-        return String(self, radix:36, uppercase:true)
-    }
-}
 
 class RTTPlanet: Entity, CustomStringConvertible {
     let baseTL = 15 // one day it might be worth allowing this to be set.

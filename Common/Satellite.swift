@@ -8,34 +8,6 @@
 
 import Foundation
 
-extension Int {
-    /**
-     return an ordinal string representation for an Int.
-     - parameters:
-     - things: the name of the entity that the Int counts. It is used
-     as part of the string, and pluralised when appropriate.
-     - returns:
-     A string of the form "is|are *n* *thing*|*thing*s" where the
-     choice of is/are and plural strings are dependend on the value
-     of *n*.
-     */
-    func strord(_ things: String)->String {
-        var result = ""
-        if self == 1 {
-            result += "is "
-        } else {
-            result += "are "
-        }
-        result += String(self)
-        result += " "
-        result += things
-        if self != 1 {
-            result += "s"
-        }
-        return result
-    }
-}
-
 /// Possible errors when creating a satellite
 enum SatelliteError:Error {
     case orbitInUse

@@ -8,13 +8,6 @@
 
 import Foundation
 
-extension String {
-    // shorthand padding with spaces to a given length
-    func padding(_ length: Int) -> String {
-        return self.padding(toLength: length, withPad: " ", startingAt: 0)
-    }
-}
-
 enum Facility: String, CustomStringConvertible {
     case Farming
     case Mining

@@ -22,6 +22,9 @@
 		5A416D374B434C2AC808C913 /* RTTSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4166D70A41844469B65600 /* RTTSystem.swift */; };
 		5A416E1CAE15F04A176D1000 /* Habitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A416A5351D441ED2489839C /* Habitation.swift */; };
 		5A416ECE14A440EDC99ED85D /* RTTBases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A416082CD20F64058A286FE /* RTTBases.swift */; };
+		830311111FEDDA190072E9FD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830311101FEDDA190072E9FD /* Extensions.swift */; };
+		830311121FEDDA190072E9FD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830311101FEDDA190072E9FD /* Extensions.swift */; };
+		830311131FEDDA190072E9FD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830311101FEDDA190072E9FD /* Extensions.swift */; };
 		831CBE991D014F03006F9182 /* Subsector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831CBE981D014F03006F9182 /* Subsector.swift */; };
 		83206E661F3E98190085DB98 /* Star.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833851771CA7B0F20058E510 /* Star.swift */; };
 		83206E671F3E98290085DB98 /* StarSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338517D1CA7B13D0058E510 /* StarSystem.swift */; };
@@ -101,6 +104,7 @@
 		5A416D1619D3B969BED61B09 /* PlanetOrbit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanetOrbit.swift; sourceTree = "<group>"; };
 		5A416D495D28003DFA71C17E /* PlanetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanetType.swift; sourceTree = "<group>"; };
 		5A416DA41195921100B77264 /* RTTStar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTTStar.swift; sourceTree = "<group>"; };
+		830311101FEDDA190072E9FD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		831CBE981D014F03006F9182 /* Subsector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subsector.swift; sourceTree = "<group>"; };
 		833851581CA39A310058E510 /* StarSystems */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = StarSystems; sourceTree = BUILT_PRODUCTS_DIR; };
 		8338515B1CA39A310058E510 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -217,6 +221,7 @@
 				83DD95A81D2293F000ADEAF3 /* GasGiant.swift */,
 				83E913A31D27850500DC8600 /* JSON.swift */,
 				5A416E0FF6F73FD228F6E226 /* RTTWorldGen */,
+				830311101FEDDA190072E9FD /* Extensions.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -411,6 +416,7 @@
 				5A4163437AF5E44D4ED636A7 /* PlanetType.swift in Sources */,
 				83DD95A71D2293D300ADEAF3 /* EmptyOrbit.swift in Sources */,
 				5A416B44C08762E8B71E1A0F /* Spectrum.swift in Sources */,
+				830311111FEDDA190072E9FD /* Extensions.swift in Sources */,
 				5A416BB4346F676509297115 /* RTTStar.swift in Sources */,
 				5A41614069DE12CE5CF00127 /* StarOrbits.swift in Sources */,
 				5A416D374B434C2AC808C913 /* RTTSystem.swift in Sources */,
@@ -432,6 +438,7 @@
 				833DA8361F6E135800AF0B30 /* Name.swift in Sources */,
 				833DA8371F6E135800AF0B30 /* EmptyOrbit.swift in Sources */,
 				833DA8381F6E135800AF0B30 /* GasGiant.swift in Sources */,
+				830311131FEDDA190072E9FD /* Extensions.swift in Sources */,
 				833DA8391F6E135800AF0B30 /* JSON.swift in Sources */,
 				833DA8221F6DED7800AF0B30 /* DetailViewController.swift in Sources */,
 				833DA8201F6DED7800AF0B30 /* MasterViewController.swift in Sources */,
@@ -458,6 +465,7 @@
 				83206E6F1F3E9B2A0085DB98 /* JSON.swift in Sources */,
 				83206E671F3E98290085DB98 /* StarSystem.swift in Sources */,
 				83206E661F3E98190085DB98 /* Star.swift in Sources */,
+				830311121FEDDA190072E9FD /* Extensions.swift in Sources */,
 				833D9AFC1FB98A0A009D35DD /* StarSystemViewController.swift in Sources */,
 				83A9C0F01F330BBF008418C8 /* ViewController.swift in Sources */,
 				839ECA281FC37B61002E88EC /* SubsectorWindow.swift in Sources */,

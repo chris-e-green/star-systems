@@ -6,3 +6,5 @@ Generates a PDF version of a Traveller subsector with optional generation of eac
 
 A work-in-progress that was largely about learning Swift (so some parts are more sophisticated than others, 
 and some bits experiment with aspects of Swift).
+
+The Traveller game in all forms is owned by Far Future Enterprises. Copyright 1977 - 2008 Far Future Enterprises.

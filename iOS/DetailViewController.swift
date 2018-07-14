@@ -5,6 +5,9 @@
 //  Created by Christopher Green on 17/9/17.
 //  Copyright © 2017 Christopher Green. All rights reserved.
 //
+//  The Traveller game in all forms is owned by Far Future Enterprises.
+//  Copyright 1977 - 2008 Far Future Enterprises.
+//
 
 import UIKit
 

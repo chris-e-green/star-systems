@@ -5,6 +5,9 @@
 //  Created by Christopher Green on 27/03/2016.
 //  Copyright © 2016 Christopher Green. All rights reserved.
 //
+//  The Traveller game in all forms is owned by Far Future Enterprises.
+//  Copyright 1977 - 2008 Far Future Enterprises.
+//
 
 import Foundation
 
@@ -24,15 +27,18 @@ enum SatelliteError:Error {
  */
 class Satellites {
     
-    /// Stores the satellite in each of the orbits (the orbit is stored as an Int, 10 times the actual orbit number (e.g. orbit 3.1 is stored as 31)
+    /// Stores the satellite in each of the orbits (the orbit is stored as an
+    /// Int, 10 times the actual orbit number (e.g. orbit 3.1 is stored as 31)
     var orbits: [Int:Satellite] = [:]
-    
+
     /**
      Add a Satellite at the given orbit.
+     
      - parameters:
-     - orbit:
+     
+        - orbit:
      The orbit at which to add the new satellite.
-     - newSatellite:
+        - newSatellite:
      The satellite to be added.
      */
     func addSatelliteAtOrbit(_ orbit: Float, newSatellite: Satellite) throws {
@@ -43,14 +49,14 @@ class Satellites {
     /**
      Retrieve the Satellite, if any, that is at the given orbit.
      - parameters:
-     - orbit:
+        - orbit:
      The orbit in question.
      */
     func getSatelliteAtOrbit(_ orbit: Float) -> Satellite? {
         let intOrbit:Int = Int(orbit * 10)
         return orbits[intOrbit]
     }
-    
+
     var count: Int {
         return orbits.count
     }
@@ -70,13 +76,14 @@ class Satellites {
 class Satellite {
     /// The satellites orbiting this satellite.
     var satellites = Satellites()
-    /// The parent satellite of this satellite. Everything except the primary will have a parent.
+    /// The parent satellite of this satellite. Everything except the primary
+    /// will have a parent.
     var parent: Satellite?
     /// The name of this satellite.
     var name: String
     /// The maximum name length for a satellite.
     let maxNameLength = 15 // this lets names fit on the map!
-
+    
     /// A textual description of this Satellite, including any satellites
     /// that orbit it.
     var satDesc: String {
@@ -90,16 +97,11 @@ class Satellite {
             result += "\n\(pad)"
             if i != -10 {
                 let orbitstr = (Float(i) / 10)~
-//                var orbitstr = String(format:"%5.1f", arguments:[Float(i) / 10])
-//                if orbitstr[orbitstr.index(orbitstr.endIndex, offsetBy: -2)...orbitstr.index(orbitstr.endIndex, offsetBy: -1)] == ".0" {
-//                    orbitstr = orbitstr[orbitstr.startIndex...orbitstr.index(orbitstr.endIndex, offsetBy: -3)] + "  "
-//                }
                 if o.zone == .H { result += "*" } else { result += " " }
                 result += orbitstr
             } else {
                 result += "Close".padding(10)
             }
-            //            result += " (\(o.zone!))".padding(14)
             result += rpad
             if o is Star {
                 let s = o as! Star
@@ -119,11 +121,8 @@ class Satellite {
         let sorted = satellites.orbits.sorted(by: {$0.0 < $1.0})
         
         for (i, o) in sorted {
-            //            result += "\t\"\(jsonLabels.sat)\": {\n"
             result += "\t{\n"
             result += "\t\t\"\(jsonLabels.orbit)\": \(Float(i) / 10),\n"
-            //            result += "\"\(jsonLabels.name)\": \"\(name)\",\n"
-            //            result += "\"\(jsonLabels.sat)\": {\n"
             if o is Star {
                 result += "\t\t\(o.json)\n"
             } else {
@@ -131,7 +130,6 @@ class Satellite {
                 result += "\(o.satJSON)"
             }
             result += "\t},\n"
-            //            result += "}\n"
         }
         return result
     }
@@ -146,27 +144,21 @@ class Satellite {
      satellite. If the orbit is occupied, currently just logs the
      inability and continues.
      - parameters:
-     - orbit:
+        - orbit:
      The orbit at which to add the satellite.
-     - newSatellite:
+        - newSatellite:
      The satellite to add.
      */
     func addToOrbit(_ orbit: Float, newSatellite: Satellite)  {
         do {
             try satellites.addSatelliteAtOrbit(orbit, newSatellite: newSatellite)
-            //            if self is Star {
-            //                let s = self as! Star
-            //                // if the new satellite is a star, don't change the maximum orbit number.
-            //                if !(newSatellite is Star) {
-            //                    if s.maxOrbitNum < Int(orbit) {
-            //                        s.maxOrbitNum = Int(orbit + 1)
-            //                        if DEBUG { print("Increased max orbits to \(s.maxOrbitNum) on \(s.name!)") }
-            //                    }
-            //                }
-            //            }
         } catch SatelliteError.orbitInUse {
-            if (getSatellite(orbit) is EmptyOrbit || getSatellite(orbit) is Star) && newSatellite is EmptyOrbit {
-                if DEBUG { print("Tried to add an empty orbit and collided with another companion") }
+            if (getSatellite(orbit) is EmptyOrbit ||
+                getSatellite(orbit) is Star) &&
+                newSatellite is EmptyOrbit {
+                if DEBUG {
+                    print("Tried to add an empty orbit and collided with another companion")
+                }
             } else {
                 print("EXCEPTION: Orbit \(orbit) in use, can't add \(newSatellite)!")
             }
@@ -190,16 +182,16 @@ class Satellite {
      a request for the Zone of an orbit of a non-star, return the Zone for
      the parent instead.
      - parameters:
-     - orbit:
+        - orbit:
      The orbit to check.
-     - returns:
+    - returns:
      The Zone in which *orbit* is contained.
      */
     func getZone(_ orbit: Float) -> Zone? {
         if self is Star {
             let s = self as! Star
             if let zones:[Zone] = tableOfZones[s.starDetail] {
-                let i = Int(round(orbit)) // decimal zones go to nearest whole zone
+                let i = Int(round(orbit)) // zones round to nearest whole zone
                 if i >= zones.count {
                     return Zone.O
                 } else if i == -1 { // close orbit
@@ -223,7 +215,10 @@ class Satellite {
     /// The orbit of this satellite relative to the parent star.
     var stellarOrbit: Float {
         var result:Float = 0.0
-        if parent == nil { result = 0.0 } // must be the primary star - no point in going further.
+        if parent == nil {
+            // must be the primary star - no point in going further.
+            result = 0.0
+        }
         else {
             var p: Satellite? = self
             // get up to the parent star
@@ -231,7 +226,9 @@ class Satellite {
                 p = p!.parent
             } while !(p is Star) && p != nil
             for (orbitInt, orbitingObject) in (p?.satellites.orbits)! {
-                if orbitingObject === self { result = Float(orbitInt) / 10.0 }
+                if orbitingObject === self {
+                    result = Float(orbitInt) / 10.0
+                }
             }
         }
         return result
@@ -268,7 +265,11 @@ class Satellite {
         for (_,s) in satellites.orbits {
             if s is Planet {
                 result.append(s as! Planet)
-            } else { if DEBUG { print("\(s.name) is not a planet") } }
+            } else {
+                if DEBUG {
+                    print("\(s.name) is not a planet")
+                }
+            }
             result.append(contentsOf: s.getPlanets())
         }
         return result

@@ -5,6 +5,9 @@
 //  Created by Christopher Green on 27/03/2016.
 //  Copyright © 2016 Christopher Green. All rights reserved.
 //
+//  The Traveller game in all forms is owned by Far Future Enterprises.
+//  Copyright 1977 - 2008 Far Future Enterprises.
+//
 
 import Foundation
 
@@ -506,10 +509,12 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
      Obtain all available orbits within the supplied zones.
  
      - parameters:
-    //- zones: The `Zone`s that the orbit must be within
-    ///     - createIfNone: Defaults to `true`. Callers that want to count available orbits should supply `false`.
-    ///
-    /// - Returns: An array of empty orbits that are within the requested `Zone`s.
+        - zones:
+     The `Zone`s that the orbit must be within
+        - createIfNone:
+     Defaults to `true`. Callers that want to count available orbits should supply `false`.
+     
+    - Returns: An array of empty orbits that are within the requested `Zone`s.
  */
     func getAvailOrbits(_ zones:Set<Zone>, createIfNone: Bool=true)->[Float] {
         var orbits:[Float] = []

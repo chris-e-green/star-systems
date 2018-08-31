@@ -12,7 +12,7 @@
 import Foundation
 
 /// Possible star spectral types
-enum StarType:String, CustomStringConvertible,Codable {
+enum StarType:String, CustomStringConvertible,Codable,Hashable {
     case O
     case B
     case A
@@ -30,6 +30,9 @@ enum StarType:String, CustomStringConvertible,Codable {
         case .M: return "Deep Red"
         case .Z: return "Undefined"
         }
+    }
+    var hashValue: Int {
+        return Int(self.rawValue.utf8.first!)
     }
 }
 
@@ -53,6 +56,18 @@ enum StarSize:String,CustomStringConvertible,Codable {
         case .V: return "Main Sequence"
         case .D: return "White Dwarf"
         case .Z: return "Undefined"
+        }
+    }
+    var hashValue: Int {
+        switch (self) {
+        case .Ia: return 0;
+        case .Ib: return 1;
+        case .II: return 2;
+        case .III: return 3;
+        case .IV: return 4;
+        case .V: return 5;
+        case .D: return 6;
+        case .Z: return 7;
         }
     }
 }

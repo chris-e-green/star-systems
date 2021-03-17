@@ -343,7 +343,7 @@ class Pdf {
             #if os(macOS)
             font = NSFont(name: fontName, size: CGFloat(fontSize))
             #else
-            font = UIFont(name: baseFontName, size: CGFloat(fontSize))
+            font = UIFont(name: fontName, size: CGFloat(fontSize))
             #endif
             fontCache["\(fontName)\(fontSize)"] = font
         }

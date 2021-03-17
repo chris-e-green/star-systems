@@ -12,7 +12,8 @@
 import Foundation
 
 /// Possible star spectral types
-enum StarType:String, CustomStringConvertible,Codable,Hashable {
+// swiftlint:disable identifier_name
+enum StarType: String, CustomStringConvertible, Codable, Hashable {
     case O
     case B
     case A
@@ -31,13 +32,13 @@ enum StarType:String, CustomStringConvertible,Codable,Hashable {
         case .Z: return "Undefined"
         }
     }
-    var hashValue: Int {
-        return Int(self.rawValue.utf8.first!)
-    }
+//    var hashValue: Int {
+//        return Int(self.rawValue.utf8.first!)
+//    }
 }
 
 /// Possible star sizes
-enum StarSize:String,CustomStringConvertible,Codable {
+enum StarSize: String, CustomStringConvertible, Codable {
     case Ia
     case Ib
     case II
@@ -46,7 +47,7 @@ enum StarSize:String,CustomStringConvertible,Codable {
     case V
     case D
     case Z
-    var description:String {
+    var description: String {
         switch self {
         case .Ia: return "Bright Supergiant"
         case .Ib: return "Weaker Supergiant"
@@ -58,39 +59,39 @@ enum StarSize:String,CustomStringConvertible,Codable {
         case .Z: return "Undefined"
         }
     }
-    var hashValue: Int {
-        switch (self) {
-        case .Ia: return 0;
-        case .Ib: return 1;
-        case .II: return 2;
-        case .III: return 3;
-        case .IV: return 4;
-        case .V: return 5;
-        case .D: return 6;
-        case .Z: return 7;
-        }
-    }
+    // swiftlint:enable identifier_name
+//    var hashValue: Int {
+//        switch self {
+//        case .Ia: return 0
+//        case .Ib: return 1
+//        case .II: return 2
+//        case .III: return 3
+//        case .IV: return 4
+//        case .V: return 5
+//        case .D: return 6
+//        case .Z: return 7
+//        }
+//    }
 }
 
 /// Contains the spectrum and size information for the star and a hash
 /// so that different stars can be compared.
-struct StarDetail:Hashable,Equatable,Codable {
-    var t: StarType
-    var d: Int
-    var s: StarSize
-    var hashValue: Int {
-        get {
-            return self.t.hashValue * 100 + self.d * 10 + self.s.hashValue
-        }
-    }
+struct StarDetail: Hashable, Equatable, Codable {
+    var starType: StarType
+    var starDecimal: Int
+    var starSize: StarSize
+//    var hashValue: Int {
+//        return self.t.hashValue * 100 + self.d * 10 + self.s.hashValue
+//    }
 }
 
 /// return true if the compared stars have the same spectrum and size
-func ==(lhs: StarDetail, rhs: StarDetail) -> Bool {
-    return lhs.hashValue == rhs.hashValue
+func == (lhs: StarDetail, rhs: StarDetail) -> Bool {
+    lhs.hashValue == rhs.hashValue
 }
 
 /// Possible orbit zones around a star
+// swiftlint:disable identifier_name
 enum Zone: String, CustomStringConvertible {
     case O
     case H
@@ -99,7 +100,7 @@ enum Zone: String, CustomStringConvertible {
     case W
     case C
     case Z
-    var description:String {
+    var description: String {
         switch self {
         case .O: return "Outer"
         case .H: return "Habitable"
@@ -111,227 +112,244 @@ enum Zone: String, CustomStringConvertible {
         }
     }
 }
+// swiftlint:enable identifier_name
 
+class StellarAttributes {
+    var bolMagnitude: Double
+    var luminosity: Double
+    var effTemp: Double
+    var radii: Double
+    var mass: Double
+    init(bolMagnitude: Double, luminosity: Double, effTemp: Double, radii: Double, mass: Double) {
+        self.bolMagnitude = bolMagnitude
+        self.luminosity = luminosity
+        self.effTemp = effTemp
+        self.radii = radii
+        self.mass = mass
+    }
+}
 /// the various stellar attributes from Traveller Book 6
-let stellarAttrs:[StarDetail:(bolMagnitude:Double, luminosity:Double, effTemp:Double, radii: Double, mass: Double)] = [
-    StarDetail(t: .B, d: 0, s: .Ia):  (-9.6, 560_000,    22_000,   52,    60),
-    StarDetail(t: .B, d: 5, s: .Ia):  (-8.5, 204_000,    14_200,   75,    30),
-    StarDetail(t: .A, d: 0, s: .Ia):  (-7.8, 107_000,     9_000,  135,    18),
-    StarDetail(t: .A, d: 5, s: .Ia):  (-7.5,  81_000,     8_000,  149,    15),
-    StarDetail(t: .F, d: 0, s: .Ia):  (-7.2,  61_000,     6_900,  174,    13),
-    StarDetail(t: .F, d: 5, s: .Ia):  (-7.0,  51_000,     6_100,  204,    12),
-    StarDetail(t: .G, d: 0, s: .Ia):  (-7.3,  67_000,     5_400,  298,    12),
-    StarDetail(t: .G, d: 5, s: .Ia):  (-7.6,  89_000,     4_700,  454,    13),
-    StarDetail(t: .K, d: 0, s: .Ia):  (-7.7,  97_000,     4_000,  654,    14),
-    StarDetail(t: .K, d: 5, s: .Ia):  (-7.8, 107_000,     3_300, 1010,    18),
-    StarDetail(t: .M, d: 0, s: .Ia):  (-7.9, 117_000,     2_800, 1467,    20),
-    StarDetail(t: .M, d: 5, s: .Ia):  (-8.0, 129_000,     2_000, 3020,    25),
-    StarDetail(t: .M, d: 9, s: .Ia):  (-8.1, 141_000,     1_900, 3499,    30),
-    
-    StarDetail(t: .B, d: 0, s: .Ib):  (-8.8, 270_000,    24_000,   30,    50),
-    StarDetail(t: .B, d: 5, s: .Ib):  (-6.9,  46_700,    14_500,   35,    25),
-    StarDetail(t: .A, d: 0, s: .Ib):  (-5.7,  15_000,     9_100,   50,    16),
-    StarDetail(t: .A, d: 5, s: .Ib):  (-5.4,  11_700,     8_100,   55,    13),
-    StarDetail(t: .F, d: 0, s: .Ib):  (-4.9,   7_400,     7_000,   59,    12),
-    StarDetail(t: .F, d: 5, s: .Ib):  (-4.5,   5_100,     6_300,   60,    10),
-    StarDetail(t: .G, d: 0, s: .Ib):  (-4.7,   6_100,     5_600,   84,    10),
-    StarDetail(t: .G, d: 5, s: .Ib):  (-5.0,   8_100,     4_850,  128,    12),
-    StarDetail(t: .K, d: 0, s: .Ib):  (-5.4,  11_700,     4_100,  216,    13),
-    StarDetail(t: .K, d: 5, s: .Ib):  (-6.0,  20_400,     3_500,  392,    16),
-    StarDetail(t: .M, d: 0, s: .Ib):  (-6.9,  46_000,     2_900,  857,    16),
-    StarDetail(t: .M, d: 5, s: .Ib):  (-7.6,  89_000,     2_200, 2073,    20),
-    StarDetail(t: .M, d: 9, s: .Ib):  (-7.9, 117_000,     2_000, 2876,    25),
-    
-    StarDetail(t: .B, d: 0, s: .II):  (-8.3, 170_000,    25_000,   22,    30),
-    StarDetail(t: .B, d: 5, s: .II):  (-5.9,  18_600,    15_100,   20,    20),
-    StarDetail(t: .A, d: 0, s: .II):  (-3.6,   2_200,     9_300,   18,    14),
-    StarDetail(t: .A, d: 5, s: .II):  (-2.55,    850,     8_200,   14,    11),
-    StarDetail(t: .F, d: 0, s: .II):  (-2.18,    600,     7_100,   16,    10),
-    StarDetail(t: .F, d: 5, s: .II):  (-2.0,     510,     6_400,   18,     8.1),
-    StarDetail(t: .G, d: 0, s: .II):  (-2.1,     560,     5_700,   25,     8.1),
-    StarDetail(t: .G, d: 5, s: .II):  (-2.4,     740,     5_000,   37,    10),
-    StarDetail(t: .K, d: 0, s: .II):  (-2.6,     890,     4_300,   54,    11),
-    StarDetail(t: .K, d: 5, s: .II):  (-3.7,   2_450,     3_650,  124,    14),
-    StarDetail(t: .M, d: 0, s: .II):  (-4.4,   4_600,     3_100,  237,    14),
-    StarDetail(t: .M, d: 5, s: .II):  (-5.65, 14_900,     2_400,  712,    16),
-    StarDetail(t: .M, d: 9, s: .II):  (-5.75, 16_200,     2_100,  931,    18),
+let stellarAttrs: [StarDetail: StellarAttributes] = [
+    StarDetail(starType: .B, starDecimal: 0, starSize: .Ia): StellarAttributes(bolMagnitude: -9.6, luminosity: 560_000, effTemp: 22_000, radii: 52, mass: 60),
+    StarDetail(starType: .B, starDecimal: 5, starSize: .Ia): StellarAttributes(bolMagnitude: -8.5, luminosity: 204_000, effTemp: 14_200, radii: 75, mass: 30),
+    StarDetail(starType: .A, starDecimal: 0, starSize: .Ia): StellarAttributes(bolMagnitude: -7.8, luminosity: 107_000, effTemp: 9_000, radii: 135, mass: 18),
+    StarDetail(starType: .A, starDecimal: 5, starSize: .Ia): StellarAttributes(bolMagnitude: -7.5, luminosity: 81_000, effTemp: 8_000, radii: 149, mass: 15),
+    StarDetail(starType: .F, starDecimal: 0, starSize: .Ia): StellarAttributes(bolMagnitude: -7.2, luminosity: 61_000, effTemp: 6_900, radii: 174, mass: 13),
+    StarDetail(starType: .F, starDecimal: 5, starSize: .Ia): StellarAttributes(bolMagnitude: -7.0, luminosity: 51_000, effTemp: 6_100, radii: 204, mass: 12),
+    StarDetail(starType: .G, starDecimal: 0, starSize: .Ia): StellarAttributes(bolMagnitude: -7.3, luminosity: 67_000, effTemp: 5_400, radii: 298, mass: 12),
+    StarDetail(starType: .G, starDecimal: 5, starSize: .Ia): StellarAttributes(bolMagnitude: -7.6, luminosity: 89_000, effTemp: 4_700, radii: 454, mass: 13),
+    StarDetail(starType: .K, starDecimal: 0, starSize: .Ia): StellarAttributes(bolMagnitude: -7.7, luminosity: 97_000, effTemp: 4_000, radii: 654, mass: 14),
+    StarDetail(starType: .K, starDecimal: 5, starSize: .Ia): StellarAttributes(bolMagnitude: -7.8, luminosity: 107_000, effTemp: 3_300, radii: 1010, mass: 18),
+    StarDetail(starType: .M, starDecimal: 0, starSize: .Ia): StellarAttributes(bolMagnitude: -7.9, luminosity: 117_000, effTemp: 2_800, radii: 1467, mass: 20),
+    StarDetail(starType: .M, starDecimal: 5, starSize: .Ia): StellarAttributes(bolMagnitude: -8.0, luminosity: 129_000, effTemp: 2_000, radii: 3020, mass: 25),
+    StarDetail(starType: .M, starDecimal: 9, starSize: .Ia): StellarAttributes(bolMagnitude: -8.1, luminosity: 141_000, effTemp: 1_900, radii: 3499, mass: 30),
 
-    StarDetail(t: .B, d: 0, s: .III): (-7.8, 107_000,    26_000,   16,    25),
-    StarDetail(t: .B, d: 5, s: .III): (-3.5,   6_700,    15_200,   10,    15),
-    StarDetail(t: .A, d: 0, s: .III): (-1.36,    280,     9_500,    6.2,  12),
-    StarDetail(t: .A, d: 5, s: .III): (-0.1,      90,     8_300,    4.6,   9),
-    StarDetail(t: .F, d: 0, s: .III): ( 0.45,     53,     7_200,    4.7,   8),
-    StarDetail(t: .F, d: 5, s: .III): ( 0.7,      43,     6_500,    5.2,   5),
-    StarDetail(t: .G, d: 0, s: .III): ( 0.52,     50,     5_800,    7.1,   2.5),
-    StarDetail(t: .G, d: 5, s: .III): ( 0.08,     75,     5_100,   11,     3.2),
-    StarDetail(t: .K, d: 0, s: .III): ( 0.17,     95,     4_500,   16,     4),
-    StarDetail(t: .K, d: 5, s: .III): (-1.5,     320,     3_800,   42,     5),
-    StarDetail(t: .M, d: 0, s: .III): (-1.9,     470,     3_400,   63,     6.3),
-    StarDetail(t: .M, d: 5, s: .III): (-3.6,   2_280,     2_650,  228,     7.4),
-    StarDetail(t: .M, d: 9, s: .III): (-3.8,   2_690,     2_200,  360,     9.2),
-    
-    StarDetail(t: .B, d: 0, s: .IV):  (-7.5,  81_000,    27_000,   13,    20),
-    StarDetail(t: .B, d: 5, s: .IV):  (-3.1,   2_000,    15_400,    5.3,  10),
-    StarDetail(t: .A, d: 0, s: .IV):  (-0.7,     156,     9_700,    4.5,   6),
-    StarDetail(t: .A, d: 5, s: .IV):  ( 0.85,     37,     8_400,    2.7,   4),
-    StarDetail(t: .F, d: 0, s: .IV):  ( 1.58,     19,     7_300,    2.7,   2.5),
-    StarDetail(t: .F, d: 5, s: .IV):  ( 2.1,      12,     6_600,    2.6,   2),
-    StarDetail(t: .G, d: 0, s: .IV):  ( 2.74,      6.5,   5_900,    2.5,   1.75),
-    StarDetail(t: .G, d: 5, s: .IV):  ( 3.04,      4.9,   5_200,    2.8,   2),
-    StarDetail(t: .K, d: 0, s: .IV):  ( 3.1,       4.67,  4_700,    3.3,   2.3),
-    
-    StarDetail(t: .B, d: 0, s: .V):   (-7.1,  56_000,    28_000,   10,    18),
-    StarDetail(t: .B, d: 5, s: .V):   (-2.71,  1_400,    15_500,    4.4,   6.5),
-    StarDetail(t: .A, d: 0, s: .V):   (-0.1,      90,     9_900,    3.2,   3.2),
-    StarDetail(t: .A, d: 5, s: .V):   ( 1.8,      16,     8_500,    1.8,   2.1),
-    StarDetail(t: .F, d: 0, s: .V):   ( 2.5,       8.1,   7_400,    1.7,   1.7),
-    StarDetail(t: .F, d: 5, s: .V):   ( 3.4,       3.5,   6_700,    1.4,   1.3),
-    StarDetail(t: .G, d: 0, s: .V):   ( 4.57,      1.21,  6_000,    1.03,  1.04),
-    StarDetail(t: .G, d: 5, s: .V):   ( 5.2,       0.67,  5_500,    0.91,  0.94),
-    StarDetail(t: .K, d: 0, s: .V):   ( 5.7,       0.42,  4_900,    0.908, 0.825),
-    StarDetail(t: .K, d: 5, s: .V):   ( 7.4,       0.08,  4_100,    0.566, 0.57),
-    StarDetail(t: .M, d: 0, s: .V):   ( 8.25,      0.04,  3_500,    0.549, 0.489),
-    StarDetail(t: .M, d: 5, s: .V):   (10.2,       0.007, 2_800,    0.358, 0.331),
-    StarDetail(t: .M, d: 9, s: .V):   (13.9,       0.001, 2_300,    0.201, 0.215),
-    
-    StarDetail(t: .B, d: 0, s: .D):   ( 8.1,       0.046, 25_000,   0.018, 0.26),
-    StarDetail(t: .A, d: 0, s: .D):   (10.5,       0.005, 14_000,   0.017, 0.36),
-    StarDetail(t: .F, d: 0, s: .D):   (13.6,       0.0003, 6_600,   0.013, 0.42),
-    StarDetail(t: .G, d: 0, s: .D):   (15.3,       0.00006,4_500,   0.012, 0.63),
-    StarDetail(t: .K, d: 0, s: .D):   (15.6,       0.00004,3_500,   0.009, 0.83),
-    StarDetail(t: .M, d: 0, s: .D):   (15.9,       0.00003,2_700,   0.006, 1.11),
-    StarDetail(t: .B, d: 5, s: .D):   ( 8.1,       0.046, 25_000,   0.018, 0.26),
-    StarDetail(t: .A, d: 5, s: .D):   (10.5,       0.005, 14_000,   0.017, 0.36),
-    StarDetail(t: .F, d: 5, s: .D):   (13.6,       0.0003, 6_600,   0.013, 0.42),
-    StarDetail(t: .G, d: 5, s: .D):   (15.3,       0.00006,4_500,   0.012, 0.63),
-    StarDetail(t: .K, d: 5, s: .D):   (15.6,       0.00004,3_500,   0.009, 0.83),
-    StarDetail(t: .M, d: 5, s: .D):   (15.9,       0.00003,2_700,   0.006, 1.11),
-    StarDetail(t: .B, d: 9, s: .D):   ( 8.1,       0.046, 25_000,   0.018, 0.26),
-    StarDetail(t: .A, d: 9, s: .D):   (10.5,       0.005, 14_000,   0.017, 0.36),
-    StarDetail(t: .F, d: 9, s: .D):   (13.6,       0.0003, 6_600,   0.013, 0.42),
-    StarDetail(t: .G, d: 9, s: .D):   (15.3,       0.00006,4_500,   0.012, 0.63),
-    StarDetail(t: .K, d: 9, s: .D):   (15.6,       0.00004,3_500,   0.009, 0.83),
-    StarDetail(t: .M, d: 9, s: .D):   (15.9,       0.00003,2_700,   0.006, 1.11),
+    StarDetail(starType: .B, starDecimal: 0, starSize: .Ib): StellarAttributes(bolMagnitude: -8.8, luminosity: 270_000, effTemp: 24_000, radii: 30, mass: 50),
+    StarDetail(starType: .B, starDecimal: 5, starSize: .Ib): StellarAttributes(bolMagnitude: -6.9, luminosity: 46_700, effTemp: 14_500, radii: 35, mass: 25),
+    StarDetail(starType: .A, starDecimal: 0, starSize: .Ib): StellarAttributes(bolMagnitude: -5.7, luminosity: 15_000, effTemp: 9_100, radii: 50, mass: 16),
+    StarDetail(starType: .A, starDecimal: 5, starSize: .Ib): StellarAttributes(bolMagnitude: -5.4, luminosity: 11_700, effTemp: 8_100, radii: 55, mass: 13),
+    StarDetail(starType: .F, starDecimal: 0, starSize: .Ib): StellarAttributes(bolMagnitude: -4.9, luminosity: 7_400, effTemp: 7_000, radii: 59, mass: 12),
+    StarDetail(starType: .F, starDecimal: 5, starSize: .Ib): StellarAttributes(bolMagnitude: -4.5, luminosity: 5_100, effTemp: 6_300, radii: 60, mass: 10),
+    StarDetail(starType: .G, starDecimal: 0, starSize: .Ib): StellarAttributes(bolMagnitude: -4.7, luminosity: 6_100, effTemp: 5_600, radii: 84, mass: 10),
+    StarDetail(starType: .G, starDecimal: 5, starSize: .Ib): StellarAttributes(bolMagnitude: -5.0, luminosity: 8_100, effTemp: 4_850, radii: 128, mass: 12),
+    StarDetail(starType: .K, starDecimal: 0, starSize: .Ib): StellarAttributes(bolMagnitude: -5.4, luminosity: 11_700, effTemp: 4_100, radii: 216, mass: 13),
+    StarDetail(starType: .K, starDecimal: 5, starSize: .Ib): StellarAttributes(bolMagnitude: -6.0, luminosity: 20_400, effTemp: 3_500, radii: 392, mass: 16),
+    StarDetail(starType: .M, starDecimal: 0, starSize: .Ib): StellarAttributes(bolMagnitude: -6.9, luminosity: 46_000, effTemp: 2_900, radii: 857, mass: 16),
+    StarDetail(starType: .M, starDecimal: 5, starSize: .Ib): StellarAttributes(bolMagnitude: -7.6, luminosity: 89_000, effTemp: 2_200, radii: 2073, mass: 20),
+    StarDetail(starType: .M, starDecimal: 9, starSize: .Ib): StellarAttributes(bolMagnitude: -7.9, luminosity: 117_000, effTemp: 2_000, radii: 2876, mass: 25),
+
+    StarDetail(starType: .B, starDecimal: 0, starSize: .II): StellarAttributes(bolMagnitude: -8.3, luminosity: 170_000, effTemp: 25_000, radii: 22, mass: 30),
+    StarDetail(starType: .B, starDecimal: 5, starSize: .II): StellarAttributes(bolMagnitude: -5.9, luminosity: 18_600, effTemp: 15_100, radii: 20, mass: 20),
+    StarDetail(starType: .A, starDecimal: 0, starSize: .II): StellarAttributes(bolMagnitude: -3.6, luminosity: 2_200, effTemp: 9_300, radii: 18, mass: 14),
+    StarDetail(starType: .A, starDecimal: 5, starSize: .II): StellarAttributes(bolMagnitude: -2.55, luminosity: 850, effTemp: 8_200, radii: 14, mass: 11),
+    StarDetail(starType: .F, starDecimal: 0, starSize: .II): StellarAttributes(bolMagnitude: -2.18, luminosity: 600, effTemp: 7_100, radii: 16, mass: 10),
+    StarDetail(starType: .F, starDecimal: 5, starSize: .II): StellarAttributes(bolMagnitude: -2.0, luminosity: 510, effTemp: 6_400, radii: 18, mass: 8.1),
+    StarDetail(starType: .G, starDecimal: 0, starSize: .II): StellarAttributes(bolMagnitude: -2.1, luminosity: 560, effTemp: 5_700, radii: 25, mass: 8.1),
+    StarDetail(starType: .G, starDecimal: 5, starSize: .II): StellarAttributes(bolMagnitude: -2.4, luminosity: 740, effTemp: 5_000, radii: 37, mass: 10),
+    StarDetail(starType: .K, starDecimal: 0, starSize: .II): StellarAttributes(bolMagnitude: -2.6, luminosity: 890, effTemp: 4_300, radii: 54, mass: 11),
+    StarDetail(starType: .K, starDecimal: 5, starSize: .II): StellarAttributes(bolMagnitude: -3.7, luminosity: 2_450, effTemp: 3_650, radii: 124, mass: 14),
+    StarDetail(starType: .M, starDecimal: 0, starSize: .II): StellarAttributes(bolMagnitude: -4.4, luminosity: 4_600, effTemp: 3_100, radii: 237, mass: 14),
+    StarDetail(starType: .M, starDecimal: 5, starSize: .II): StellarAttributes(bolMagnitude: -5.65, luminosity: 14_900, effTemp: 2_400, radii: 712, mass: 16),
+    StarDetail(starType: .M, starDecimal: 9, starSize: .II): StellarAttributes(bolMagnitude: -5.75, luminosity: 16_200, effTemp: 2_100, radii: 931, mass: 18),
+
+    StarDetail(starType: .B, starDecimal: 0, starSize: .III): StellarAttributes(bolMagnitude: -7.8, luminosity: 107_000, effTemp: 26_000, radii: 16, mass: 25),
+    StarDetail(starType: .B, starDecimal: 5, starSize: .III): StellarAttributes(bolMagnitude: -3.5, luminosity: 6_700, effTemp: 15_200, radii: 10, mass: 15),
+    StarDetail(starType: .A, starDecimal: 0, starSize: .III): StellarAttributes(bolMagnitude: -1.36, luminosity: 280, effTemp: 9_500, radii: 6.2, mass: 12),
+    StarDetail(starType: .A, starDecimal: 5, starSize: .III): StellarAttributes(bolMagnitude: -0.1, luminosity: 90, effTemp: 8_300, radii: 4.6, mass: 9),
+    StarDetail(starType: .F, starDecimal: 0, starSize: .III): StellarAttributes( bolMagnitude: 0.45, luminosity: 53, effTemp: 7_200, radii: 4.7, mass: 8),
+    StarDetail(starType: .F, starDecimal: 5, starSize: .III): StellarAttributes( bolMagnitude: 0.7, luminosity: 43, effTemp: 6_500, radii: 5.2, mass: 5),
+    StarDetail(starType: .G, starDecimal: 0, starSize: .III): StellarAttributes( bolMagnitude: 0.52, luminosity: 50, effTemp: 5_800, radii: 7.1, mass: 2.5),
+    StarDetail(starType: .G, starDecimal: 5, starSize: .III): StellarAttributes( bolMagnitude: 0.08, luminosity: 75, effTemp: 5_100, radii: 11, mass: 3.2),
+    StarDetail(starType: .K, starDecimal: 0, starSize: .III): StellarAttributes( bolMagnitude: 0.17, luminosity: 95, effTemp: 4_500, radii: 16, mass: 4),
+    StarDetail(starType: .K, starDecimal: 5, starSize: .III): StellarAttributes(bolMagnitude: -1.5, luminosity: 320, effTemp: 3_800, radii: 42, mass: 5),
+    StarDetail(starType: .M, starDecimal: 0, starSize: .III): StellarAttributes(bolMagnitude: -1.9, luminosity: 470, effTemp: 3_400, radii: 63, mass: 6.3),
+    StarDetail(starType: .M, starDecimal: 5, starSize: .III): StellarAttributes(bolMagnitude: -3.6, luminosity: 2_280, effTemp: 2_650, radii: 228, mass: 7.4),
+    StarDetail(starType: .M, starDecimal: 9, starSize: .III): StellarAttributes(bolMagnitude: -3.8, luminosity: 2_690, effTemp: 2_200, radii: 360, mass: 9.2),
+
+    StarDetail(starType: .B, starDecimal: 0, starSize: .IV): StellarAttributes(bolMagnitude: -7.5, luminosity: 81_000, effTemp: 27_000, radii: 13, mass: 20),
+    StarDetail(starType: .B, starDecimal: 5, starSize: .IV): StellarAttributes(bolMagnitude: -3.1, luminosity: 2_000, effTemp: 15_400, radii: 5.3, mass: 10),
+    StarDetail(starType: .A, starDecimal: 0, starSize: .IV): StellarAttributes(bolMagnitude: -0.7, luminosity: 156, effTemp: 9_700, radii: 4.5, mass: 6),
+    StarDetail(starType: .A, starDecimal: 5, starSize: .IV): StellarAttributes( bolMagnitude: 0.85, luminosity: 37, effTemp: 8_400, radii: 2.7, mass: 4),
+    StarDetail(starType: .F, starDecimal: 0, starSize: .IV): StellarAttributes( bolMagnitude: 1.58, luminosity: 19, effTemp: 7_300, radii: 2.7, mass: 2.5),
+    StarDetail(starType: .F, starDecimal: 5, starSize: .IV): StellarAttributes( bolMagnitude: 2.1, luminosity: 12, effTemp: 6_600, radii: 2.6, mass: 2),
+    StarDetail(starType: .G, starDecimal: 0, starSize: .IV): StellarAttributes( bolMagnitude: 2.74, luminosity: 6.5, effTemp: 5_900, radii: 2.5, mass: 1.75),
+    StarDetail(starType: .G, starDecimal: 5, starSize: .IV): StellarAttributes( bolMagnitude: 3.04, luminosity: 4.9, effTemp: 5_200, radii: 2.8, mass: 2),
+    StarDetail(starType: .K, starDecimal: 0, starSize: .IV): StellarAttributes( bolMagnitude: 3.1, luminosity: 4.67, effTemp: 4_700, radii: 3.3, mass: 2.3),
+
+    StarDetail(starType: .B, starDecimal: 0, starSize: .V): StellarAttributes(bolMagnitude: -7.1, luminosity: 56_000, effTemp: 28_000, radii: 10, mass: 18),
+    StarDetail(starType: .B, starDecimal: 5, starSize: .V): StellarAttributes(bolMagnitude: -2.71, luminosity: 1_400, effTemp: 15_500, radii: 4.4, mass: 6.5),
+    StarDetail(starType: .A, starDecimal: 0, starSize: .V): StellarAttributes(bolMagnitude: -0.1, luminosity: 90, effTemp: 9_900, radii: 3.2, mass: 3.2),
+    StarDetail(starType: .A, starDecimal: 5, starSize: .V): StellarAttributes( bolMagnitude: 1.8, luminosity: 16, effTemp: 8_500, radii: 1.8, mass: 2.1),
+    StarDetail(starType: .F, starDecimal: 0, starSize: .V): StellarAttributes( bolMagnitude: 2.5, luminosity: 8.1, effTemp: 7_400, radii: 1.7, mass: 1.7),
+    StarDetail(starType: .F, starDecimal: 5, starSize: .V): StellarAttributes( bolMagnitude: 3.4, luminosity: 3.5, effTemp: 6_700, radii: 1.4, mass: 1.3),
+    StarDetail(starType: .G, starDecimal: 0, starSize: .V): StellarAttributes( bolMagnitude: 4.57, luminosity: 1.21, effTemp: 6_000, radii: 1.03, mass: 1.04),
+    StarDetail(starType: .G, starDecimal: 5, starSize: .V): StellarAttributes( bolMagnitude: 5.2, luminosity: 0.67, effTemp: 5_500, radii: 0.91, mass: 0.94),
+    StarDetail(starType: .K, starDecimal: 0, starSize: .V): StellarAttributes( bolMagnitude: 5.7, luminosity: 0.42, effTemp: 4_900, radii: 0.908, mass: 0.825),
+    StarDetail(starType: .K, starDecimal: 5, starSize: .V): StellarAttributes( bolMagnitude: 7.4, luminosity: 0.08, effTemp: 4_100, radii: 0.566, mass: 0.57),
+    StarDetail(starType: .M, starDecimal: 0, starSize: .V): StellarAttributes( bolMagnitude: 8.25, luminosity: 0.04, effTemp: 3_500, radii: 0.549, mass: 0.489),
+    StarDetail(starType: .M, starDecimal: 5, starSize: .V): StellarAttributes(bolMagnitude: 10.2, luminosity: 0.007, effTemp: 2_800, radii: 0.358, mass: 0.331),
+    StarDetail(starType: .M, starDecimal: 9, starSize: .V): StellarAttributes(bolMagnitude: 13.9, luminosity: 0.001, effTemp: 2_300, radii: 0.201, mass: 0.215),
+
+    StarDetail(starType: .B, starDecimal: 0, starSize: .D): StellarAttributes( bolMagnitude: 8.1, luminosity: 0.046, effTemp: 25_000, radii: 0.018, mass: 0.26),
+    StarDetail(starType: .A, starDecimal: 0, starSize: .D): StellarAttributes(bolMagnitude: 10.5, luminosity: 0.005, effTemp: 14_000, radii: 0.017, mass: 0.36),
+    StarDetail(starType: .F, starDecimal: 0, starSize: .D): StellarAttributes(bolMagnitude: 13.6, luminosity: 0.0003, effTemp: 6_600, radii: 0.013, mass: 0.42),
+    StarDetail(starType: .G, starDecimal: 0, starSize: .D): StellarAttributes(bolMagnitude: 15.3, luminosity: 0.00006, effTemp: 4_500, radii: 0.012, mass: 0.63),
+    StarDetail(starType: .K, starDecimal: 0, starSize: .D): StellarAttributes(bolMagnitude: 15.6, luminosity: 0.00004, effTemp: 3_500, radii: 0.009, mass: 0.83),
+    StarDetail(starType: .M, starDecimal: 0, starSize: .D): StellarAttributes(bolMagnitude: 15.9, luminosity: 0.00003, effTemp: 2_700, radii: 0.006, mass: 1.11),
+    StarDetail(starType: .B, starDecimal: 5, starSize: .D): StellarAttributes( bolMagnitude: 8.1, luminosity: 0.046, effTemp: 25_000, radii: 0.018, mass: 0.26),
+    StarDetail(starType: .A, starDecimal: 5, starSize: .D): StellarAttributes(bolMagnitude: 10.5, luminosity: 0.005, effTemp: 14_000, radii: 0.017, mass: 0.36),
+    StarDetail(starType: .F, starDecimal: 5, starSize: .D): StellarAttributes(bolMagnitude: 13.6, luminosity: 0.0003, effTemp: 6_600, radii: 0.013, mass: 0.42),
+    StarDetail(starType: .G, starDecimal: 5, starSize: .D): StellarAttributes(bolMagnitude: 15.3, luminosity: 0.00006, effTemp: 4_500, radii: 0.012, mass: 0.63),
+    StarDetail(starType: .K, starDecimal: 5, starSize: .D): StellarAttributes(bolMagnitude: 15.6, luminosity: 0.00004, effTemp: 3_500, radii: 0.009, mass: 0.83),
+    StarDetail(starType: .M, starDecimal: 5, starSize: .D): StellarAttributes(bolMagnitude: 15.9, luminosity: 0.00003, effTemp: 2_700, radii: 0.006, mass: 1.11),
+    StarDetail(starType: .B, starDecimal: 9, starSize: .D): StellarAttributes( bolMagnitude: 8.1, luminosity: 0.046, effTemp: 25_000, radii: 0.018, mass: 0.26),
+    StarDetail(starType: .A, starDecimal: 9, starSize: .D): StellarAttributes(bolMagnitude: 10.5, luminosity: 0.005, effTemp: 14_000, radii: 0.017, mass: 0.36),
+    StarDetail(starType: .F, starDecimal: 9, starSize: .D): StellarAttributes(bolMagnitude: 13.6, luminosity: 0.0003, effTemp: 6_600, radii: 0.013, mass: 0.42),
+    StarDetail(starType: .G, starDecimal: 9, starSize: .D): StellarAttributes(bolMagnitude: 15.3, luminosity: 0.00006, effTemp: 4_500, radii: 0.012, mass: 0.63),
+    StarDetail(starType: .K, starDecimal: 9, starSize: .D): StellarAttributes(bolMagnitude: 15.6, luminosity: 0.00004, effTemp: 3_500, radii: 0.009, mass: 0.83),
+    StarDetail(starType: .M, starDecimal: 9, starSize: .D): StellarAttributes(bolMagnitude: 15.9, luminosity: 0.00003, effTemp: 2_700, radii: 0.006, mass: 1.11)
 
 ]
 /// the defined zones for each star type and size from Traveller Book 6
-let tableOfZones:[StarDetail:[Zone]] = [
+let tableOfZones: [StarDetail: [Zone]] = [
     //                            0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
-    StarDetail(t: .B, d: 0, s: .Ia):  [.W,.U,.U,.U,.U,.U,.U,.U,.I,.I,.I,.I,.I,.H,.O],
-    StarDetail(t: .B, d: 5, s: .Ia):  [.W,.U,.U,.U,.U,.U,.U,.I,.I,.I,.I,.I,.H,.O,.O],
-    StarDetail(t: .A, d: 0, s: .Ia):  [.W,.W,.U,.U,.U,.U,.U,.I,.I,.I,.I,.I,.H,.O,.O],
-    StarDetail(t: .A, d: 5, s: .Ia):  [.W,.W,.U,.U,.U,.U,.U,.I,.I,.I,.I,.I,.H,.O,.O],
-    StarDetail(t: .F, d: 0, s: .Ia):  [.W,.W,.W,.U,.U,.U,.I,.I,.I,.I,.I,.I,.H,.O,.O],
-    StarDetail(t: .F, d: 5, s: .Ia):  [.W,.W,.W,.U,.U,.U,.I,.I,.I,.I,.I,.H,.O,.O,.O],
-    StarDetail(t: .G, d: 0, s: .Ia):  [.W,.W,.W,.W,.U,.U,.U,.I,.I,.I,.I,.I,.H,.O,.O],
-    StarDetail(t: .G, d: 5, s: .Ia):  [.W,.W,.W,.W,.W,.U,.U,.I,.I,.I,.I,.I,.H,.O,.O],
-    StarDetail(t: .K, d: 0, s: .Ia):  [.W,.W,.W,.W,.W,.W,.U,.I,.I,.I,.I,.I,.H,.O,.O],
-    StarDetail(t: .K, d: 5, s: .Ia):  [.W,.W,.W,.W,.W,.W,.U,.I,.I,.I,.I,.I,.H,.O,.O],
-    StarDetail(t: .M, d: 0, s: .Ia):  [.W,.W,.W,.W,.W,.W,.W,.I,.I,.I,.I,.I,.H,.O,.O],
-    StarDetail(t: .M, d: 5, s: .Ia):  [.W,.W,.W,.W,.W,.W,.W,.W,.I,.I,.I,.I,.H,.O,.O],
-    StarDetail(t: .M, d: 9, s: .Ia):  [.W,.W,.W,.W,.W,.W,.W,.W,.I,.I,.I,.I,.H,.O,.O],
+    StarDetail(starType: .B, starDecimal: 0, starSize: .Ia): [.W, .U, .U, .U, .U, .U, .U, .U, .I, .I, .I, .I, .I, .H, .O],
+    StarDetail(starType: .B, starDecimal: 5, starSize: .Ia): [.W, .U, .U, .U, .U, .U, .U, .I, .I, .I, .I, .I, .H, .O, .O],
+    StarDetail(starType: .A, starDecimal: 0, starSize: .Ia): [.W, .W, .U, .U, .U, .U, .U, .I, .I, .I, .I, .I, .H, .O, .O],
+    StarDetail(starType: .A, starDecimal: 5, starSize: .Ia): [.W, .W, .U, .U, .U, .U, .U, .I, .I, .I, .I, .I, .H, .O, .O],
+    StarDetail(starType: .F, starDecimal: 0, starSize: .Ia): [.W, .W, .W, .U, .U, .U, .I, .I, .I, .I, .I, .I, .H, .O, .O],
+    StarDetail(starType: .F, starDecimal: 5, starSize: .Ia): [.W, .W, .W, .U, .U, .U, .I, .I, .I, .I, .I, .H, .O, .O, .O],
+    StarDetail(starType: .G, starDecimal: 0, starSize: .Ia): [.W, .W, .W, .W, .U, .U, .U, .I, .I, .I, .I, .I, .H, .O, .O],
+    StarDetail(starType: .G, starDecimal: 5, starSize: .Ia): [.W, .W, .W, .W, .W, .U, .U, .I, .I, .I, .I, .I, .H, .O, .O],
+    StarDetail(starType: .K, starDecimal: 0, starSize: .Ia): [.W, .W, .W, .W, .W, .W, .U, .I, .I, .I, .I, .I, .H, .O, .O],
+    StarDetail(starType: .K, starDecimal: 5, starSize: .Ia): [.W, .W, .W, .W, .W, .W, .U, .I, .I, .I, .I, .I, .H, .O, .O],
+    StarDetail(starType: .M, starDecimal: 0, starSize: .Ia): [.W, .W, .W, .W, .W, .W, .W, .I, .I, .I, .I, .I, .H, .O, .O],
+    StarDetail(starType: .M, starDecimal: 5, starSize: .Ia): [.W, .W, .W, .W, .W, .W, .W, .W, .I, .I, .I, .I, .H, .O, .O],
+    StarDetail(starType: .M, starDecimal: 9, starSize: .Ia): [.W, .W, .W, .W, .W, .W, .W, .W, .I, .I, .I, .I, .H, .O, .O],
     //                            0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
-    StarDetail(t: .B, d: 0, s: .Ib):  [.U,.U,.U,.U,.U,.U,.U,.U,.I,.I,.I,.I,.I,.H,.O],
-    StarDetail(t: .B, d: 5, s: .Ib):  [.U,.U,.U,.U,.U,.U,.I,.I,.I,.I,.I,.H,.O,.O,.O],
-    StarDetail(t: .A, d: 0, s: .Ib):  [.W,.U,.U,.U,.U,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O],
-    StarDetail(t: .A, d: 5, s: .Ib):  [.W,.U,.U,.U,.U,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O],
-    StarDetail(t: .F, d: 0, s: .Ib):  [.W,.U,.U,.U,.U,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O],
-    StarDetail(t: .F, d: 5, s: .Ib):  [.W,.U,.U,.U,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O],
-    StarDetail(t: .G, d: 0, s: .Ib):  [.W,.U,.U,.U,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O],
-    StarDetail(t: .G, d: 5, s: .Ib):  [.W,.W,.U,.U,.U,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O],
-    StarDetail(t: .K, d: 0, s: .Ib):  [.W,.W,.W,.W,.U,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O],
-    StarDetail(t: .K, d: 5, s: .Ib):  [.W,.W,.W,.W,.W,.U,.I,.I,.I,.I,.I,.H,.O,.O,.O],
-    StarDetail(t: .M, d: 0, s: .Ib):  [.W,.W,.W,.W,.W,.W,.I,.I,.I,.I,.I,.H,.O,.O,.O],
-    StarDetail(t: .M, d: 5, s: .Ib):  [.W,.W,.W,.W,.W,.W,.W,.I,.I,.I,.I,.I,.H,.O,.O],
-    StarDetail(t: .M, d: 9, s: .Ib):  [.W,.W,.W,.W,.W,.W,.W,.W,.I,.I,.I,.I,.H,.O,.O],
+    StarDetail(starType: .B, starDecimal: 0, starSize: .Ib): [.U, .U, .U, .U, .U, .U, .U, .U, .I, .I, .I, .I, .I, .H, .O],
+    StarDetail(starType: .B, starDecimal: 5, starSize: .Ib): [.U, .U, .U, .U, .U, .U, .I, .I, .I, .I, .I, .H, .O, .O, .O],
+    StarDetail(starType: .A, starDecimal: 0, starSize: .Ib): [.W, .U, .U, .U, .U, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O],
+    StarDetail(starType: .A, starDecimal: 5, starSize: .Ib): [.W, .U, .U, .U, .U, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O],
+    StarDetail(starType: .F, starDecimal: 0, starSize: .Ib): [.W, .U, .U, .U, .U, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O],
+    StarDetail(starType: .F, starDecimal: 5, starSize: .Ib): [.W, .U, .U, .U, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O],
+    StarDetail(starType: .G, starDecimal: 0, starSize: .Ib): [.W, .U, .U, .U, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O],
+    StarDetail(starType: .G, starDecimal: 5, starSize: .Ib): [.W, .W, .U, .U, .U, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O],
+    StarDetail(starType: .K, starDecimal: 0, starSize: .Ib): [.W, .W, .W, .W, .U, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O],
+    StarDetail(starType: .K, starDecimal: 5, starSize: .Ib): [.W, .W, .W, .W, .W, .U, .I, .I, .I, .I, .I, .H, .O, .O, .O],
+    StarDetail(starType: .M, starDecimal: 0, starSize: .Ib): [.W, .W, .W, .W, .W, .W, .I, .I, .I, .I, .I, .H, .O, .O, .O],
+    StarDetail(starType: .M, starDecimal: 5, starSize: .Ib): [.W, .W, .W, .W, .W, .W, .W, .I, .I, .I, .I, .I, .H, .O, .O],
+    StarDetail(starType: .M, starDecimal: 9, starSize: .Ib): [.W, .W, .W, .W, .W, .W, .W, .W, .I, .I, .I, .I, .H, .O, .O],
     //                            0  1  2  3  4  5  6  7  8  9 10 11 12 13
-    StarDetail(t: .B, d: 0, s: .II):  [.U,.U,.U,.U,.U,.U,.U,.I,.I,.I,.I,.I,.H,.O],
-    StarDetail(t: .B, d: 5, s: .II):  [.U,.U,.U,.U,.U,.I,.I,.I,.I,.I,.I,.H,.O,.O],
-    StarDetail(t: .A, d: 0, s: .II):  [.U,.U,.U,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O],
-    StarDetail(t: .A, d: 5, s: .II):  [.U,.U,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O],
-    StarDetail(t: .F, d: 0, s: .II):  [.U,.U,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O],
-    StarDetail(t: .F, d: 5, s: .II):  [.U,.U,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O],
-    StarDetail(t: .G, d: 0, s: .II):  [.U,.U,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O],
-    StarDetail(t: .G, d: 5, s: .II):  [.U,.U,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O],
-    StarDetail(t: .K, d: 0, s: .II):  [.W,.U,.I,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O],
-    StarDetail(t: .K, d: 5, s: .II):  [.W,.W,.U,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O],
-    StarDetail(t: .M, d: 0, s: .II):  [.W,.W,.W,.W,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O],
-    StarDetail(t: .M, d: 5, s: .II):  [.W,.W,.W,.W,.W,.W,.I,.I,.I,.I,.I,.H,.O,.O],
-    StarDetail(t: .M, d: 9, s: .II):  [.W,.W,.W,.W,.W,.W,.I,.I,.I,.I,.I,.H,.O,.O],
+    StarDetail(starType: .B, starDecimal: 0, starSize: .II): [.U, .U, .U, .U, .U, .U, .U, .I, .I, .I, .I, .I, .H, .O],
+    StarDetail(starType: .B, starDecimal: 5, starSize: .II): [.U, .U, .U, .U, .U, .I, .I, .I, .I, .I, .I, .H, .O, .O],
+    StarDetail(starType: .A, starDecimal: 0, starSize: .II): [.U, .U, .U, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O],
+    StarDetail(starType: .A, starDecimal: 5, starSize: .II): [.U, .U, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O],
+    StarDetail(starType: .F, starDecimal: 0, starSize: .II): [.U, .U, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O],
+    StarDetail(starType: .F, starDecimal: 5, starSize: .II): [.U, .U, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O],
+    StarDetail(starType: .G, starDecimal: 0, starSize: .II): [.U, .U, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O],
+    StarDetail(starType: .G, starDecimal: 5, starSize: .II): [.U, .U, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O],
+    StarDetail(starType: .K, starDecimal: 0, starSize: .II): [.W, .U, .I, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O],
+    StarDetail(starType: .K, starDecimal: 5, starSize: .II): [.W, .W, .U, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O],
+    StarDetail(starType: .M, starDecimal: 0, starSize: .II): [.W, .W, .W, .W, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O],
+    StarDetail(starType: .M, starDecimal: 5, starSize: .II): [.W, .W, .W, .W, .W, .W, .I, .I, .I, .I, .I, .H, .O, .O],
+    StarDetail(starType: .M, starDecimal: 9, starSize: .II): [.W, .W, .W, .W, .W, .W, .I, .I, .I, .I, .I, .H, .O, .O],
     //                            0  1  2  3  4  5  6  7  8  9 10 11 12 13
-    StarDetail(t: .A, d: 0, s: .III): [.I,.I,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O],
-    StarDetail(t: .A, d: 5, s: .III): [.I,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .F, d: 0, s: .III): [.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .F, d: 5, s: .III): [.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .G, d: 0, s: .III): [.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .G, d: 5, s: .III): [.I,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .K, d: 0, s: .III): [.I,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .K, d: 5, s: .III): [.W,.I,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O],
-    StarDetail(t: .M, d: 0, s: .III): [.W,.W,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O],
-    StarDetail(t: .M, d: 5, s: .III): [.W,.W,.W,.W,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O],
-    StarDetail(t: .M, d: 9, s: .III): [.W,.W,.W,.W,.W,.I,.I,.I,.I,.H,.O,.O,.O,.O],
+    StarDetail(starType: .A, starDecimal: 0, starSize: .III): [.I, .I, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O],
+    StarDetail(starType: .A, starDecimal: 5, starSize: .III): [.I, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .F, starDecimal: 0, starSize: .III): [.I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .F, starDecimal: 5, starSize: .III): [.I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .G, starDecimal: 0, starSize: .III): [.I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .G, starDecimal: 5, starSize: .III): [.I, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .K, starDecimal: 0, starSize: .III): [.I, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .K, starDecimal: 5, starSize: .III): [.W, .I, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O],
+    StarDetail(starType: .M, starDecimal: 0, starSize: .III): [.W, .W, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O],
+    StarDetail(starType: .M, starDecimal: 5, starSize: .III): [.W, .W, .W, .W, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O],
+    StarDetail(starType: .M, starDecimal: 9, starSize: .III): [.W, .W, .W, .W, .W, .I, .I, .I, .I, .H, .O, .O, .O, .O],
     //                            0  1  2  3  4  5  6  7  8  9 10 11 12 13
-    StarDetail(t: .A, d: 0, s: .IV):  [.W,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .A, d: 5, s: .IV):  [.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .F, d: 0, s: .IV):  [.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .F, d: 5, s: .IV):  [.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .G, d: 0, s: .IV):  [.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .G, d: 5, s: .IV):  [.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .K, d: 0, s: .IV):  [.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O,.O,.O,.O],
+    StarDetail(starType: .A, starDecimal: 0, starSize: .IV): [.W, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .A, starDecimal: 5, starSize: .IV): [.I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .F, starDecimal: 0, starSize: .IV): [.I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .F, starDecimal: 5, starSize: .IV): [.I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .G, starDecimal: 0, starSize: .IV): [.I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .G, starDecimal: 5, starSize: .IV): [.I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .K, starDecimal: 0, starSize: .IV): [.I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O, .O, .O, .O],
     //                            0  1  2  3  4  5  6  7  8  9 10 11 12 13
-    StarDetail(t: .A, d: 0, s: .V):   [.I,.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .A, d: 5, s: .V):   [.I,.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .F, d: 0, s: .V):   [.I,.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .F, d: 5, s: .V):   [.I,.I,.I,.I,.H,.O,.O,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .G, d: 0, s: .V):   [.I,.I,.I,.H,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .G, d: 5, s: .V):   [.I,.I,.H,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .K, d: 0, s: .V):   [.I,.I,.H,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .K, d: 5, s: .V):   [.H,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .M, d: 0, s: .V):   [.H,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .M, d: 5, s: .V):   [.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O],
-    StarDetail(t: .M, d: 9, s: .V):   [.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O,.O],
+    StarDetail(starType: .A, starDecimal: 0, starSize: .V): [.I, .I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .A, starDecimal: 5, starSize: .V): [.I, .I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .F, starDecimal: 0, starSize: .V): [.I, .I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .F, starDecimal: 5, starSize: .V): [.I, .I, .I, .I, .H, .O, .O, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .G, starDecimal: 0, starSize: .V): [.I, .I, .I, .H, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .G, starDecimal: 5, starSize: .V): [.I, .I, .H, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .K, starDecimal: 0, starSize: .V): [.I, .I, .H, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .K, starDecimal: 5, starSize: .V): [.H, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .M, starDecimal: 0, starSize: .V): [.H, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .M, starDecimal: 5, starSize: .V): [.O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O],
+    StarDetail(starType: .M, starDecimal: 9, starSize: .V): [.O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O, .O],
     //                            0  1  2  3  4
-    StarDetail(t: .B, d: 0, s: .D):   [.H,.O,.O,.O,.O],
-    StarDetail(t: .B, d: 5, s: .D):   [.H,.O,.O,.O,.O],
-    StarDetail(t: .B, d: 9, s: .D):   [.H,.O,.O,.O,.O],
+    StarDetail(starType: .B, starDecimal: 0, starSize: .D): [.H, .O, .O, .O, .O],
+    StarDetail(starType: .B, starDecimal: 5, starSize: .D): [.H, .O, .O, .O, .O],
+    StarDetail(starType: .B, starDecimal: 9, starSize: .D): [.H, .O, .O, .O, .O],
     //                            0  1  2  3  4
-    StarDetail(t: .A, d: 0, s: .D):   [.O,.O,.O,.O,.O],
-    StarDetail(t: .A, d: 5, s: .D):   [.O,.O,.O,.O,.O],
-    StarDetail(t: .A, d: 9, s: .D):   [.O,.O,.O,.O,.O],
+    StarDetail(starType: .A, starDecimal: 0, starSize: .D): [.O, .O, .O, .O, .O],
+    StarDetail(starType: .A, starDecimal: 5, starSize: .D): [.O, .O, .O, .O, .O],
+    StarDetail(starType: .A, starDecimal: 9, starSize: .D): [.O, .O, .O, .O, .O],
     //                            0  1  2  3  4
-    StarDetail(t: .F, d: 0, s: .D):   [.O,.O,.O,.O,.O],
-    StarDetail(t: .F, d: 5, s: .D):   [.O,.O,.O,.O,.O],
-    StarDetail(t: .F, d: 9, s: .D):   [.O,.O,.O,.O,.O],
+    StarDetail(starType: .F, starDecimal: 0, starSize: .D): [.O, .O, .O, .O, .O],
+    StarDetail(starType: .F, starDecimal: 5, starSize: .D): [.O, .O, .O, .O, .O],
+    StarDetail(starType: .F, starDecimal: 9, starSize: .D): [.O, .O, .O, .O, .O],
     //                            0  1  2  3  4
-    StarDetail(t: .G, d: 0, s: .D):   [.O,.O,.O,.O,.O],
-    StarDetail(t: .G, d: 5, s: .D):   [.O,.O,.O,.O,.O],
-    StarDetail(t: .G, d: 9, s: .D):   [.O,.O,.O,.O,.O],
+    StarDetail(starType: .G, starDecimal: 0, starSize: .D): [.O, .O, .O, .O, .O],
+    StarDetail(starType: .G, starDecimal: 5, starSize: .D): [.O, .O, .O, .O, .O],
+    StarDetail(starType: .G, starDecimal: 9, starSize: .D): [.O, .O, .O, .O, .O],
     //                            0  1  2  3  4
-    StarDetail(t: .K, d: 0, s: .D):   [.O,.O,.O,.O,.O],
-    StarDetail(t: .K, d: 5, s: .D):   [.O,.O,.O,.O,.O],
-    StarDetail(t: .K, d: 9, s: .D):   [.O,.O,.O,.O,.O],
+    StarDetail(starType: .K, starDecimal: 0, starSize: .D): [.O, .O, .O, .O, .O],
+    StarDetail(starType: .K, starDecimal: 5, starSize: .D): [.O, .O, .O, .O, .O],
+    StarDetail(starType: .K, starDecimal: 9, starSize: .D): [.O, .O, .O, .O, .O],
     //                            0  1  2  3  4
-    StarDetail(t: .M, d: 0, s: .D):   [.O,.O,.O,.O,.O],
-    StarDetail(t: .M, d: 5, s: .D):   [.O,.O,.O,.O,.O],
-    StarDetail(t: .M, d: 9, s: .D):   [.O,.O,.O,.O,.O],
+    StarDetail(starType: .M, starDecimal: 0, starSize: .D): [.O, .O, .O, .O, .O],
+    StarDetail(starType: .M, starDecimal: 5, starSize: .D): [.O, .O, .O, .O, .O],
+    StarDetail(starType: .M, starDecimal: 9, starSize: .D): [.O, .O, .O, .O, .O]
 ]
 
 /// The class that defines all stars.
-class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
+class Star: Satellite, /*Hashable, Equatable, */CustomStringConvertible {
     //    var type: StarType = .A
     //    var decimal: Int = 0
     //    var size: StarSize = .Ia
-    var starDetail: StarDetail = StarDetail(t:.A,d:0,s:.Ia)
+    var starDetail: StarDetail = StarDetail(starType: .A, starDecimal: 0, starSize: .Ia)
     var magnitude: Double = 0
-    // despite its name, 'maximum orbits' is described in the text as "the highest numbered orbit available". Given that the system allows orbit 0, that means that the maximum number of orbits is actually one higher than 'max orbits'...
+    // despite its name, 'maximum orbits' is described in the text as "the highest numbered orbit available".
+    // Given that the system allows orbit 0, that means that the maximum number of orbits is actually one higher than
+    // 'max orbits'...
     // so to avoid further confusion, I am calling the variable 'maxOrbitNum'.
     var maxOrbitNum: Int = 0
     //    var hashValue: Int {get {return self.type.hashValue * 100 + self.decimal * 10 + self.size.hashValue}}
-    
+
     var specSizeDescription: String {
-        return "\(starDetail.t), \(starDetail.s) Star"
+        "\(starDetail.starType), \(starDetail.starSize) Star"
     }
-    
+
     var starDesc: String {
         var result = ""
         //        let pad = String(count: depth, repeatedValue: Character(" "))
@@ -342,47 +360,50 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
         result += "\t\t(\(specSizeDescription))"
         return result
     }
-    
+
     var verboseDesc: String {
         var result = "\(name) (\(specSize)) is a \(specSizeDescription.lowercased())"
-        if let p = parent as? Star {
-            result += " companion star to \(p.name)"
+        if let parentStar = parent as? Star {
+            result += " companion star to \(parentStar.name)"
         }
         result += ". "
         return result
     }
-    
+
     var specSize: String {
         var result = ""
-        if starDetail.s == .D { result += "\(starDetail.s.rawValue)\(starDetail.t.rawValue)" }
-        else { result += "\(starDetail.t.rawValue)\(starDetail.d) \(starDetail.s.rawValue)" }
+        if starDetail.starSize == .D {
+            result += "\(starDetail.starSize.rawValue)\(starDetail.starType.rawValue)"
+        } else {
+            result += "\(starDetail.starType.rawValue)\(starDetail.starDecimal) \(starDetail.starSize.rawValue)"
+        }
         return result
     }
-    var description : String {
-        var d: String = ""
-        d += starDesc
+    var description: String {
+        var desc: String = ""
+        desc += starDesc
         //        d += "Max orbit number = \(maxOrbitNum)\n"
         //        if parent == nil {
-        d += "\(satDesc)"
+        desc += "\(satDesc)"
         //        }
-        return d
+        return desc
     }
-        
+
     override var json: String {
         var result = ""
-        result += "\"\(jsonLabels.star)\":\n"
+        result += "\"\(JsonLabels.star)\":\n"
         result += "{\n"
-        result += "\t\"\(jsonLabels.name)\": \"\(name)\",\n"
-        result += "\t\"\(jsonLabels.type)\": \"\(starDetail.t.rawValue)\",\n"
-        result += "\t\"\(jsonLabels.decimal)\": \"\(starDetail.d)\",\n"
-        result += "\t\"\(jsonLabels.size)\": \"\(starDetail.s.rawValue)\",\n"
-        result += "\t\"\(jsonLabels.satellites)\": [\n"
+        result += "\t\"\(JsonLabels.name)\": \"\(name)\",\n"
+        result += "\t\"\(JsonLabels.type)\": \"\(starDetail.starType.rawValue)\",\n"
+        result += "\t\"\(JsonLabels.decimal)\": \"\(starDetail.starDecimal)\",\n"
+        result += "\t\"\(JsonLabels.size)\": \"\(starDetail.starSize.rawValue)\",\n"
+        result += "\t\"\(JsonLabels.satellites)\": [\n"
         result += satJSON
         result += "\t]\n"
         result += "}\n"
         return result
     }
-    
+
     //    var satJSONDesc: String {
     //        var result = ""
     //            result += "\t\"\(jsonLabels.satellites)\": [\n"
@@ -390,136 +411,134 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
     //            result += "\t]\n"
     //        return result
     //    }
-    
+
     convenience init(type: StarType, decimal: Int, size: StarSize, parent: Star? = nil) {
-        self.init(t: type, d: decimal, s: size)
-        self.starDetail.t = type
-        self.starDetail.d = decimal
-        self.starDetail.s = size
-        self.magnitude = (stellarAttrs[starDetail]?.bolMagnitude)!
+        self.init(starType: type, starDecimal: decimal, starSize: size)
+        starDetail.starType = type
+        starDetail.starDecimal = decimal
+        starDetail.starSize = size
+        magnitude = (stellarAttrs[starDetail]?.bolMagnitude)!
         self.parent = parent
     }
-    
-    init(t: StarType = .A, d: Int = 0, s: StarSize = .Ia, p: Star? = nil) {
-        super.init(parent:p)
-        self.starDetail.t = t
-        self.starDetail.d = d
-        self.starDetail.s = s
-        self.magnitude = (stellarAttrs[starDetail]?.bolMagnitude)!
-        self.name = Name(maxLength: maxNameLength).description
+
+    init(starType: StarType = .A, starDecimal: Int = 0, starSize: StarSize = .Ia, parentStar: Star? = nil) {
+        super.init(parent: parentStar)
+        starDetail.starType = starType
+        starDetail.starDecimal = starDecimal
+        starDetail.starSize = starSize
+        magnitude = (stellarAttrs[starDetail]?.bolMagnitude)!
+        name = Name(maxLength: maxNameLength).description
     }
-    
-    convenience init(companion: Bool, typeRoll:Int, sizeRoll:Int, parent: Star? = nil) {
+
+    convenience init(companion: Bool, typeRoll: Int, sizeRoll: Int, parent: Star? = nil) {
         self.init()
         self.parent = parent
         if companion {
             switch typeRoll {
-            case 1:   self.starDetail.t = .B
-            case 2:   self.starDetail.t = .A
-            case 3,4: self.starDetail.t = .F
-            case 5,6: self.starDetail.t = .G
-            case 7,8: self.starDetail.t = .K
-            default:  self.starDetail.t = .M
+            case 1:   starDetail.starType = .B
+            case 2:   starDetail.starType = .A
+            case 3, 4: starDetail.starType = .F
+            case 5, 6: starDetail.starType = .G
+            case 7, 8: starDetail.starType = .K
+            default:  starDetail.starType = .M
             }
         } else {
             switch typeRoll {
-            case 2:     self.starDetail.t = .A
-            case 3...7: self.starDetail.t = .M
-            case 8:     self.starDetail.t = .K
-            case 9,10:  self.starDetail.t = .G
-            default:    self.starDetail.t = .F
+            case 2:     starDetail.starType = .A
+            case 3...7: starDetail.starType = .M
+            case 8:     starDetail.starType = .K
+            case 9, 10:  starDetail.starType = .G
+            default:    starDetail.starType = .F
             }
         }
-        
-        if Dice.roll(1) <= 3 { self.starDetail.d = 0 } else { self.starDetail.d = 5}
-        
+
+        if Dice.roll(1) <= 3 { starDetail.starDecimal = 0 } else { starDetail.starDecimal = 5}
+
         if companion {
             switch sizeRoll {
-            case 0: self.starDetail.s = .Ia
-            case 1: self.starDetail.s = .Ib
-            case 2: self.starDetail.s = .II
-            case 3: self.starDetail.s = .III
-            case 4: self.starDetail.s = .IV
-            case 5...11: self.starDetail.s = .V
-            default: self.starDetail.s = .D
+            case 0: starDetail.starSize = .Ia
+            case 1: starDetail.starSize = .Ib
+            case 2: starDetail.starSize = .II
+            case 3: starDetail.starSize = .III
+            case 4: starDetail.starSize = .IV
+            case 5...11: starDetail.starSize = .V
+            default: starDetail.starSize = .D
             }
         } else {
             switch sizeRoll {
-            case 2: self.starDetail.s = .II
-            case 3: self.starDetail.s = .III
-            case 4: self.starDetail.s = .IV
-            default: self.starDetail.s = .V
+            case 2: starDetail.starSize = .II
+            case 3: starDetail.starSize = .III
+            case 4: starDetail.starSize = .IV
+            default: starDetail.starSize = .V
             }
         }
-        if ((self.starDetail.t == .K && self.starDetail.d == 5) || (self.starDetail.t == .M)) && (self.starDetail.s == .IV) {
-            self.starDetail.s = .V
+        if ((starDetail.starType == .K && starDetail.starDecimal == 5) ||
+            (starDetail.starType == .M)) && (starDetail.starSize == .IV) {
+            starDetail.starSize = .V
         }
-        self.magnitude = (stellarAttrs[starDetail]?.bolMagnitude)!
+        magnitude = (stellarAttrs[starDetail]?.bolMagnitude)!
 
     }
-    
+
     /// Get the main world of this system (if such a thing exists).
     /// The main world is the planet with the highest population, and if there's more than
     /// one, by preference one in the habitable zone, otherwise the one closest to the sun.
     ///
     /// - returns:
     ///      The planet (if one exists) that matches the criteria.
-    func getMainWorld()->Planet? {
+    func getMainWorld() -> Planet? {
         var mainWorld: Planet?
         var minOrbit: Float = Float.infinity
         let (worlds, _) = getMaxPop()  // worlds is an array of worlds that have the maximum population.
         // now we need to weed out to find the actual mainworld.
-        for planet in worlds {
-            if let p1 = planet {
+        for world in worlds {
+            if let planet = world {
                 // habitable is first preference
-                if p1.zone == Zone.H {
+                if planet.zone == Zone.H {
                     mainWorld = planet
                 } else {
-                    if p1.stellarOrbit < minOrbit {
+                    if planet.stellarOrbit < minOrbit {
                         mainWorld = planet
-                        minOrbit = p1.stellarOrbit
+                        minOrbit = planet.stellarOrbit
                     }
                 }
             }
         }
         return mainWorld
     }
-    
+
     /// Obtain a random orbit number in the inner, habitable or outer zone.
     /// - Returns: A random available inner, habitable or outer orbit number.
     func getAvailOrbit() -> Float {
-        var o:Float
-        var possibilities = getAvailOrbits(Set<Zone>([Zone.H, Zone.O, Zone.I]))
+        var orbit: Float
+        let possibilities = getAvailOrbits(Set<Zone>([Zone.H, Zone.O, Zone.I]))
         if DEBUG { print("Avail on \(name); AvailOrbits returned \(possibilities)") }
-        let r = Dice.roll(1, sides:possibilities.count)
-        o = possibilities[r-1]
-        return o
+        orbit = possibilities[Dice.roll(1, sides: possibilities.count)-1]
+        return orbit
     }
 
     /// Obtain a random orbit number in any zone except within the star.
     /// - Returns: A random available orbit number except within the star.
     func getAnyAvailOrbit() -> Float {
-        var o:Float
-        var possibilities = getAvailOrbits(Set<Zone>([Zone.H, Zone.O, Zone.I, Zone.U]))
+        var orbit: Float
+        let possibilities = getAvailOrbits(Set<Zone>([Zone.H, Zone.O, Zone.I, Zone.U]))
         if DEBUG { print("Avail on \(name); AnyAvailOrbits returned \(possibilities)") }
-        let r = Dice.roll(1, sides:possibilities.count)
-        o = possibilities[r-1]
-        return o
+        orbit = possibilities[Dice.roll(1, sides: possibilities.count)-1]
+        return orbit
     }
 
     /// Obtain a random orbit number in the inner or outer zone.
     /// - Returns: A random available inner or outer orbit number.
     func getAvailInOutOrbit() -> Float? {
-        var o:Float?
-        var possibilities = getAvailOrbits(Set<Zone>([Zone.O, Zone.I]))
+        var orbit: Float?
+        let possibilities = getAvailOrbits(Set<Zone>([Zone.O, Zone.I]))
         if DEBUG { print("AvailInOut on \(name); AvailOrbits returned \(possibilities)") }
         if possibilities.count > 0 {
-            let r = Dice.roll(1, sides:possibilities.count)
-            o = possibilities[r-1]
+            orbit = possibilities[Dice.roll(1, sides: possibilities.count)-1]
         }
-        return o
+        return orbit
     }
-    
+
 /**
      Obtain all available orbits within the supplied zones.
  
@@ -531,17 +550,19 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
      
     - Returns: An array of empty orbits that are within the requested `Zone`s.
  */
-    func getAvailOrbits(_ zones:Set<Zone>, createIfNone: Bool=true)->[Float] {
-        var orbits:[Float] = []
-        for i in 0...maxOrbitNum {
-            if zones.contains(getZone(i)!) && getSatellite(i) == nil {
-                orbits.append(Float(i))
+    func getAvailOrbits(_ zones: Set<Zone>, createIfNone: Bool=true) -> [Float] {
+        var orbits: [Float] = []
+        for orbit in 0...maxOrbitNum {
+            if zones.contains(getZone(orbit)!) && getSatellite(orbit) == nil {
+                orbits.append(Float(orbit))
             }
         }
         if createIfNone {
             // if we found no orbits, and we've been asked to, we'll make one.
             if orbits.count == 0 {
-                // we can't just blindly increment to the next orbit, because it might be occupied by a star, a captured planet, or an empty orbit.
+                // we can't just blindly increment to the next orbit,
+                // because it might be occupied by a star, a captured planet,
+                // or an empty orbit.
                 repeat {
                     maxOrbitNum += 1
                 } while getSatellite(maxOrbitNum) != nil
@@ -551,13 +572,16 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
         }
         return orbits
     }
-    
+
     /// Creates a new outer zone on the star and returns the orbit number.
-    func createOuterZone()->Float {
+    func createOuterZone() -> Float {
         var result: Float = 0.0
-        // first, we need to find out whether the current max orbit number is already in the outer zone.
+        // first, we need to find out whether the current max orbit number
+        // is already in the outer zone.
         if getZone(maxOrbitNum) == Zone.O {
-            // it is, so we just need to get to the next available orbit number and return that one (we need to make sure we don't collide with something...)
+            // it is, so we just need to get to the next available orbit
+            // number and return that one (we need to make sure we don't
+            // collide with something...)
             repeat {
                 maxOrbitNum += 1
             } while getSatellite(maxOrbitNum) != nil
@@ -576,21 +600,21 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
         }
         return result
     }
-    
+
 /**
      Return the habitable orbit for this star, if there is one.
      - returns: the orbit number of the habitable zone, or nil if
      there is no habitable zone.
  */
-    func getHabOrbit()->Float? {
+    func getHabOrbit() -> Float? {
         var result: Float?
-        if let zones:[Zone] = tableOfZones[self.starDetail] {
-            if zones.index(of: Zone.H) != nil {
-                result = Float(zones.index(of: Zone.H)!)
+        if let zones: [Zone] = tableOfZones[starDetail] {
+            if zones.firstIndex(of: Zone.H) != nil {
+                result = Float(zones.firstIndex(of: Zone.H)!)
             }
         }
         return result
-        
+
     }
 /**
  Obtain all satellites within the supplied zones.
@@ -600,11 +624,11 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
 
  - returns: An array of satellites that are with the requested `Zone`s.
  */
-    func getSatellites(_ zones:Set<Zone>)->[Satellite] {
-        var satellites:[Satellite] = []
-        for i in 0...maxOrbitNum {
-            if zones.contains(getZone(i)!) && getSatellite(i) != nil {
-                satellites.append(getSatellite(i)!)
+    func getSatellites(_ zones: Set<Zone>) -> [Satellite] {
+        var satellites: [Satellite] = []
+        for orbitNum in 0...maxOrbitNum {
+            if zones.contains(getZone(orbitNum)!) && getSatellite(orbitNum) != nil {
+                satellites.append(getSatellite(orbitNum)!)
             }
         }
         return satellites
@@ -614,28 +638,27 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
  - Returns: A random unoccupied orbit within the habitable and outer zones. If
      there are no available orbits in those zones, the outcome is undefined.
  */
-    func getAvailHabitableOrOuterOrbit()->Float? {
+    func getAvailHabitableOrOuterOrbit() -> Float? {
         // returns a random available habitable or outer orbit number.
-        var o:Float?
-        var possibilities = getAvailOrbits(Set<Zone>([Zone.H, Zone.O]))
+        var orbit: Float?
+        let possibilities = getAvailOrbits(Set<Zone>([Zone.H, Zone.O]))
         if DEBUG { print("AvailHabOut on \(name); AvailOrbits returned \(possibilities)") }
         if possibilities.count > 0 {
-            let r = Dice.roll(1, sides:possibilities.count)
-            o = possibilities[r-1]
+            orbit = possibilities[Dice.roll(1, sides: possibilities.count)-1]
         }
-        return o
+        return orbit
     }
-    
+
     /// The number of available orbits in the habitable and outer zones.
-    var availHabOuterOrbits:Int {
-        return getAvailOrbits(Set<Zone>([Zone.H, Zone.O]), createIfNone: false).count
+    var availHabOuterOrbits: Int {
+        getAvailOrbits(Set<Zone>([Zone.H, Zone.O]), createIfNone: false).count
     }
-    
+
     /// The number of available habitable, inner, outer and uninhabitable orbits.
-    var availOrbits:Int {
-        return getAvailOrbits(Set<Zone>([Zone.H, Zone.I, Zone.O, Zone.U]), createIfNone: false).count
+    var availOrbits: Int {
+        getAvailOrbits(Set<Zone>([Zone.H, Zone.I, Zone.O, Zone.U]), createIfNone: false).count
     }
-    
+
     /**
  Roll for the maximum number of orbits
  - Returns:
@@ -643,18 +666,18 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
  */
     func getMaxOrbitNum() -> Int {
         // determine maximum orbits
-        var orbitDM : Int = 0
+        var orbitDM: Int = 0
         var result: Int
-        if starDetail.s == .III { orbitDM += 4}
-        if starDetail.s == .II { orbitDM += 8}
-        if starDetail.t == .M { orbitDM -= 4}
-        if starDetail.t == .K { orbitDM -= 2}
+        if starDetail.starSize == .III { orbitDM += 4}
+        if starDetail.starSize == .II { orbitDM += 8}
+        if starDetail.starType == .M { orbitDM -= 4}
+        if starDetail.starType == .K { orbitDM -= 2}
         result = Dice.roll(2) + orbitDM
         if result < 0 { result = 0 }
         // maximum orbits is open-ended so no need to place upper limits.
         return result
     }
-    
+
     /**
  Obtain a random orbit for a companion star.
      
@@ -693,23 +716,17 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
      - 6 at about orbit 16.3.
      
      */
-    func getCompanionOrbit(_ dm: Int)->(orbitNum: Float, inFarOrbit: Bool) {
+    func getCompanionOrbit(_ diceModifier: Int)->(orbitNum: Float, inFarOrbit: Bool) {
 
-        
         var farOrbit: Bool = false
         var orbit: Float
-        
-        switch Dice.roll(2) + dm {
-        case 0..<4: orbit = -1 // aka 'close' orbit
-        case 4:     orbit = 1
-        case 5:     orbit = 2
-        case 6:     orbit = 3
-        case 7:     orbit = 4 + Float(Dice.roll(1))
-        case 8:     orbit = 5 + Float(Dice.roll(1))
-        case 9:     orbit = 6 + Float(Dice.roll(1))
-        case 10:    orbit = 7 + Float(Dice.roll(1))
-        case 11:    orbit = 8 + Float(Dice.roll(1))
-        default: // if its not one of the above it's "far".
+
+        let primaryRoll = Dice.roll(2) + diceModifier
+        switch primaryRoll {
+        case 0..<4: orbit = -1.0
+        case 4..<7: orbit = Float(primaryRoll - 3)
+        case 7..<12: orbit = Float(primaryRoll - 3 + Dice.roll())
+        default:
             farOrbit = true
             switch Dice.roll() {
             case 1: orbit = 13.7
@@ -722,8 +739,4 @@ class Star : Satellite, /*Hashable, Equatable, */CustomStringConvertible {
         }
         return (orbit, farOrbit)
     }
-    
 }
-//func ==(lhs: Star, rhs: Star) -> Bool {
-//    return lhs.hashValue == rhs.hashValue
-//}

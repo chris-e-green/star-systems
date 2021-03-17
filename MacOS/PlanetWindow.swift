@@ -9,5 +9,5 @@
 import Cocoa
 
 class PlanetWindow: NSWindow {
-    
+
 }

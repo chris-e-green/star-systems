@@ -17,7 +17,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var detailDescriptionLabel: UILabel!
 
     @IBOutlet weak var starportField: UITextField!
-    
+
     @IBOutlet weak var atmosphereField: UITextField!
     @IBOutlet weak var sizeField: UITextField!
     @IBOutlet weak var hydrographicsField: UITextField!
@@ -83,4 +83,3 @@ class DetailViewController: UIViewController {
         }
     }
 }
-

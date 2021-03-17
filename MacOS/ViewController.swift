@@ -20,10 +20,10 @@ class ViewController: NSViewController {
     @IBAction func makeSubsector(_ sender: NSButton) {
         let subsector: Subsector = Subsector(density: 3, withStarSystems: true)
         infoTextView.textStorage?.mutableString.setString(subsector.description)
-        
+
     }
     @IBAction func makeStar(_ sender: NSButton) {
-        let starsystem : StarSystem = StarSystem()
+        let starsystem: StarSystem = StarSystem()
         infoTextView.textStorage?.mutableString.setString(starsystem.description)
 //        for star in starsystem.stars {
 //            infoTextView.textStorage?.mutableString.append(star.description)
@@ -41,6 +41,4 @@ class ViewController: NSViewController {
         }
     }
 
-
 }
-

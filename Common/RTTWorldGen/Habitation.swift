@@ -6,9 +6,8 @@
 import Foundation
 
 enum Habitation: String, CustomStringConvertible {
-    case Homeworld, Colony, Outpost, Uninhabited
+    case homeworld, colony, outpost, uninhabited
     var description: String {
-        return self.rawValue
+        self.rawValue.uppercaseFirst
     }
 }
-

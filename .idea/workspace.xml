@@ -1,16 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AnalysisUIOptions">
-    <option name="ANALYSIS_IN_BACKGROUND" value="true" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="06b2592e-e8c7-4392-93dc-e54244608f54" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change afterPath="$PROJECT_DIR$/StarSystemsGUIRelease.entitlements" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Dice.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Dice.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/EmptyOrbit.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/EmptyOrbit.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Extensions.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Extensions.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/GasGiant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/GasGiant.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/JSON.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/JSON.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Name.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Name.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Pdf.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Pdf.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Planet.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Planet.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/RTTWorldGen/Chemistry.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/RTTWorldGen/Chemistry.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/RTTWorldGen/Extensions.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/RTTWorldGen/Extensions.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/RTTWorldGen/Habitation.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/RTTWorldGen/Habitation.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/RTTWorldGen/Luminosity.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/RTTWorldGen/Luminosity.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/RTTWorldGen/PlanetOrbit.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/RTTWorldGen/PlanetOrbit.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/RTTWorldGen/PlanetType.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/RTTWorldGen/PlanetType.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/RTTWorldGen/RTTBases.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/RTTWorldGen/RTTBases.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/RTTWorldGen/RTTPlanet.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/RTTWorldGen/RTTPlanet.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/RTTWorldGen/RTTStar.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/RTTWorldGen/RTTStar.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/RTTWorldGen/RTTSystem.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/RTTWorldGen/RTTSystem.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/RTTWorldGen/Spectrum.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/RTTWorldGen/Spectrum.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/RTTWorldGen/StarOrbits.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/RTTWorldGen/StarOrbits.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/RTTWorldGen/TradeCodes.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/RTTWorldGen/TradeCodes.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Satellite.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Satellite.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Star.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Star.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/StarSystem.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/StarSystem.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Subsector.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Subsector.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/diceroll.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Common/diceroll.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Console/main.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Console/main.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MacOS/AppDelegate.swift" beforeDir="false" afterPath="$PROJECT_DIR$/MacOS/AppDelegate.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MacOS/MainWindow.swift" beforeDir="false" afterPath="$PROJECT_DIR$/MacOS/MainWindow.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MacOS/PlanetViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/MacOS/PlanetViewController.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MacOS/PlanetWindow.swift" beforeDir="false" afterPath="$PROJECT_DIR$/MacOS/PlanetWindow.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MacOS/StarSystemViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/MacOS/StarSystemViewController.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MacOS/StarSystemWindow.swift" beforeDir="false" afterPath="$PROJECT_DIR$/MacOS/StarSystemWindow.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MacOS/SubsectorWindow.swift" beforeDir="false" afterPath="$PROJECT_DIR$/MacOS/SubsectorWindow.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MacOS/ViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/MacOS/ViewController.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/project.xcworkspace/xcuserdata/chris.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/project.xcworkspace/xcuserdata/chris.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" beforeDir="false" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems basic system.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems basic system.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems full from UPP.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems full from UPP.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems full from scratch.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems full from scratch.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems no parameters.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems no parameters.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems subsector density 1.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems subsector density 1.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems subsector density 2.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems subsector density 2.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems subsector density 3.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems subsector density 3.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems subsector density 4.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems subsector density 4.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems subsector density 5.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/StarSystems subsector density 5.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/testStarSystems.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/testStarSystems.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/xcschememanagement.plist" beforeDir="false" afterPath="$PROJECT_DIR$/StarSystems.xcodeproj/xcuserdata/chris.xcuserdatad/xcschemes/xcschememanagement.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOS/AppDelegate.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOS/AppDelegate.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOS/Base.lproj/Main.storyboard" beforeDir="false" afterPath="$PROJECT_DIR$/iOS/Base.lproj/Main.storyboard" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOS/DetailViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOS/DetailViewController.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iOS/MasterViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/iOS/MainViewController.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testStarSystems/testBasicPlanet.swift" beforeDir="false" afterPath="$PROJECT_DIR$/testStarSystems/testBasicPlanet.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testStarSystems/testPlanet.swift" beforeDir="false" afterPath="$PROJECT_DIR$/testStarSystems/testPlanet.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testStarSystems/testStarSystems.swift" beforeDir="false" afterPath="$PROJECT_DIR$/testStarSystems/testStarSystems.swift" afterDir="false" />
     </list>
-    <ignored path="StarSystems.iws" />
-    <ignored path=".idea/workspace.xml" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,110 +69,9 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="macos_x86_64" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="macos_macos_x86_64" />
   <component name="FavoritesManager">
     <favorites_list name="StarSystems" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Pdf.swift" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/StarSystems/Pdf.swift">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="15" lean-forward="false" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StarSystem.swift" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/StarSystems/StarSystem.swift">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3150">
-              <caret line="210" column="12" lean-forward="false" selection-start-line="210" selection-start-column="12" selection-end-line="210" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RTTPlanet.swift" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/StarSystems/RTTWorldGen/RTTPlanet.swift">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="75" column="16" lean-forward="false" selection-start-line="75" selection-start-column="16" selection-end-line="75" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.swift" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/StarSystems/main.swift">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="86" column="26" lean-forward="false" selection-start-line="86" selection-start-column="26" selection-end-line="86" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Star.swift" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/StarSystems/Star.swift">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="750">
-              <caret line="50" column="27" lean-forward="false" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Spectrum.swift" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/StarSystems/RTTWorldGen/Spectrum.swift">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StarOrbits.swift" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/StarSystems/RTTWorldGen/StarOrbits.swift">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Subsector.swift" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/StarSystems/Subsector.swift">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="147" column="13" lean-forward="false" selection-start-line="147" selection-start-column="13" selection-end-line="147" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Project Settings" pinned="false" current-in-tab="false">
-        <entry file="appcode.project-settings://adfadf7e">
-          <provider selected="true" editor-type-id="AppCode.ProjectSettings">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Planet.swift" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/StarSystems/Planet.swift">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="406" column="16" lean-forward="true" selection-start-line="406" selection-start-column="16" selection-end-line="406" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
@@ -131,6 +80,14 @@
       </list>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -177,6 +134,7 @@
     <option name="width" value="1460" />
     <option name="height" value="722" />
   </component>
+  <component name="ProjectId" id="1pe5AAL95ix9otT7yMTcpMbEzNI" />
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
       <profile-state>
@@ -244,11 +202,22 @@
       </pane>
     </panes>
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/StarSystems/Name.swift" />
     <property name="OBJC.PRESERVED_TARGET_SELECTION" value="" />
-    <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/StarSystems/Name.swift" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
   <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
     <UpdatedFiles>
@@ -367,155 +336,112 @@
       </FILE-GROUP>
     </UpdatedFiles>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Application.StarSystems macOS GUI">
-    <configuration name="StarSystems basic system" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-type basicPlanet" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems basic system" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE">
-      <envs />
+  <component name="RunManager" selected="Application.StarSystems subsector density 3">
+    <configuration name="StarSystems basic system" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-type basicPlanet" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems basic system" IS_LOCATION_SIMULATION_ALLOWED="true" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE" SHOULD_DEBUG_EXTENSIONS="false">
       <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
         <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
       </EXTENSION>
-      <method>
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="false" />
+      <embedded_app_extension_list />
+      <method v="2" />
+    </configuration>
+    <configuration name="StarSystems full from UPP" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-UWP C66A546-B -type fromUWP -json ~/gui.json -gasGiant YES -scoutBase YES -name Guiabidigoob -coords 05,06" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems full from UPP" IS_LOCATION_SIMULATION_ALLOWED="true" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE" SHOULD_DEBUG_EXTENSIONS="false">
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+      <embedded_app_extension_list />
+      <method v="2" />
+    </configuration>
+    <configuration name="StarSystems full from scratch" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-type basicStar" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems full from scratch" IS_LOCATION_SIMULATION_ALLOWED="true" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE" SHOULD_DEBUG_EXTENSIONS="false">
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+      <embedded_app_extension_list />
+      <method v="2" />
+    </configuration>
+    <configuration name="StarSystems no parameters" type="AppleRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems no parameters" IS_LOCATION_SIMULATION_ALLOWED="true" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE" SHOULD_DEBUG_EXTENSIONS="false">
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+      <embedded_app_extension_list />
+      <method v="2" />
+    </configuration>
+    <configuration name="StarSystems subsector density 1" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-type subsector -density 1 -pdf ~/tttt.pdf" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems subsector density 1" IS_LOCATION_SIMULATION_ALLOWED="true" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE" SHOULD_DEBUG_EXTENSIONS="false">
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+      <embedded_app_extension_list />
+      <method v="2" />
+    </configuration>
+    <configuration name="StarSystems subsector density 2" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-type subsector -density 2" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems subsector density 2" IS_LOCATION_SIMULATION_ALLOWED="true" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE" SHOULD_DEBUG_EXTENSIONS="false">
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+      <embedded_app_extension_list />
+      <method v="2" />
+    </configuration>
+    <configuration name="StarSystems subsector density 3" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-type subsector -expanded YES -density 3 -pdf ~/expanded3.pdf" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems subsector density 3" IS_LOCATION_SIMULATION_ALLOWED="true" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE" SHOULD_DEBUG_EXTENSIONS="false">
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+      <embedded_app_extension_list />
+      <method v="2" />
+    </configuration>
+    <configuration name="StarSystems subsector density 4" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-type subsector -density 4" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems subsector density 4" IS_LOCATION_SIMULATION_ALLOWED="true" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE" SHOULD_DEBUG_EXTENSIONS="false">
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+      <embedded_app_extension_list />
+      <method v="2" />
+    </configuration>
+    <configuration name="StarSystems subsector density 5" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-type subsector -density 5" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems subsector density 5" IS_LOCATION_SIMULATION_ALLOWED="true" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE" SHOULD_DEBUG_EXTENSIONS="false">
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+      <embedded_app_extension_list />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="AppleRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" IS_LOCATION_SIMULATION_ALLOWED="true" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE" SHOULD_DEBUG_EXTENSIONS="false">
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+      <embedded_app_extension_list />
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StarSystems full from UPP" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-UWP C66A546-B -type fromUWP -json ~/gui.json -gasGiant YES -scoutBase YES -name Guiabidigoob -coords 05,06" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems full from UPP" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE">
-      <envs />
-      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
-        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
-      </EXTENSION>
-      <method>
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="false" />
+    <configuration default="true" type="OCGoogleTestRunConfigurationType" factoryName="Google Test" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" IS_LOCATION_SIMULATION_ALLOWED="true" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StarSystems full from scratch" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-type basicStar" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems full from scratch" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE">
-      <envs />
-      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
-        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
-      </EXTENSION>
-      <method>
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="false" />
+    <configuration default="true" type="OCUnitRunConfiguration" factoryName="XCTest/Kiwi" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="testStarSystems" CONFIG_NAME="Debug" IS_LOCATION_SIMULATION_ALLOWED="true" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StarSystems macOS GUI" type="AppleRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystemsGUI" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems macOS GUI" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystemsGUI" MAKE_ACTIVE="TRUE">
-      <envs />
-      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
-        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
-      </EXTENSION>
-      <method>
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
-    <configuration name="StarSystems no parameters" type="AppleRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems no parameters" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE">
-      <envs />
-      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
-        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
-      </EXTENSION>
-      <method>
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
-    <configuration name="StarSystems subsector density 1" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-type subsector -density 1 -pdf ~/tttt.pdf" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems subsector density 1" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE">
-      <envs />
-      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
-        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
-      </EXTENSION>
-      <method>
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
-    <configuration name="StarSystems subsector density 2" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-type subsector -density 2" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems subsector density 2" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE">
-      <envs />
-      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
-        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
-      </EXTENSION>
-      <method>
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
-    <configuration name="StarSystems subsector density 3" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-type subsector -expanded -density 3 -pdf ~/test.pdf" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems subsector density 3" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE">
-      <envs />
-      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
-        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
-      </EXTENSION>
-      <method>
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
-    <configuration name="StarSystems subsector density 4" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-type subsector -density 4" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems subsector density 4" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE">
-      <envs />
-      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
-        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
-      </EXTENSION>
-      <method>
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
-    <configuration name="StarSystems subsector density 5" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-type subsector -density 5" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" SCHEME_NAME="StarSystems subsector density 5" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE">
-      <envs />
-      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
-        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
-      </EXTENSION>
-      <method>
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
-    <configuration default="true" type="AppleRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="StarSystems" RUN_TARGET_NAME="StarSystems" MAKE_ACTIVE="TRUE">
-      <envs />
-      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
-        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
-      </EXTENSION>
-    </configuration>
-    <configuration default="true" type="OCGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="StarSystems" CONFIG_NAME="Debug" TEST_MODE="SUITE_TEST">
-      <envs />
-    </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+    <configuration default="true" type="js.build_tools.gulp">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <gulpfile />
       <tasks />
       <arguments />
       <envs />
+      <method v="2" />
     </configuration>
-    <configuration default="true" type="OCUnitRunConfiguration" factoryName="XCTest/Kiwi" PASS_PARENT_ENVS_2="true" PROJECT_NAME="StarSystems" TARGET_NAME="testStarSystems" CONFIG_NAME="Debug" TEST_MODE="SUITE_TEST">
-      <envs />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
-      <method />
-    </configuration>
-    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
-      <command value="run-script" />
-      <scripts />
-      <node-interpreter value="project" />
-      <envs />
-      <method />
-    </configuration>
-    <list size="10">
-      <item index="0" class="java.lang.String" itemvalue="Application.StarSystems subsector density 1" />
-      <item index="1" class="java.lang.String" itemvalue="Application.StarSystems full from UPP" />
-      <item index="2" class="java.lang.String" itemvalue="Application.StarSystems full from scratch" />
-      <item index="3" class="java.lang.String" itemvalue="Application.StarSystems basic system" />
-      <item index="4" class="java.lang.String" itemvalue="Application.StarSystems subsector density 2" />
-      <item index="5" class="java.lang.String" itemvalue="Application.StarSystems subsector density 3" />
-      <item index="6" class="java.lang.String" itemvalue="Application.StarSystems subsector density 4" />
-      <item index="7" class="java.lang.String" itemvalue="Application.StarSystems subsector density 5" />
-      <item index="8" class="java.lang.String" itemvalue="Application.StarSystems no parameters" />
-      <item index="9" class="java.lang.String" itemvalue="Application.StarSystems macOS GUI" />
+    <list>
+      <item itemvalue="Application.StarSystems subsector density 1" />
+      <item itemvalue="Application.StarSystems full from UPP" />
+      <item itemvalue="Application.StarSystems full from scratch" />
+      <item itemvalue="Application.StarSystems basic system" />
+      <item itemvalue="Application.StarSystems subsector density 2" />
+      <item itemvalue="Application.StarSystems subsector density 3" />
+      <item itemvalue="Application.StarSystems subsector density 4" />
+      <item itemvalue="Application.StarSystems subsector density 5" />
+      <item itemvalue="Application.StarSystems no parameters" />
     </list>
   </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
-  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -527,6 +453,7 @@
       <option name="presentableId" value="Default" />
       <updated>1463472797967</updated>
       <workItem from="1511421068089" duration="10127000" />
+      <workItem from="1615530572091" duration="27349000" />
     </task>
     <task id="LOCAL-00001" summary="Uncommented Subsector.generatePDF() routine (not entirely sure why I commented it out in the first place but I suspect I'll discover why soonnnn....)">
       <created>1511424489665</created>
@@ -573,7 +500,18 @@
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -590,12 +528,6 @@
     <MESSAGE value="Uncommented Subsector.generatePDF() routine (not entirely sure why I commented it out in the first place but I suspect I'll discover why soonnnn....)" />
     <MESSAGE value="Added alternative verbose descriptions of trade classifications.&#10;Improved the description of planets.&#10;Improved the description of starports vs spaceports.&#10;Added descriptions of trade classifications to the planet's verbose description." />
     <option name="LAST_COMMIT_MESSAGE" value="Added alternative verbose descriptions of trade classifications.&#10;Improved the description of planets.&#10;Improved the description of starports vs spaceports.&#10;Added descriptions of trade classifications to the planet's verbose description." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <option name="time" value="2" />
-    </breakpoint-manager>
-    <watches-manager />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/StarSystems/Pdf.swift">

@@ -6,8 +6,8 @@
 import Foundation
 
 enum Chemistry: String, CustomStringConvertible {
-    case Water, Ammonia, Methane, Sulfur, Chlorine
+    case water, ammonia, methane, sulfur, chlorine
     var description: String {
-        return self.rawValue
+        self.rawValue.uppercaseFirst
     }
 }

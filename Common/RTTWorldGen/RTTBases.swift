@@ -4,13 +4,44 @@
 //
 
 import Foundation
-
+// swiftlint:disable identifier_name
 enum RTTBases: String, CustomStringConvertible {
     case A, B, C, D, E, F, G, H, J, K, L, M, GC, MH, SH, TA, TC
     case N, P, Q, R, S, T, U, V, W, X, Y, Z
     var description: String {
-        return self.rawValue
+        switch self {
+        case .A: return "A"
+        case .B: return "B"
+        case .C: return "C"
+        case .D: return "D"
+        case .E: return "E"
+        case .F: return "F"
+        case .G: return "G"
+        case .H: return "H"
+        case .J: return "J"
+        case .K: return "K"
+        case .L: return "L"
+        case .M: return "M"
+        case .GC: return "GC"
+        case .MH: return "MH"
+        case .SH: return "SH"
+        case .TA: return "TA"
+        case .TC: return "TC"
+        case .N: return "N"
+        case .P: return "P"
+        case .Q: return "Q"
+        case .R: return "R"
+        case .S: return "S"
+        case .T: return "T"
+        case .U: return "U"
+        case .V: return "V"
+        case .W: return "W"
+        case .X: return "X"
+        case .Y: return "Y"
+        case .Z: return "Z"
+        }
     }
+
     var longDescription: String {
         switch self {
         case .A: return "A-class (Excellent) Starport"
@@ -44,4 +75,5 @@ enum RTTBases: String, CustomStringConvertible {
         case .Z: return "Psionics Institute"
         }
     }
+    // swiftlint:enable identifier_name
 }

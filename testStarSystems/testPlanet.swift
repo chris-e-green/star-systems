@@ -9,20 +9,20 @@
 import XCTest
 import StarSystems
 
-class testPlanet: XCTestCase {
+class TestPlanet: XCTestCase {
 
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
 
     func testDescribePlanet() {
-       let planet:Planet = Planet()
+       let planet: Planet = Planet()
         planet.generateRandomPlanet(99, starType: .Z, zone: .Z)
        print(planet.fullDescription)
     }
@@ -32,7 +32,7 @@ class testPlanet: XCTestCase {
         planet.generateRandomPlanet(99, starType: .Z, zone: .Z)
         print(planet)
     }
-    
+
     func testPrecreatedPlanet() {
         let upp = "A123456-3"
         var planet = Planet(upp: upp, scoutBase: true, navalBase: true, gasGiant: true)
@@ -44,11 +44,11 @@ class testPlanet: XCTestCase {
         XCTAssertEqual("A123456-3 G", planet.description)
         planet = Planet(upp: upp, scoutBase: false, navalBase: true, gasGiant: false)
         XCTAssertEqual("A123456-3 N", planet.description)
-        
+
     }
     func testGeneratePlanetPerformance() {
         // This is an example of a performance test case.
-        let planet:Planet = Planet()
+        let planet: Planet = Planet()
         self.measureBlock {
             // Put the code you want to measure the time of here.
             planet.generateRandomPlanet(99, starType: .Z, zone: .Z)

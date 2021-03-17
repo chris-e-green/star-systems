@@ -12,11 +12,16 @@ enum PlanetType: Int, CustomStringConvertible {
     case telluric, terrestrial, vesperian, star
     var longDescription: String {
         switch self {
-        case .acheronian: return "These are worlds that were directly affected by their primary's transition from the main sequence; the atmosphere and oceans have been boiled away, leaving a scorched, dead planet."
+        case .acheronian:
+            return "These are worlds that were directly affected by their primary's transition from the main sequence; " +
+                    "the atmosphere and oceans have been boiled away, leaving a scorched, dead planet."
         case .arean: return "These are worlds with little liquid, that move through a slow geological cycle of a gradual build-up, a short wet and clement period, and a long decline."
         case .arid: return "These are worlds with limited amounts of surface liquid, that maintain an equilibrium with the help of their tectonic activity and their biosphere."
-        case .asphodelian: return "These are worlds that were directly affected by their primary's transition from the main sequence; their atmosphere has been boiled away, leaving the surface exposed."
-        case .chthonian: return "These are worlds that were directly affected by their primary's transition from the main sequence, or that have simply spent too long in a tight epistellar orbit; their atmospheres have been stripped away."
+        case .asphodelian:
+            return "These are worlds that were directly affected by their primary's transition from the main sequence; their atmosphere has been boiled away, leaving the surface exposed."
+        case .chthonian:
+            return "These are worlds that were directly affected by their primary's transition from the main sequence, " +
+                    "or that have simply spent too long in a tight epistellar orbit; their atmospheres have been stripped away."
         case .hebean: return "These are highly active worlds, due to tidal flexing, but with some regions of stability; the larger ones may be able to maintain some atmosphere and surface liquid."
         case .helian: return "These are typical helian or \"subgiant\" worlds – large enough to retain helium atmospheres."
         case .janiLithic: return "These worlds, tide-locked to the primary, are rocky, dry, and geologically active."
@@ -27,7 +32,9 @@ enum PlanetType: Int, CustomStringConvertible {
         case .promethean: return "These are worlds that, through tidal-flexing, have a geological cycle similar to plate tectonics, that supports surface liquid and atmosphere."
         case .rockball: return "These are mostly dormant worlds, with surfaces largely unchanged since the early period of planetary formation."
         case .smallBody: return "These are bodies too small to sustain hydrostatic equilibrium; nearly all asteroids and comets are small bodies."
-        case .snowball: return "These worlds are composed of mostly ice and some rock. They may have varying degrees of activity, ranging from completely cold and still to cryo-volcanically active with extensive subsurface oceans."
+        case .snowball:
+            return "These worlds are composed of mostly ice and some rock. They may have varying degrees of activity, " +
+                    "ranging from completely cold and still to cryo-volcanically active with extensive subsurface oceans."
         case .stygian: return "These are worlds that were directly affected by their primary's transition from the main sequence; they are melted and blasted lumps."
         case .tectonic: return "These are worlds with active plate tectonics and large bodies of surface liquid, allowing for stable atmospheres and a high likelihood of life."
         case .telluric: return "These are worlds with geoactivity but no hydrological cycle at all, leading to dense runaway-greenhouse atmospheres."

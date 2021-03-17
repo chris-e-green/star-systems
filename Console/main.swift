@@ -51,15 +51,15 @@ func printSyntax() {
     print()
 }
 
-var planet:Planet
+var planet: Planet
 
-var cmdLineOpts:UserDefaults = UserDefaults.standard;
+var cmdLineOpts: UserDefaults = UserDefaults.standard
 
 let expanded = cmdLineOpts.bool(forKey: "expanded")
 let density = cmdLineOpts.integer(forKey: "density")
-let xmlfn:String? = cmdLineOpts.string(forKey: "xml")
-let jsonfn:String? = cmdLineOpts.string(forKey: "json")
-let pdffn:String? = cmdLineOpts.string(forKey: "pdf")
+let xmlfn: String? = cmdLineOpts.string(forKey: "xml")
+let jsonfn: String? = cmdLineOpts.string(forKey: "json")
+let pdffn: String? = cmdLineOpts.string(forKey: "pdf")
 let overwrite = cmdLineOpts.bool(forKey: "overwrite")
 let verbose = cmdLineOpts.bool(forKey: "verbose")
 let navalBase = cmdLineOpts.bool(forKey: "navalBase")
@@ -78,7 +78,7 @@ if let type = cmdLineOpts.string(forKey: "type") {
         print(planet)
     case "basicStar":
         print("Generating system from scratch")
-        let star : StarSystem = StarSystem()
+        let star: StarSystem = StarSystem()
         print(star)
     case "subsector":
         if density > 5 || density < 1 {
@@ -115,15 +115,14 @@ if let type = cmdLineOpts.string(forKey: "type") {
     case "RTTWorldGen":
         print("Generating system using RTTWorldGen")
         let rtt = RTTSystem()
-        if verbose { print(rtt.verboseDesc) }
-        else { print(rtt) }
+        if verbose { print(rtt.verboseDesc) } else { print(rtt) }
     case "fromUWP":
         print("Generating system from UWP")
         if upp != nil {
             planet = Planet.init(upp: upp!, scoutBase: scoutBase, navalBase: navalBase, gasGiant: gasGiant)
             if name != nil { planet.name = name! }
             if coords != nil {
-                if let coordParts = coords?.components(separatedBy:",") {
+                if let coordParts = coords?.components(separatedBy: ",") {
                     planet.coordinateX = Int(coordParts[0])!
                     planet.coordinateY = Int(coordParts[1])!
                 }
@@ -132,8 +131,8 @@ if let type = cmdLineOpts.string(forKey: "type") {
             //            print (planet)
             let starSystem = StarSystem(newWorld: planet)
             print(starSystem)
-            if let fn = jsonfn {
-                let jsonF = JsonFile(jsonFilename: fn)
+            if let filename = jsonfn {
+                let jsonF = JsonFile(jsonFilename: filename)
                 jsonF.writeJson(starSystem.json)
             }
         } else {
@@ -146,4 +145,3 @@ if let type = cmdLineOpts.string(forKey: "type") {
 } else {
     printSyntax()
 }
-

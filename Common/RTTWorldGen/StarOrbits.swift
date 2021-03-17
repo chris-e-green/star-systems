@@ -4,17 +4,17 @@
 //
 
 import Foundation
-enum StarOrbits : String, CustomStringConvertible{
-    case Primary
-    case BrownDwarf
-    case Tight
-    case Close
-    case Moderate
-    case Distant
+enum StarOrbits: String, CustomStringConvertible {
+    case primary
+    case brownDwarf
+    case tight
+    case close
+    case moderate
+    case distant
     var description: String {
         switch self {
-        case .BrownDwarf: return "Brown Dwarf"
-        default: return self.rawValue
+        case .brownDwarf: return "Brown Dwarf"
+        default: return self.rawValue.uppercaseFirst
         }
     }
 }

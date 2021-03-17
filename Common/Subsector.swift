@@ -11,129 +11,129 @@
 
 import Foundation
 
-class Subsector:CustomStringConvertible  {
+class Subsector: CustomStringConvertible {
     var planets = [Planet]()
     var starSystems = [StarSystem]()
     var name: String = ""
-    
+
     var description: String {
-        var result:String = ""
+        var result: String = ""
         result += "Subsector name: \(name)\n"
-        
+
         if starSystems.count>0 {
-            for (_, s) in starSystems.enumerated() {
-                result += "\(s)\n"
+            for starSystem in starSystems {
+                result += "\(starSystem)\n"
             }
         } else {
-            for (_, p) in planets.enumerated() {
-                result += "\(p)\n"
+            for planet in planets {
+                result += "\(planet)\n"
             }
         }
         return result
     }
-    
+
     var xml: String {
-        var x: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-        x += "<\(jsonLabels.subsector)>\n"
-        x += "<\(jsonLabels.name)>\n"
-        x += name
-        x += "</\(jsonLabels.name)>\n"
-        for p in planets {
-                x += p.xml
+        var xmlTemp: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+        xmlTemp += "<\(JsonLabels.subsector)>\n"
+        xmlTemp += "<\(JsonLabels.name)>\n"
+        xmlTemp += name
+        xmlTemp += "</\(JsonLabels.name)>\n"
+        for planet in planets {
+            xmlTemp += planet.xml
         }
-        x += "</\(jsonLabels.subsector)>\n"
-        return x
+        xmlTemp += "</\(JsonLabels.subsector)>\n"
+        return xmlTemp
     }
     
     var json: String {
-        var j: String = "{\n\"\(jsonLabels.subsector)\": "
-        j += "[\n"
-        for (x, p) in planets.enumerated() {
-            j += p.json
-            if x < planets.count - 1 {
-                j += ",\n"
+        var jsonTemp: String = "{\n\"\(JsonLabels.subsector)\": "
+        jsonTemp += "[\n"
+        for (planetIndex, planet) in planets.enumerated() {
+            jsonTemp += planet.json
+            if planetIndex < planets.count - 1 {
+                jsonTemp += ",\n"
             } else {
-                j += "\n"
+                jsonTemp += "\n"
             }
         }
-        j += "]\n}\n"
-        return j
+        jsonTemp += "]\n}\n"
+        return jsonTemp
     }
     var json2: String {
-        var j: String = "{\n\"\(jsonLabels.subsector)\": [\n"
-        for (x, s) in starSystems.enumerated() {
-            j += s.json
-            if x < starSystems.count - 1 {
-                j += ",\n"
+        var jsonText: String = "{\n\"\(JsonLabels.subsector)\": [\n"
+        for (starSystemIndex, starSystem) in starSystems.enumerated() {
+            jsonText += starSystem.json
+            if starSystemIndex < starSystems.count - 1 {
+                jsonText += ",\n"
             } else {
-                j += "\n"
+                jsonText += "\n"
             }
         }
-        j += "]\n}\n"
-        return j
+        jsonText += "]\n}\n"
+        return jsonText
     }
     
     func generatePdf(_ filename: String, starSysPrint: Bool = false) {
-        let pdf : Pdf = Pdf()
+        let pdf: Pdf = Pdf()
         pdf.start()
         if starSysPrint {
-            for s in starSystems {
-                pdf.display(s)
+            for starSystem in starSystems {
+                pdf.display(starSystem)
             }
         } else {
-            for p in planets {
-                pdf.display(p)
+            for planet in planets {
+                pdf.display(planet)
             }
         }
         pdf.end()
         do {
-            let fn = NSString(string:filename).expandingTildeInPath
-            print("Writing PDF to \(fn)")
-            try pdf.pdfContent.write(toFile: fn, atomically: true, encoding: String.Encoding.utf8)
+            let expandedFilename = NSString(string: filename).expandingTildeInPath
+            print("Writing PDF to \(expandedFilename)")
+            try pdf.pdfContent.write(toFile: expandedFilename, atomically: true, encoding: String.Encoding.utf8)
         } catch {
             print("EXCEPTION: \(error) writing \(pdf.pdfContent)")
         }
     }
     
     func populateStarSystems() {
-        for p in planets {
-            let ss = StarSystem(newWorld: p)
-            ss.subsectorName = name
-            starSystems.append(ss)
+        for planet in planets {
+            let starSystem = StarSystem(newWorld: planet)
+            starSystem.subsectorName = name
+            starSystems.append(starSystem)
         }
     }
     
-    func serialize(_ filename:String) {
+    func serialize(_ filename: String) {
         do {
-            let fn = NSString(string:filename).expandingTildeInPath
-            print("Writing XML to \(fn)")
-            try xml.write(toFile: fn, atomically: true, encoding: String.Encoding.utf8)
+            let expandedFilename = NSString(string: filename).expandingTildeInPath
+            print("Writing XML to \(expandedFilename)")
+            try xml.write(toFile: expandedFilename, atomically: true, encoding: String.Encoding.utf8)
         } catch {
             print("EXCEPTION: \(error) writing XML file.")
         }
     }
     
-    func writeJson(_ filename:String) {
+    func writeJson(_ filename: String) {
         do {
-            let fn = NSString(string:filename).expandingTildeInPath
-            print("Writing JSON to \(fn)")
-            try json.write(toFile: fn, atomically: true, encoding: String.Encoding.utf8)
+            let expandedFilename = NSString(string: filename).expandingTildeInPath
+            print("Writing JSON to \(expandedFilename)")
+            try json.write(toFile: expandedFilename, atomically: true, encoding: String.Encoding.utf8)
         } catch {
             print("EXCEPTION: \(error) writing JSON file.")
         }
         
     }
-    func writeJson2(_ filename:String) {
+    func writeJson2(_ filename: String) {
         do {
-            let fn = NSString(string:filename).expandingTildeInPath
-            print("Writing JSON to \(fn)")
-            try json2.write(toFile: fn, atomically: true, encoding: String.Encoding.utf8)
+            let expandedFilename = NSString(string: filename).expandingTildeInPath
+            print("Writing JSON to \(expandedFilename)")
+            try json2.write(toFile: expandedFilename, atomically: true, encoding: String.Encoding.utf8)
         } catch {
             print("EXCEPTION: \(error) writing JSON file.")
         }
         
     }
-    init(xml:String) {
+    init(xml: String) {
         let parser = XMLParser(stream: InputStream(fileAtPath: xml)!)
         parser.parse()
     }
@@ -142,25 +142,26 @@ class Subsector:CustomStringConvertible  {
         do {
             let jsonStream = InputStream(fileAtPath: jsonFilename)
             jsonStream?.open()
-            let jsonData = try JSONSerialization.jsonObject(with: jsonStream!, options: JSONSerialization.ReadingOptions()) as! [String:AnyObject]
-            jsonStream?.close()
-            if let jsonSubsector = jsonData["\(jsonLabels.subsector)"] as? [[String:AnyObject]] {
-                for jsonPlanet in jsonSubsector {
-                    planets.append(Planet(fromJSON:jsonPlanet))
+            if let jsonData = try JSONSerialization.jsonObject(with: jsonStream!, options: JSONSerialization.ReadingOptions()) as? [String: AnyObject] {
+                if let jsonSubsector = jsonData["\(JsonLabels.subsector)"] as? [[String: AnyObject]] {
+                    for jsonPlanet in jsonSubsector {
+                        planets.append(Planet(fromJSON: jsonPlanet))
+                    }
                 }
             }
+            jsonStream?.close()
         } catch {
             print("Error parsing JSON data \(error)")
         }
     }
-    
-    init(density:Int, withStarSystems: Bool = false) {
-        let d : Dice = Dice(sides:6)
 
-        for x in 1...8 {
-            for y in 1...10 {
-                if d.roll() <= density {
-                    let planet = Planet(coordX:x,coordY:y)
+    init(density: Int, withStarSystems: Bool = false) {
+        let die: Dice = Dice(sides: 6)
+
+        for xCoord in 1...8 {
+            for yCoord in 1...10 {
+                if die.roll() <= density {
+                    let planet = Planet(coordX: xCoord, coordY: yCoord)
                     planets.append(planet)
                 }
             }

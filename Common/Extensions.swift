@@ -11,19 +11,19 @@ import Foundation
 extension String {
     // shorthand padding with spaces to a given length
     func padding(_ length: Int) -> String {
-        return self.padding(toLength: length, withPad: " ", startingAt: 0)
+        self.padding(toLength: length, withPad: " ", startingAt: 0)
     }
     // return the first character of the string
     var first: String {
-        return String(prefix(1))
+        String(prefix(1))
     }
     // return the last character of the string
     var last: String {
-        return String(suffix(1))
+        String(suffix(1))
     }
     // return the string with the first character uppercased
     var uppercaseFirst: String {
-        return first.uppercased() + String(dropFirst())
+        first.uppercased() + String(dropFirst())
     }
 }
 
@@ -38,7 +38,7 @@ extension Int {
      choice of is/are and plural strings are dependend on the value
      of *n*.
      */
-    func strord(_ things: String)->String {
+    func strord(_ things: String) -> String {
         var result = ""
         var isAre = ""
         var plural = ""
@@ -51,13 +51,11 @@ extension Int {
         result += String(self)
         result += " "
         result += things
-        
+
         return "\(isAre) \(self) \(things)\(plural)"
     }
-    
-    var b36:String {
-        return String(self, radix:36, uppercase:true)
+
+    var b36: String {
+        String(self, radix: 36, uppercase: true)
     }
-
 }
-

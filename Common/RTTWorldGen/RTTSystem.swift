@@ -4,10 +4,10 @@
 //
 
 import Foundation
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
+  case let (left?, right?):
+    return left < right
   case (nil, _?):
     return true
   default:
@@ -15,25 +15,24 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
+  case let (left?, right?):
+    return left > right
   default:
     return rhs < lhs
   }
 }
 
-
 class RTTSystem: CustomStringConvertible {
-    var stars:[RTTStar] = []
-    var age:Int // system age in billions of years
+    var stars: [RTTStar] = []
+    var age: Int // system age in billions of years
     var present = Set<StarOrbits>()
     var description: String {
         var result: String = ""
         result += "System is \(age) billion years old, there \(stars.count.strord("star")):\n"
-        for s in stars {
-            result += "\t\(s)"
+        for star in stars {
+            result += "\t\(star)"
         }
         result += "Orbits present: \(present)\n"
         return result
@@ -41,8 +40,8 @@ class RTTSystem: CustomStringConvertible {
     var verboseDesc: String {
         var result: String = ""
         result += "System is \(age) billion years old, there \(stars.count.strord("star")):\n"
-        for s in stars {
-            result += "\t\(s.verboseDesc)"
+        for star in stars {
+            result += "\t\(star.verboseDesc)"
         }
         result += "Orbits present: \(present)\n"
         return result
@@ -52,7 +51,7 @@ class RTTSystem: CustomStringConvertible {
         age = Dice.roll(3) - 3  // this is more useful to know in advance.
         if Dice.roll(1, sides: 2) == 2 {
             // brown dwarf somewhere
-            stars.append(RTTStar(spectrum: .L, orbit:.BrownDwarf, age: age))
+            stars.append(RTTStar(spectrum: .L, orbit: .brownDwarf, age: age))
         }
 
         if Dice.roll(1, sides: 2) == 2 {
@@ -64,14 +63,14 @@ class RTTSystem: CustomStringConvertible {
 
             if ssRoll >= 11 {
                 // binary or ternary
-                let secondary = RTTStar(specRoll: spec + Dice.roll(1) - 1, age: age, companion:true)
+                let secondary = RTTStar(specRoll: spec + Dice.roll(1) - 1, age: age, companion: true)
                 present.insert(secondary.orbit)
                 stars.append(secondary)
             }
 
             if ssRoll >= 16 {
                 // ternary
-                let ternary = RTTStar(specRoll: spec + Dice.roll(1) - 1, age: age, companion:true)
+                let ternary = RTTStar(specRoll: spec + Dice.roll(1) - 1, age: age, companion: true)
                 present.insert(ternary.orbit)
                 stars.append(ternary)
             }
@@ -79,83 +78,65 @@ class RTTSystem: CustomStringConvertible {
 
         // we need to have generated all stars before we can establish
         // what planets could exist.
-        for s in stars
-        {
-            var orbitCount:[PlanetOrbit:Int] = [.Epistellar:0, .Inner:0, .Outer: 0]
-            if s.orbit == .Primary ||
-                    s.orbit == .Distant ||
-                    s.orbit == .BrownDwarf
-            {
-                var curr: PlanetOrbit = .Epistellar
+        for star in stars {
+            var orbitCount: [PlanetOrbit: Int] = [.epistellar: 0, .inner: 0, .outer: 0]
+            if star.orbit == .primary || star.orbit == .distant || star.orbit == .brownDwarf {
+                var curr: PlanetOrbit = .epistellar
                 // epistellar orbits
-                if s.luminosity != .III &&
-                        s.spectrum != .D &&
-                        s.spectrum != .L
-                {
+                if star.luminosity != .typeIII && star.spectrum != .D && star.spectrum != .L {
                     orbitCount[curr] = Dice.roll() - 3
                     if orbitCount[curr] > 2 { orbitCount[curr] = 2 }
-                    if s.spectrum == .M && s.luminosity == .V
-                    {
-                        orbitCount[curr]! -= 1
-                    }
+                    if star.spectrum == .M && star.luminosity == .typeV { orbitCount[curr]! -= 1 }
                     if orbitCount[curr] < 0 { orbitCount[curr] = 0 }
                 }
 
-                s.populatePlanets(orbitCount[curr]!, orbit:curr)
+                star.populatePlanets(orbitCount[curr]!, orbit: curr)
 
-                curr = .Inner
+                curr = .inner
 
                 // inner orbits
-                if !present.contains(.Close) || s.orbit == .BrownDwarf
-                {
-                    if s.spectrum == .L
-                    {
+                if !present.contains(.close) || star.orbit == .brownDwarf {
+                    if star.spectrum == .L {
                         orbitCount[curr] = Dice.roll(1, sides: 3) - 1
                     } else {
                         orbitCount[curr] = Dice.roll() - 1
-                        if s.spectrum == .M && s.luminosity == .V
-                        {
-                            orbitCount[curr]! -= 1
-                        }
+                        if star.spectrum == .M && star.luminosity == .typeV { orbitCount[curr]! -= 1 }
                     }
                 }
 
                 if orbitCount[curr] < 0 { orbitCount[curr] = 0 }
 
-                s.populatePlanets(orbitCount[curr]!, orbit:curr)
+                star.populatePlanets(orbitCount[curr]!, orbit: curr)
 
-                curr = .Outer
+                curr = .outer
 
                 // outer orbits
-                if !present.contains(.Moderate) || s.orbit == .BrownDwarf
-                {
+                if !present.contains(.moderate) || star.orbit == .brownDwarf {
                     orbitCount[curr] = Dice.roll() - 1
-                    if (s.spectrum == .M && s.luminosity == .V) ||
-                            s.spectrum == .L
-                    {
+                    if (star.spectrum == .M && star.luminosity == .typeV) || star.spectrum == .L {
                         orbitCount[curr]! -= 1
                     }
                 }
 
                 if orbitCount[curr] < 0 { orbitCount[curr] = 0 }
 
-                s.populatePlanets(orbitCount[curr]!, orbit:curr)
+                star.populatePlanets(orbitCount[curr]!, orbit: curr)
             }
-            if s.spectrum == .D || s.luminosity == .III {
+            if star.spectrum == .D || star.luminosity == .typeIII {
                 let affectedOrbits = Dice.roll()
-                var i = 0
+                var index = 0
                 repeat {
-                    if i < s.planets.count - 1 {
-                        switch s.planets[i].type {
-                        case .dwarf: s.planets[i].type = .stygian
-                        case .terrestrial: s.planets[i].type = .acheronian
-                        case .helian: s.planets[i].type = .asphodelian
-                        case .jovian: s.planets[i].type = .chthonian
+                    if index < star.planets.count - 1 {
+                        switch star.planets[index].type {
+                        case .dwarf: star.planets[index].type = .stygian
+                        case .terrestrial: star.planets[index].type = .acheronian
+                        case .helian: star.planets[index].type = .asphodelian
+                        case .jovian: star.planets[index].type = .chthonian
                         default: break
                         }
                     }
-                    i += 1
-                } while i < affectedOrbits
+                    index += 1
+                } while index < affectedOrbits
             }
         }
     }

@@ -9,14 +9,14 @@
 import Foundation
 
 enum GasGiantEnum: String, CustomStringConvertible {
-    case Small
-    case Large
-    var description:String {
-        return self.rawValue + " GG"
+    case small
+    case large
+    var description: String {
+        self.rawValue.uppercaseFirst + " GG"
     }
 }
 
-class GasGiant : Satellite, CustomStringConvertible {
+class GasGiant: Satellite, CustomStringConvertible {
     var size: GasGiantEnum
 //    var name: String = Name.init(maxLength: 14).description
     var description: String {
@@ -28,24 +28,24 @@ class GasGiant : Satellite, CustomStringConvertible {
         return result
     }
     var verboseDesc: String {
-        return "\(name) is a \(size.rawValue.lowercased()) gas giant orbiting the \(parent!.type.lowercased()) \(parent!.name)."
+        "\(name) is a \(size.rawValue.lowercased()) gas giant " +
+                "orbiting the \(parent!.type.lowercased()) \(parent!.name)."
     }
     override var json: String {
         var result = ""
-        result += "\"\(jsonLabels.gasgiant)\": {\n"
-        result += "\t\"\(jsonLabels.name)\": \"\(name)\",\n"
-        result += "\t\"\(jsonLabels.size)\": \"\(size.rawValue)\",\n"
-        result += "\t\"\(jsonLabels.satellites)\": [\n"
+        result += "\"\(JsonLabels.gasgiant)\": {\n"
+        result += "\t\"\(JsonLabels.name)\": \"\(name)\",\n"
+        result += "\t\"\(JsonLabels.size)\": \"\(size.rawValue)\",\n"
+        result += "\t\"\(JsonLabels.satellites)\": [\n"
         result += "\(satJSON)"
         result += "\t]\n"
         result += "}\n"
         return result
     }
     // gas giants only have parents that are stars.
-    init(size:GasGiantEnum = .Small, parent:Star) {
+    init(size: GasGiantEnum = .small, parent: Star) {
         self.size = size
         super.init(parent: parent)
         name = Name(maxLength: maxNameLength).description
     }
 }
-

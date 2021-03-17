@@ -8,8 +8,7 @@
 
 import Foundation
 
-
-enum jsonLabels: String, CustomStringConvertible {
+enum JsonLabels: String, CustomStringConvertible {
     case satellites
     case gasgiant
     // subsector labels
@@ -33,7 +32,7 @@ enum jsonLabels: String, CustomStringConvertible {
     case naval
     case scout
     case gas
-    case tc
+    case trade
     case fac
     // Star labels
     case star
@@ -44,37 +43,37 @@ enum jsonLabels: String, CustomStringConvertible {
     // coords is on star system where appropriate
     // Gas Giant labels
     var description: String {
-        return self.rawValue
+        self.rawValue
     }
 }
 
 class JsonFile {
-    var jsonFilename:String?
-    
-    func writeJson(_ jsonData:String) {
+    var jsonFilename: String?
+
+    func writeJson(_ jsonData: String) {
         if let filename = jsonFilename {
             do {
-                let fn = NSString(string:filename).expandingTildeInPath
-                print("Writing JSON to \(fn)")
-                try jsonData.write(toFile: fn, atomically: true, encoding: String.Encoding.utf8)
+                let expandedFilename = NSString(string: filename).expandingTildeInPath
+                print("Writing JSON to \(expandedFilename)")
+                try jsonData.write(toFile: expandedFilename, atomically: true, encoding: String.Encoding.utf8)
             } catch {
                 print("Error writing JSON file. \(error)")
             }
         }
     }
-    
+
     init(jsonFilename: String) {
         self.jsonFilename = jsonFilename
     }
-    
-    func readJson()->[[String:AnyObject]]? {
+
+    func readJson() -> [[String: AnyObject]]? {
         if let filename = jsonFilename {
             do {
                 let jsonStream = InputStream(fileAtPath: filename)
                 jsonStream?.open()
                 let jsonData = try JSONSerialization.jsonObject(with: jsonStream!, options: JSONSerialization.ReadingOptions())
                 jsonStream?.close()
-                return jsonData as? [[String:AnyObject]]
+                return jsonData as? [[String: AnyObject]]
             } catch {
                 print("Error parsing JSON data. \(error)")
                 return nil
@@ -84,5 +83,5 @@ class JsonFile {
             return nil
         }
     }
-    
+
 }

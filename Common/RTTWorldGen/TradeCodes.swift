@@ -4,11 +4,12 @@
 //
 
 import Foundation
+// swiftlint:disable identifier_name
 enum TradeCodes: String, CustomStringConvertible {
     case Ag, As, De, Fl, Ga, Hi, Ht, Ic, In, Lo
     case Lt, Na, Ni, Po, Ri, St, Wa, Va, Zo
     var description: String {
-        return self.rawValue
+        self.rawValue
     }
     var longDescription: String {
         switch self {
@@ -33,4 +34,5 @@ enum TradeCodes: String, CustomStringConvertible {
         case .Zo: return "Zoo"
         }
     }
+    // swiftlint:enable identifier_name
 }

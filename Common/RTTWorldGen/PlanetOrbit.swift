@@ -5,11 +5,11 @@
 
 import Foundation
 
-enum PlanetOrbit :String, CustomStringConvertible{
-    case Epistellar
-    case Inner
-    case Outer
+enum PlanetOrbit: String, CustomStringConvertible {
+    case epistellar
+    case inner
+    case outer
     var description: String {
-        return self.rawValue
+        self.rawValue.uppercaseFirst
     }
 }

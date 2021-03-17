@@ -5,20 +5,25 @@
 
 import Foundation
 
-enum Luminosity : String, CustomStringConvertible{
-    case III
-    case IV
-    case V
-    case Ve
+enum Luminosity: String, CustomStringConvertible {
+    case typeIII
+    case typeIV
+    case typeV
+    case typeVe
     var description: String {
-        return self.rawValue
+        switch self {
+        case .typeIII: return "III"
+        case .typeIV: return "IV"
+        case .typeV: return "V"
+        case .typeVe: return "Ve"
+        }
     }
     var longDescription: String {
         switch self {
-        case .III: return "Giant"
-        case .IV: return "Subgiant"
-        case .V: return "Main Sequence"
-        case .Ve: return "Flare"
+        case .typeIII: return "Giant"
+        case .typeIV: return "Subgiant"
+        case .typeV: return "Main Sequence"
+        case .typeVe: return "Flare"
         }
     }
 }

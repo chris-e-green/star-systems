@@ -8,35 +8,35 @@
 
 import XCTest
 
-class testStarSystems: XCTestCase {
-    
+class TestStarSystems: XCTestCase {
+
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
+
     func testCreateStarSystem() {
         let star = StarSystem()
-        print (star)
+        print(star)
     }
-    
+
     func testSystemNature() {
         let sys1 = SystemNature.Solo
         let sys2 = SystemNature.Binary
         let sys3 = SystemNature.Trinary
-        XCTAssertEqual(sys1.description,"Solo")
+        XCTAssertEqual(sys1.description, "Solo")
         XCTAssertNotEqual(sys1.description, "Binary")
-        XCTAssertNotEqual(sys1.rawValue,0)
-        XCTAssertEqual(sys1.rawValue,1)
-        XCTAssertEqual(sys2.description,"Binary")
-        XCTAssertEqual(sys2.rawValue,2)
-        XCTAssertEqual(sys3.description,"Trinary")
-        XCTAssertEqual(sys3.rawValue,3)
+        XCTAssertNotEqual(sys1.rawValue, 0)
+        XCTAssertEqual(sys1.rawValue, 1)
+        XCTAssertEqual(sys2.description, "Binary")
+        XCTAssertEqual(sys2.rawValue, 2)
+        XCTAssertEqual(sys3.description, "Trinary")
+        XCTAssertEqual(sys3.rawValue, 3)
     }
     func testZones() {
         XCTAssertEqual(Zone.H.description, "Habitable")
@@ -53,9 +53,9 @@ class testStarSystems: XCTestCase {
         XCTAssertEqual(gg2.description, "Large")
     }
     func testRollCompanionStar() {
-        let s = StarSystem()
+        let starSystem = StarSystem()
         for _ in 0..<100 {
-            s.rollCompanionStar(-2, sizeDM: -2)
+            starSystem.rollCompanionStar(-2, sizeDM: -2)
         }
     }
     func testStarHashable() {
@@ -69,7 +69,7 @@ class testStarSystems: XCTestCase {
         XCTAssertNotEqual(star1, star4)
         XCTAssertNotEqual(star1, star5)
     }
-    
+
     func testCreateStarSystemPerformance() {
         // This is an example of a performance test case.
         self.measureBlock {
@@ -78,5 +78,5 @@ class testStarSystems: XCTestCase {
             print(star)
         }
     }
-    
+
 }

@@ -4,7 +4,8 @@
 //
 
 import Foundation
-enum Spectrum : String, CustomStringConvertible{
+// swiftlint:disable identifier_name
+enum Spectrum: String, CustomStringConvertible {
     case A
     case F
     case G
@@ -13,10 +14,10 @@ enum Spectrum : String, CustomStringConvertible{
     case L
     case D
     var description: String {
-        return self.rawValue
+        self.rawValue
     }
     var longDescription: String {
-        switch (self) {
+        switch self {
         case .A: return "bluish-white"
         case .F: return "white"
         case .G: return "yellow"
@@ -26,4 +27,5 @@ enum Spectrum : String, CustomStringConvertible{
         case .D: return "white dwarf"
         }
     }
+    // swiftlint:enable identifier_name
 }

@@ -12,17 +12,17 @@ class EmptyOrbit: Satellite, CustomStringConvertible {
     var description: String {
 //        let pad = String(count: depth, repeatedValue: Character(" "))
 //        return "\(pad)Empty orbit"
-    return "Empty orbit"
+        "Empty orbit"
     }
     override var json: String {
         var result = ""
-        result += "\"\(jsonLabels.sattype)\": \"empty\"\n"
+        result += "\"\(JsonLabels.sattype)\": \"empty\"\n"
         return result
     }
 
     // empty orbits only have parents that are stars.
     init(parent: Star) {
-        super.init(parent:parent)
+        super.init(parent: parent)
         name = ""
     }
 }

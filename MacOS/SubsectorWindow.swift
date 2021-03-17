@@ -9,6 +9,5 @@
 import Cocoa
 
 class SubsectorWindow: NSWindow {
-    
-}
 
+}

@@ -47,7 +47,7 @@
 		833D9AFA1FB8367B009D35DD /* PlanetWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833D9AF91FB8367B009D35DD /* PlanetWindow.swift */; };
 		833D9AFC1FB98A0A009D35DD /* StarSystemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833D9AFB1FB98A0A009D35DD /* StarSystemViewController.swift */; };
 		833DA81E1F6DED7800AF0B30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833DA81D1F6DED7800AF0B30 /* AppDelegate.swift */; };
-		833DA8201F6DED7800AF0B30 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833DA81F1F6DED7800AF0B30 /* MasterViewController.swift */; };
+		833DA8201F6DED7800AF0B30 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833DA81F1F6DED7800AF0B30 /* MainViewController.swift */; };
 		833DA8221F6DED7800AF0B30 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833DA8211F6DED7800AF0B30 /* DetailViewController.swift */; };
 		833DA8251F6DED7800AF0B30 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 833DA8231F6DED7800AF0B30 /* Main.storyboard */; };
 		833DA8271F6DED7800AF0B30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 833DA8261F6DED7800AF0B30 /* Assets.xcassets */; };
@@ -118,7 +118,7 @@
 		833D9AFB1FB98A0A009D35DD /* StarSystemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarSystemViewController.swift; sourceTree = "<group>"; };
 		833DA81B1F6DED7800AF0B30 /* StarSystemsiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarSystemsiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		833DA81D1F6DED7800AF0B30 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		833DA81F1F6DED7800AF0B30 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		833DA81F1F6DED7800AF0B30 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		833DA8211F6DED7800AF0B30 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		833DA8241F6DED7800AF0B30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		833DA8261F6DED7800AF0B30 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -126,6 +126,7 @@
 		833DA82B1F6DED7800AF0B30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83401EE91F67D18800D6FB65 /* PlanetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetViewController.swift; sourceTree = "<group>"; };
 		835FC0DE1FEBA36700646D50 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		8371AA08258F505700743834 /* StarSystemsGUIRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StarSystemsGUIRelease.entitlements; sourceTree = "<group>"; };
 		839ECA271FC37B61002E88EC /* SubsectorWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsectorWindow.swift; sourceTree = "<group>"; };
 		839ECA291FC37BE1002E88EC /* StarSystemWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarSystemWindow.swift; sourceTree = "<group>"; };
 		83A9C0EB1F330BBF008418C8 /* StarSystemsGUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarSystemsGUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -188,6 +189,7 @@
 		8338514F1CA39A310058E510 = {
 			isa = PBXGroup;
 			children = (
+				8371AA08258F505700743834 /* StarSystemsGUIRelease.entitlements */,
 				835FC0DD1FEBA2D600646D50 /* Console */,
 				8338515A1CA39A310058E510 /* Common */,
 				83A9C0EC1F330BBF008418C8 /* MacOS */,
@@ -231,7 +233,7 @@
 			children = (
 				835FC0DE1FEBA36700646D50 /* Default-568h@2x.png */,
 				833DA81D1F6DED7800AF0B30 /* AppDelegate.swift */,
-				833DA81F1F6DED7800AF0B30 /* MasterViewController.swift */,
+				833DA81F1F6DED7800AF0B30 /* MainViewController.swift */,
 				833DA8211F6DED7800AF0B30 /* DetailViewController.swift */,
 				833DA8231F6DED7800AF0B30 /* Main.storyboard */,
 				833DA8261F6DED7800AF0B30 /* Assets.xcassets */,
@@ -278,7 +280,7 @@
 				833851541CA39A310058E510 /* Sources */,
 				833851551CA39A310058E510 /* Frameworks */,
 				833851561CA39A310058E510 /* CopyFiles */,
-				83B88FB420523401004B1DE9 /* ShellScript */,
+				83D895EC21EFDAD100DECDFC /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -330,12 +332,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0900;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "Christopher Green";
 				TargetAttributes = {
 					833851571CA39A310058E510 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1230;
 					};
 					833DA81A1F6DED7800AF0B30 = {
 						CreatedOnToolsVersion = 9.0;
@@ -347,12 +349,13 @@
 						CreatedOnToolsVersion = 9.0;
 						DevelopmentTeam = 8Q52PQZUH9;
 						LastSwiftMigration = 1000;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
 			buildConfigurationList = 833851531CA39A310058E510 /* Build configuration list for PBXProject "StarSystems" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -394,19 +397,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		83B88FB420523401004B1DE9 /* ShellScript */ = {
+		83D895EC21EFDAD100DECDFC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputFileListPaths = (
+			);
 			inputPaths = (
 			);
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				/Users/chris/test.txt,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "set > /Users/chris/test.txt\n";
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelif which /opt/homebrew/bin/swiftlint > /dev/null; then\n    /opt/homebrew/bin/swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -461,7 +467,7 @@
 				830311131FEDDA190072E9FD /* Extensions.swift in Sources */,
 				833DA8391F6E135800AF0B30 /* JSON.swift in Sources */,
 				833DA8221F6DED7800AF0B30 /* DetailViewController.swift in Sources */,
-				833DA8201F6DED7800AF0B30 /* MasterViewController.swift in Sources */,
+				833DA8201F6DED7800AF0B30 /* MainViewController.swift in Sources */,
 				833DA81E1F6DED7800AF0B30 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -555,6 +561,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
@@ -636,6 +643,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
@@ -681,16 +689,18 @@
 		833851601CA39A310058E510 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		833851611CA39A310058E510 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -708,7 +718,7 @@
 				DEVELOPMENT_TEAM = BD96TN239S;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mgsdl.StarSystemsiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -733,7 +743,7 @@
 				DEVELOPMENT_TEAM = BD96TN239S;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mgsdl.StarSystemsiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -753,14 +763,18 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = StarSystemsGUI/StarSystemsGUI.entitlements;
+				CODE_SIGN_ENTITLEMENTS = StarSystemsGUI.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8Q52PQZUH9;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "$(SRCROOT)/MacOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mgsdl.StarSystemsGUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 4.2;
 			};
@@ -775,14 +789,18 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = StarSystemsGUI/StarSystemsGUI.entitlements;
+				CODE_SIGN_ENTITLEMENTS = StarSystemsGUIRelease.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8Q52PQZUH9;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "$(SRCROOT)/MacOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mgsdl.StarSystemsGUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Release;

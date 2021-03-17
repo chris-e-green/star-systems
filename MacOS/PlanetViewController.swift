@@ -21,13 +21,13 @@ class PlanetViewController: NSViewController {
     @IBOutlet weak var atmosphere: NSTextField!
     @IBOutlet weak var lawLevel: NSTextField!
     @IBOutlet weak var techLevel: NSTextField!
-    
+
     @IBOutlet weak var bases: NSTextField!
     @IBOutlet var planetDescription: NSTextView!
     @IBOutlet weak var tradeClass: NSTextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
         let planet = Planet()
         planet.generateRandomPlanet()
@@ -44,11 +44,10 @@ class PlanetViewController: NSViewController {
         bases.stringValue = planet.baseStr
         tradeClass.stringValue = planet.shortTradeClassifications
     }
-    
+
     override var representedObject: Any? {
         didSet {
             // Update the view, if already loaded.
         }
     }
 }
-
